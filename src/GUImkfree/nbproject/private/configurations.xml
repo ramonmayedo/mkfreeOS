@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="applications">
+        <df name="destokp">
+          <in>Gdestokp.cc</in>
+          <in>Gdestokp.h</in>
+          <in>GmainBar.cc</in>
+          <in>GmainBar.h</in>
+          <in>Gscreen.cc</in>
+          <in>Gscreen.h</in>
+          <in>destokp.cc</in>
+        </df>
+        <df name="fileExplorer">
+          <in>fileExplorer.cc</in>
+        </df>
+        <df name="textEditor">
+          <in>textEditor.cc</in>
+        </df>
+      </df>
+      <df name="basics">
+        <df name="fonts">
+          <in>lucidaconsole.asm</in>
+        </df>
+        <in>color.cc</in>
+        <in>color.h</in>
+        <in>columns.cc</in>
+        <in>columns.h</in>
+        <in>control.cc</in>
+        <in>control.h</in>
+        <in>cstring.cc</in>
+        <in>cstring.h</in>
+        <in>elapseTime.cc</in>
+        <in>elapseTime.h</in>
+        <in>font.cc</in>
+        <in>font.h</in>
+        <in>frame.cc</in>
+        <in>frame.h</in>
+        <in>graphicsbitmap.cc</in>
+        <in>graphicsbitmap.h</in>
+        <in>kgraphics.cc</in>
+        <in>kgraphics.h</in>
+        <in>list.cc</in>
+        <in>list.h</in>
+        <in>object.cc</in>
+        <in>object.h</in>
+        <in>point.cc</in>
+        <in>point.h</in>
+        <in>rect.cc</in>
+        <in>rect.h</in>
+        <in>size.cc</in>
+        <in>size.h</in>
+        <in>slines.cc</in>
+        <in>slines.h</in>
+        <in>templates.h</in>
+        <in>vstring.cc</in>
+        <in>vstring.h</in>
+      </df>
+      <df name="components">
+        <in>GWbartitle.cc</in>
+        <in>GWbartitle.h</in>
+        <in>Gbutton.cc</in>
+        <in>Gbutton.h</in>
+        <in>GcolumnButton.cc</in>
+        <in>GcolumnButton.h</in>
+        <in>Gcursor.cc</in>
+        <in>Gcursor.h</in>
+        <in>Glabel.cc</in>
+        <in>Glabel.h</in>
+        <in>GlineEdit.cc</in>
+        <in>GlineEdit.h</in>
+        <in>GlistBox.cc</in>
+        <in>GlistBox.h</in>
+        <in>GlistView.cc</in>
+        <in>GlistView.h</in>
+        <in>Gpanel.cc</in>
+        <in>Gpanel.h</in>
+        <in>GscrollBar.cc</in>
+        <in>GscrollBar.h</in>
+        <in>GstatusBar.cc</in>
+        <in>GstatusBar.h</in>
+        <in>GtextEdit.cc</in>
+        <in>GtextEdit.h</in>
+        <in>GtoolBar.cc</in>
+        <in>GtoolBar.h</in>
+        <in>Gwindows.cc</in>
+        <in>Gwindows.h</in>
+        <in>desktop.cc</in>
+        <in>desktop.h</in>
+      </df>
+      <df name="iconos">
+      </df>
+      <df name="server">
+        <in>client.cc</in>
+        <in>client.h</in>
+        <in>server.cc</in>
+        <in>server.h</in>
+      </df>
+      <df name="systemWindows">
+        <in>Gclient.cc</in>
+        <in>Gclient.h</in>
+        <in>Gserver.cc</in>
+        <in>Gserver.h</in>
+      </df>
+    </df>
+  </logicalFolder>
+  <projectmakefile>makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>3</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>

@@ -1,0 +1,15 @@
+#configuracion del compilador de C++
+SC=C:\gcc\bin\g++
+#FLAG=  -g -O2 -w -trigraphs -fno-builtin  -fno-exceptions  -O0  -fno-rtti -nostdlib -nodefaultlibs
+#comando para mostrar el contenido del fichero
+OBJDUMP=objdump
+
+#configuracion del enlazador se define como entrada 0x00000
+LD=C:\gcc\bin\ld
+LDFLAG= -static  -L ./ -T architecture/$(ARCH)/linker.ld -nostdlib
+#configuracion del comando  para copiar obcopy
+OBJCOPY = objcopy
+OBJCOPYFLAG = -R .note -R .comment -S -O binary
+
+ASM=C:\nasm\nasm
+ASMFLAG =  -f elf 

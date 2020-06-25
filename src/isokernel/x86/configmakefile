@@ -1,0 +1,7 @@
+ASM=C:\nasm\nasm
+SC=C:\gcc\bin\g++
+OBJCOPY = objcopy
+OBJCOPYFLAG = -R .note -R .comment -S -O binary
+LD=C:\gcc\bin\ld
+LDFLAG= -static  -L ./ -T $(ARCH)/linker.ld
+OBJDUMP=objdump

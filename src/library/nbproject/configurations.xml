@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="code">
+        <in>close.cc</in>
+        <in>conio.cc</in>
+        <in>fclose.cc</in>
+        <in>fopen.cc</in>
+        <in>fread.cc</in>
+        <in>fwrite.cc</in>
+        <in>malloc.cc</in>
+        <in>read.cc</in>
+        <in>sbrk.cc</in>
+        <in>stdio.c</in>
+        <in>stdlib.cc</in>
+        <in>string.cc</in>
+        <in>syscall.cc</in>
+        <in>thread.cc</in>
+        <in>time.cc</in>
+        <in>write.cc</in>
+      </df>
+      <df name="includes">
+        <in>conio.h</in>
+        <in>dirent.h</in>
+        <in>memory.cc</in>
+        <in>memory.h</in>
+        <in>program.h</in>
+        <in>stdio.h</in>
+        <in>stdlib.h</in>
+        <in>string.h</in>
+        <in>syscall.h</in>
+        <in>thread.h</in>
+        <in>time.h</in>
+        <in>unistd.h</in>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>nbproject/private/launcher.properties</itemPath>
+      <itemPath>makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f makefile</buildCommand>
+          <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path="code/close.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/conio.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/fclose.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/fopen.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/fread.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/fwrite.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/malloc.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/read.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/sbrk.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/stdio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="code/stdlib.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/string.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/syscall.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/thread.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/time.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="code/write.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="includes/conio.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/dirent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/memory.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="includes/memory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/program.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/stdio.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/stdlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/string.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/syscall.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/thread.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/time.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="includes/unistd.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

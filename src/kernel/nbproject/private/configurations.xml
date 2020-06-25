@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="architecture">
+        <df name="x86">
+          <df name="includes">
+            <in>maps.h</in>
+            <in>reg.h</in>
+          </df>
+          <in>architecture.cc</in>
+          <in>architecture.h</in>
+          <in>intfunction.cc</in>
+          <in>intfunction.h</in>
+          <in>io.cc</in>
+          <in>io.h</in>
+          <in>ioscreen.cc</in>
+          <in>ioscreen.h</in>
+          <in>malloc.cc</in>
+          <in>malloc.h</in>
+          <in>modeprotected.cc</in>
+          <in>modeprotected.h</in>
+          <in>pic8259.cc</in>
+          <in>pic8259.h</in>
+          <in>pit8253.cc</in>
+          <in>pit8253.h</in>
+          <in>sharedmemory.cc</in>
+          <in>sharedmemory.h</in>
+          <in>star.asm</in>
+          <in>virtualmemory.cc</in>
+          <in>virtualmemory.h</in>
+          <in>x86.cc</in>
+          <in>x86.h</in>
+        </df>
+      </df>
+      <df name="core">
+        <df name="compiler">
+          <in>operator.cc</in>
+        </df>
+        <df name="filesystem">
+          <df name="includes">
+            <in>commond.h</in>
+            <in>hbfs.h</in>
+            <in>hfat.h</in>
+            <in>hiso9660.h</in>
+          </df>
+          <in>bfs.cc</in>
+          <in>bfs.h</in>
+          <in>fat.cc</in>
+          <in>fat.h</in>
+          <in>iso9660.cc</in>
+          <in>iso9660.h</in>
+        </df>
+        <df name="includes">
+          <in>disk.h</in>
+          <in>hprocess.h</in>
+        </df>
+        <in>adminProcess.cc</in>
+        <in>adminProcess.h</in>
+        <in>adminthread.cc</in>
+        <in>adminthread.h</in>
+        <in>cacheDisk.cc</in>
+        <in>cacheDisk.h</in>
+        <in>devices.cc</in>
+        <in>devices.h</in>
+        <in>diskpartition.cc</in>
+        <in>diskpartition.h</in>
+        <in>elfloader.cc</in>
+        <in>elfloader.h</in>
+        <in>exclusion.cc</in>
+        <in>exclusion.h</in>
+        <in>file.cc</in>
+        <in>file.h</in>
+        <in>filesystem.cc</in>
+        <in>filesystem.h</in>
+        <in>graphics.cc</in>
+        <in>graphics.h</in>
+        <in>kernel.cc</in>
+        <in>kernel.h</in>
+        <in>pioscreen.cc</in>
+        <in>pioscreen.h</in>
+        <in>process.cc</in>
+        <in>process.h</in>
+        <in>systemcall.cc</in>
+        <in>systemcall.h</in>
+        <in>thread.cc</in>
+        <in>thread.h</in>
+        <in>virtualmemoryzone.cc</in>
+        <in>virtualmemoryzone.h</in>
+      </df>
+      <df name="defines">
+        <in>constants.h</in>
+        <in>enums.h</in>
+        <in>types.h</in>
+      </df>
+      <df name="drivers">
+        <df name="bxvga">
+          <in>font8x8.h</in>
+          <in>fontbasic8x8.asm</in>
+        </df>
+        <df name="includes">
+          <in>modevideo.h</in>
+        </df>
+        <df name="vga">
+          <df name="font">
+            <in>basic.asm</in>
+            <in>lucidaconsole.asm</in>
+            <in>systembyte.asm</in>
+          </df>
+          <df name="palette">
+            <in>palette256.asm</in>
+          </df>
+          <df name="videomode">
+            <in>mode320x200x256.cc</in>
+            <in>mode320x200x256.h</in>
+            <in>mode720x480x4.cc</in>
+            <in>mode720x480x4.h</in>
+            <in>modetext80x25x16.cc</in>
+            <in>modetext80x25x16.h</in>
+          </df>
+          <in>registerVGA.cc</in>
+          <in>registerVGA.h</in>
+        </df>
+        <in>bxvga.cc</in>
+        <in>bxvga.h</in>
+        <in>cdide.cc</in>
+        <in>cdide.h</in>
+        <in>clock.cc</in>
+        <in>clock.h</in>
+        <in>diskide.cc</in>
+        <in>diskide.h</in>
+        <in>keyborad.cc</in>
+        <in>keyborad.h</in>
+        <in>mouse.cc</in>
+        <in>mouse.h</in>
+        <in>pci.cc</in>
+        <in>pci.h</in>
+        <in>vga.cc</in>
+        <in>vga.h</in>
+      </df>
+      <df name="files">
+        <df name="includes">
+          <in>hbmp.h</in>
+        </df>
+        <in>bmp.cc</in>
+        <in>bmp.h</in>
+      </df>
+      <df name="nbproject1">
+        <df name="private">
+          <in>c_standard_headers_indexer.c</in>
+          <in>cpp_standard_headers_indexer.cpp</in>
+        </df>
+      </df>
+      <df name="uses">
+        <in>conversion.cc</in>
+        <in>conversion.h</in>
+        <in>defmapkeyboard.asm</in>
+        <in>list.cc</in>
+        <in>list.h</in>
+        <in>memory.cc</in>
+        <in>memory.h</in>
+        <in>string.cc</in>
+        <in>string.h</in>
+        <in>timer.cc</in>
+        <in>timer.h</in>
+      </df>
+    </df>
+  </logicalFolder>
+  <projectmakefile>makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>3</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>

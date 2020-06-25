@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="architecture">
+        <df name="x86">
+          <df name="includes">
+            <in>maps.h</in>
+            <in>reg.h</in>
+          </df>
+          <in>architecture.cc</in>
+          <in>architecture.h</in>
+          <in>intfunction.cc</in>
+          <in>intfunction.h</in>
+          <in>io.cc</in>
+          <in>io.h</in>
+          <in>ioscreen.cc</in>
+          <in>ioscreen.h</in>
+          <in>malloc.cc</in>
+          <in>malloc.h</in>
+          <in>modeprotected.cc</in>
+          <in>modeprotected.h</in>
+          <in>pic8259.cc</in>
+          <in>pic8259.h</in>
+          <in>pit8253.cc</in>
+          <in>pit8253.h</in>
+          <in>sharedmemory.cc</in>
+          <in>sharedmemory.h</in>
+          <in>star.asm</in>
+          <in>virtualmemory.cc</in>
+          <in>virtualmemory.h</in>
+          <in>x86.cc</in>
+          <in>x86.h</in>
+        </df>
+      </df>
+      <df name="core">
+        <df name="compiler">
+          <in>operator.cc</in>
+        </df>
+        <df name="filesystem">
+          <df name="includes">
+            <in>commond.h</in>
+            <in>hbfs.h</in>
+            <in>hfat.h</in>
+            <in>hiso9660.h</in>
+          </df>
+          <in>bfs.cc</in>
+          <in>bfs.h</in>
+          <in>fat.cc</in>
+          <in>fat.h</in>
+          <in>iso9660.cc</in>
+          <in>iso9660.h</in>
+        </df>
+        <df name="includes">
+          <in>disk.h</in>
+          <in>hprocess.h</in>
+        </df>
+        <in>adminProcess.cc</in>
+        <in>adminProcess.h</in>
+        <in>adminthread.cc</in>
+        <in>adminthread.h</in>
+        <in>cacheDisk.cc</in>
+        <in>cacheDisk.h</in>
+        <in>devices.cc</in>
+        <in>devices.h</in>
+        <in>diskpartition.cc</in>
+        <in>diskpartition.h</in>
+        <in>elfloader.cc</in>
+        <in>elfloader.h</in>
+        <in>exclusion.cc</in>
+        <in>exclusion.h</in>
+        <in>file.cc</in>
+        <in>file.h</in>
+        <in>filesystem.cc</in>
+        <in>filesystem.h</in>
+        <in>graphics.cc</in>
+        <in>graphics.h</in>
+        <in>kernel.cc</in>
+        <in>kernel.h</in>
+        <in>pioscreen.cc</in>
+        <in>pioscreen.h</in>
+        <in>process.cc</in>
+        <in>process.h</in>
+        <in>systemcall.cc</in>
+        <in>systemcall.h</in>
+        <in>thread.cc</in>
+        <in>thread.h</in>
+        <in>virtualmemoryzone.cc</in>
+        <in>virtualmemoryzone.h</in>
+      </df>
+      <df name="defines">
+        <in>constants.h</in>
+        <in>enums.h</in>
+        <in>types.h</in>
+      </df>
+      <df name="drivers">
+        <df name="includes">
+          <in>modevideo.h</in>
+        </df>
+        <df name="vga">
+          <df name="font">
+            <in>basic.asm</in>
+            <in>lucidaconsole.asm</in>
+            <in>systembyte.asm</in>
+          </df>
+          <df name="palette">
+            <in>palette256.asm</in>
+          </df>
+          <df name="videomode">
+            <in>mode320x200x256.cc</in>
+            <in>mode320x200x256.h</in>
+            <in>mode720x480x4.cc</in>
+            <in>mode720x480x4.h</in>
+            <in>modetext80x25x16.cc</in>
+            <in>modetext80x25x16.h</in>
+          </df>
+          <in>registerVGA.cc</in>
+          <in>registerVGA.h</in>
+        </df>
+        <in>bxvga.cc</in>
+        <in>bxvga.h</in>
+        <in>cdide.cc</in>
+        <in>cdide.h</in>
+        <in>clock.cc</in>
+        <in>clock.h</in>
+        <in>diskide.cc</in>
+        <in>diskide.h</in>
+        <in>keyborad.cc</in>
+        <in>keyborad.h</in>
+        <in>mouse.cc</in>
+        <in>mouse.h</in>
+        <in>pci.cc</in>
+        <in>pci.h</in>
+        <in>vga.cc</in>
+        <in>vga.h</in>
+      </df>
+      <df name="files">
+        <df name="includes">
+          <in>hbmp.h</in>
+        </df>
+        <in>bmp.cc</in>
+        <in>bmp.h</in>
+      </df>
+      <df name="nbproject1">
+        <df name="private">
+          <in>c_standard_headers_indexer.c</in>
+          <in>cpp_standard_headers_indexer.cpp</in>
+        </df>
+      </df>
+      <df name="uses">
+        <in>conversion.cc</in>
+        <in>conversion.h</in>
+        <in>defmapkeyboard.asm</in>
+        <in>list.cc</in>
+        <in>list.h</in>
+        <in>memory.cc</in>
+        <in>memory.h</in>
+        <in>string.cc</in>
+        <in>string.h</in>
+        <in>timer.cc</in>
+        <in>timer.h</in>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>nbproject/private/launcher.properties</itemPath>
+      <itemPath>makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f makefile</buildCommand>
+          <cleanCommand>${MAKE} -f makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path="architecture/x86/architecture.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/architecture.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/includes/maps.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/includes/reg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/intfunction.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/intfunction.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/io.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/io.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/ioscreen.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/ioscreen.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/malloc.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/modeprotected.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/modeprotected.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/pic8259.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/pic8259.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/pit8253.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/pit8253.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/sharedmemory.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/sharedmemory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/star.asm" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="architecture/x86/virtualmemory.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/virtualmemory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/x86.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/x86.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/adminProcess.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/adminProcess.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/adminthread.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/adminthread.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/cacheDisk.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/cacheDisk.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/compiler/operator.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/devices.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/devices.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/diskpartition.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/diskpartition.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/elfloader.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/elfloader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/exclusion.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/exclusion.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/file.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/file.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/filesystem.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/filesystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/filesystem/bfs.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/filesystem/bfs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/filesystem/fat.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/filesystem/fat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/filesystem/includes/commond.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/filesystem/includes/hbfs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/filesystem/includes/hfat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/filesystem/includes/hiso9660.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="core/filesystem/iso9660.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/filesystem/iso9660.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/graphics.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/graphics.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/includes/disk.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/includes/hprocess.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/kernel.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/kernel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/pioscreen.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/pioscreen.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/process.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/process.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/systemcall.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/systemcall.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/thread.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/thread.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/virtualmemoryzone.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="core/virtualmemoryzone.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="defines/constants.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="defines/enums.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="defines/types.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/bxvga.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="drivers/bxvga.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/cdide.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="drivers/cdide.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/clock.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="drivers/clock.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/diskide.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="drivers/diskide.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/includes/modevideo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/keyborad.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="drivers/keyborad.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/mouse.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="drivers/mouse.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/pci.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="drivers/pci.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/vga.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="drivers/vga.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/vga/font/basic.asm" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="drivers/vga/font/lucidaconsole.asm" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="drivers/vga/font/systembyte.asm" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="drivers/vga/palette/palette256.asm" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="drivers/vga/registerVGA.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="drivers/vga/registerVGA.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/vga/videomode/mode320x200x256.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="drivers/vga/videomode/mode320x200x256.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="drivers/vga/videomode/mode720x480x4.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="drivers/vga/videomode/mode720x480x4.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="drivers/vga/videomode/modetext80x25x16.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="drivers/vga/videomode/modetext80x25x16.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="files/bmp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="files/bmp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="files/includes/hbmp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="nbproject1/private/c_standard_headers_indexer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="nbproject1/private/cpp_standard_headers_indexer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="uses/conversion.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="uses/conversion.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="uses/defmapkeyboard.asm" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="uses/list.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="uses/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="uses/memory.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="uses/memory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="uses/string.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="uses/string.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="uses/timer.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="uses/timer.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

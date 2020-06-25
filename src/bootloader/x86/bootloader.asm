@@ -1,0 +1,125 @@
+;Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+
+;This program is free software: you can redistribute it and/or modify
+;it under the terms of the GNU General Public License as published by
+;the Free Software Foundation, either version 3 of the License, or
+;(at your option) any later version.
+
+;This program is distributed in the hope that it will be useful,
+;but WITHOUT ANY WARRANTY; without even the implied warranty of
+;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;GNU General Public License for more details.
+
+;You should have received a copy of the GNU General Public License
+;along with this program.  If not, see <http://www.gnu.org/licenses/>
+
+[BITS 16]
+;COPIANDO EL SECTOR DE ARRANQUE A OTRA LOCALIDAD DE MEMORIA 0x1000 PARA 
+;LUEGO CARGAR EN LA 0X7C00 LA PARTICION ACTIVA
+[ORG 0x01000]
+CLI
+XOR AX,AX
+MOV ES,AX
+MOV DS,AX
+MOV SS,AX
+MOV SP,0xFFF8
+
+MOV CX,0x0100 ;TAMA�O DEL BOOTLOADER 1 SECTOR DE 512(100H) SI SE EXTIENDE SE CAMBIA ESTE TAMA�O
+MOV SI,0x7C00 ;DIRECCION EN EL QUE SE CARGA EL 1ER SECTOR DEL MEDIO ARRANCABLE 
+MOV DI,0x01000 ;DESTINO
+REP MOVSW
+
+JMP 0:BOOTLOADER ;SE SALTA AL CARGADOR Y SE DA COMIENZO A LA RUTINA DE ARRANQUE  
+
+BOOTLOADER: 
+STI
+MOV [BOOTDRIVER],DL  ;INFORMACION DE QUE UNIDAD ES LA QUE SE ARRANCO
+
+MOV AH,0x00          ;MODO TEXTO DE LA PANTALLA
+MOV AL,0x03
+INT 10H
+
+MOV DI,CARTEL       ;IMPRIME CARTEL DE INCIO
+CALL WRITE
+
+;----CHEQUEO DE LA TABLA DE PARTICIONES DE LA UNIDAD---------------
+CHECKPARTITION:
+MOV BX,PARTITION1    ;COMIENZO DE LA TABLA DE PARTICIONES 0x01BE ES EL BYTE 446 DEL SECTOR 0
+MOV CX,0x04          ;4 ENTRADA DE LA TABLA DE PARTICIONES, 4 POSIBLES PARTICIONES
+CHKPARTITIONLOOP:    
+MOV AL,BYTE [BX]
+TEST AL,0x80         ;ES ARRANCABLE LA PARTICION SI EL BIT 7 DEL 1ER BYTE ESTA ACTIVO
+JNZ  FOUNDPARTITION
+ADD BX,0x10
+LOOP CHKPARTITIONLOOP
+JMP ERRORPARTITION
+;------------------------------------------------------------------
+;------------------------------------------------------------------
+FOUNDPARTITION:
+;---TOMAR INFORMACION DE LA PARTICION PARA COPIAR EN MEMORIA EL SECTOR DE ARRANQUE DE LA PARTICION--------
+MOV DI,FOUNDED
+CALL WRITE
+MOV CH,BYTE[BX+1]                 ;CILINDRO
+MOV DH,BYTE[BX+2]                 ;HEADER
+MOV CL,BYTE[BX+3]                 ;SECTOR    
+CALL READSECTOR
+CMP WORD[0x7C00 + 0x01FE ],0xAA55 ;CHEQUE SI ES ARRANCABLE LA PARTICION
+JNE NOTBOOTPARTITION
+MOV DL, BYTE [BOOTDRIVER]
+JMP 0x7C00                        ;SI ES ARRANCAMBLE SE DA CONTROL AL BOOTLOADER DE LA PARTICION
+NOTBOOTPARTITION:
+MOV DI,NOTBOOT
+CALL WRITE
+JMP $
+;-----------------------------------------------------------------------
+
+;-----------------------------------------------------------------------
+ERRORPARTITION:
+MOV DI,NOTFOUNDED
+CALL WRITE
+JMP $
+;------------------------------------------------------------------------
+
+;------------------------------------------------------------------------
+READSECTOR:
+MOV AH,0x2
+MOV AL,10             ;4 sector a leer
+MOV DL,[BOOTDRIVER]   ;
+MOV BX,0x7C00         ;ES:BX - 0000:0800
+INT 13h
+JNC OKFIN
+JMP $
+OKFIN:
+RET
+;----IMPRIME EN PANTALLA UNA CADENA---------------------------------------
+WRITE:
+CICLO:
+MOV AL,BYTE [DI]
+CMP AL,0
+JZ  FIN
+INC DI
+MOV AH,0X0E
+INT 10H
+JMP CICLO
+FIN:
+RET
+;-VARIABLES-------------------------------------------------------
+BOOTDRIVER DB 00
+PARTITIONOFFSET DW 00
+CARTEL DB 'LOADER PARA SISTEMA OPERATIVO MKFREE',0DH,0AH,0
+FOUNDED DB 'PARTICION ENCONTRADA',0DH,0AH,0
+NOTFOUNDED DB 'PARTICION NO ENCONTRADA',0DH,0AH,0
+NOTBOOT DB 'PARTICION NO ARRAQNCABLE',0DH,0AH,0
+;---TABLA DE PARTICIONES------- PARTICION 1 ARRANCABLE---------------
+TIMES (0x01BE-($-$$)) DB 00
+PARTITION1 DB 0x80 
+           DB 00,00,0x3 ;CHS INICIO DE LA PARTICION
+           DB 0x57      ;TIPO DE PARTICION
+           DB 00,00,0x50;CHS FIN DE LA PARTICION 
+           DD 0x03      ;LBA INICIO DE LA PARTICION
+           DD 0x160     ;TAMAÑO DE LA PARTICION
+PARTITION2 TIMES 16 DB 0
+PARTITION3 TIMES 16 DB 0
+PARTITION4 TIMES 16 DB 0
+TIMES 510 - ($-$$ ) DB 0
+DB 0x55,0xAA 
