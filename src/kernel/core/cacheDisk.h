@@ -35,6 +35,7 @@ struct Scache{
 class CcacheDisk {
 public:
     CcacheDisk();
+    void initialize();
     int readSector(u32 adevice, u32 ablock, u32 asectorCount, char *abuffer);
     int writeSector(u32 adevice,u32 ablock,u32 asectorCount,char *abuffer);
     void flush();

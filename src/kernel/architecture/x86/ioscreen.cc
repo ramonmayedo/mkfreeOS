@@ -22,6 +22,10 @@ extern Smaps maps;
 extern Score core;
 
 CioScreen::CioScreen() { //constructor por defecto
+
+}
+
+void CioScreen::initialize() {
     CurX = 0;
     CurY = 0;
     ShowCursor = false;

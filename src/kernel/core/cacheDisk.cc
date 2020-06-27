@@ -20,6 +20,10 @@ extern Sx86 x86;
 extern Score core;
 
 CcacheDisk::CcacheDisk() {
+
+}
+
+void CcacheDisk::initialize() {
     table = new Scache[MAX_ENTRY];
     for (int i = 0; i < MAX_ENTRY / 8; i++) {
         u32 dirPtr = (u32) x86.virtualMemory.getPagesVirtualKernel();
@@ -29,6 +33,7 @@ CcacheDisk::CcacheDisk() {
         }
     }
 }
+
 
 int CcacheDisk::readSector(u32 adevice, u32 ablock, char *abuffer) {
     int indexEmpty = 0;

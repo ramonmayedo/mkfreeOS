@@ -33,34 +33,31 @@ int start() {
     //---Inicializacion del Teclado--------------------
     maps.keyMap.port.regBase = 0x60;
     maps.keyMap.port.regControl = 0x64;     
-    core.keyborad = Ckeyboard();
+    core.keyborad.initialize();
     //---Inicializacion del Mouse--------------------        
     maps.mouseMap.port.regBase = 0x60;
     maps.mouseMap.port.regControl = 0x64;
-    core.mousePS2 = CmausePS2();
+    core.mousePS2.initialize();
     //--Inicializacion del reloj real------------------------
     maps.clockMap.port.regBase = 0x70;
     maps.clockMap.port.regControl = 0x71;
     core.clock.refresh();
-    //Inicializacion del Controlador de Interruopciones PIC8259
+    //Inicializacion del Controlador de Interrupciones PIC8259
     maps.picMap.master.regBase = 0x20;
     maps.picMap.master.regControl = 0x21;
     maps.picMap.slave.regBase = 0xA0;
     maps.picMap.slave.regControl = 0xA1;
     x86.pic8259.initialize(); 
-    //Timer
-    x86.pit8253.initialized();   
-    
-    //
+    //Inicializacion del Temporizador programable de intervalos PIC8253
+    maps.pitMap.port.regBase = 0x40;
+    maps.pitMap.port.regControl = 0x43;
+    x86.pit8253.initialize();
+    maps.ticks = 0;
+    //Inicializacion disco IDE
     maps.diskIde.chanel0.regBase = 0x1F0;      //Canal 0
     maps.diskIde.chanel0.regControl = 0x3F6;
-    
     maps.diskIde.chanel1.regBase = 0x170;     //Canal 1
     maps.diskIde.chanel1.regControl = 0x376;  
-
-    asm("lidtl (%0)" : "=m"(maps.kidtr)); 
-    asm("sti");
-    
      //Inicializacion de la paginacion y la memoria virtual
     maps.memoryPagination.directoryPageKernel = KERNEL_PAGE_DIR;
     maps.memoryPagination.kernelPage1 = KERNEL_PAGE1;
@@ -78,16 +75,11 @@ int start() {
     maps.memoryPagination.userPageHeap = USER_PAGE;
     maps.memoryPagination.userPageHeapEnd = USER_PAGE_END;
     maps.memoryPagination.userStack = USER_STACK;
-    maps.ticks =0;
-    CadminProcess nuevo;
-    core.adminProcess = nuevo;
-    core.fileSystem = CfileSystem();
     x86.virtualMemory.initialize();
-    core.cacheDisk = CcacheDisk();
-    x86.ioScreen = CioScreen();
-    x86.sharedMemory.initialized();
+   //Se carga la IDT y se activan las interrupciones
+    asm("lidtl (%0)" : "=m"(maps.kidtr)); 
+    asm("sti");
+    //Se Cargar el Registro de Tareas y se Salta al Kernel
     asm("movw $0x38, %ax; ltr %ax");	 
-
     kernel();    
-    
 }

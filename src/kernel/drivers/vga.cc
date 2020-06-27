@@ -232,7 +232,6 @@ int Cvga::setMode(int amode) {
             configuration = (CmodeVideo*) & mode720x480x4;
             setConfiguration(configuration);
             setdefaultVGApalette(&difault_vga_palette);
-            clearDisplay();
             mode = amode;
             break;
         }

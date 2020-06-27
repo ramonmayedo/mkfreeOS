@@ -30,15 +30,18 @@ void c_passint() {
 void c_int_timer() {
     u32 *ebp;
     asm("mov %%ebp,%0" : "=m"(ebp));
-    maps.ticks++;
-    maps.clockMap.msecond++;
+    Cprocess *process = core.adminProcess.getRun();
+    if (process != 0) {
+        maps.ticks++;
+        maps.clockMap.msecond++;
+    }
     if (maps.clockMap.msecond >= MAX_TICK_X_SECONDS) {
         maps.clockMap.msecond = 0;
         core.cacheDisk.flush();
     }
     if (maps.ticks >= 10) {
         maps.ticks = 0;
-        Cprocess *process = core.adminProcess.getRun();
+        
         if (process != 0 && core.adminProcess.getNext() != 0) {
             process->processX86.regX86->gs = ebp[2];
             process->processX86.regX86->fs = ebp[3];
@@ -130,8 +133,8 @@ void c_page_fault() {
     x86.ioScreen.printf("EIP = %s /n", string);
 
     if (error == true) x86.ioScreen.printf("Esta fuera del espacio de usuario/n");
-    //core.adminProcess.killProcessRun();
-    while(1);
+     core.adminProcess.killProcessRun();
+
 }
 
 void c_syscall() {

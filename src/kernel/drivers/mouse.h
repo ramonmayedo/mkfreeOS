@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 class CmausePS2 {
 public:
     CmausePS2();
+    void initialize();
     void IRQ();
     int command(int acommand, int parameter1, int parameter2);
     int getState();

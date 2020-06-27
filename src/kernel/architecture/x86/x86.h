@@ -64,8 +64,9 @@ struct Smaps{
     u32   kstack;                       //Offset donde empieza la pila del kernel
     SpicMap picMap;                     //Info Controlador de Interrupciones
     SkeyMap keyMap;                     //Info del Teclado
+    SpitMap pitMap;                     //Info del PIT
     SmouseMap mouseMap;                 //Info del Mouse
-    SclockMap clockMap;                 //Info del Reloj
+    SclockMap clockMap;                 //Info del Reloj RTC
     SmemoryPagination memoryPagination; //Info de la paginacion
     SdiskIdeMap diskIde;                //Info controladores disco duro IDE
     u32 ticks;
@@ -94,12 +95,12 @@ struct Score{
     CfileSystem fileSystem;        //Sistema de Archivos
     Cstring     string;            //Manejo de string
     Cconversion conversion;        //Conversiones
-    CelfLoader  elfLoader;          //Manejador de archivos ELF
+    CelfLoader  elfLoader;         //Manejador de archivos ELF
     CsystemCall systemCall;        //LLamadas al sistema
     Cgraphics graphics;            //LLamadas al sistema de salida en pantalla
     CadminProcess adminProcess;    //Administracion de procesos
-    Cmemory memory;                 //Manejo de memoria
-    Cexclusion exclusion;          //
+    Cmemory memory;                //Manejo de memoria
+    Cexclusion exclusion;          //Semaforos
     CcacheDisk cacheDisk;          //Cache para discos
     Cpioscreen pioscreen;          //Conecta un proceso al terminal del kernel
 };

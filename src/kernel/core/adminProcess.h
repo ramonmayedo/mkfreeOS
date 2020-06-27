@@ -33,6 +33,7 @@ class CadminProcess {
 
 public:
     CadminProcess();
+    void initialize();
     int addReady(char *afile, int argc, char **argv);
     void schelude();
     Cprocess *getRun();
@@ -44,7 +45,7 @@ public:
     Cprocess *getProcess(int aidPID);
     int command(int acommand, int parameter1, int parameter2, int parameter3, int parameter4);
 private:
-    Clist ready, lock;
+    Clist *ready, *lock;
     Cprocess *run;
     int max,id;
 };

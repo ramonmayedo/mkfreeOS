@@ -17,15 +17,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #include "pit8253.h"
 #include "x86.h"
 extern Sx86 x86;
-
+extern Smaps maps;
 Cpit8253::Cpit8253() {
 }
 
-void Cpit8253::initialized() {
-    x86.port.outb(PIT_CTL, TIMER0_SELECT | WRITE_WORD | MODE_SQUARE_WAVE);
+void Cpit8253::initialize() {
+    x86.port.outb(maps.pitMap.port.regControl, TIMER0_SELECT | WRITE_WORD | MODE_SQUARE_WAVE);
     u16 timer_reload = (BASE_FREQUENCY / TICKS_PER_SECOND);
-    x86.port.outb(TIMER0_CTL, timer_reload);
-    x86.port.outb(TIMER0_CTL, timer_reload >> 8);
+    x86.port.outb(maps.pitMap.port.regBase + TIMER0_CTL, timer_reload);
+    x86.port.outb(maps.pitMap.port.regBase + TIMER0_CTL, timer_reload >> 8);
 }
 
 Cpit8253::~Cpit8253() {

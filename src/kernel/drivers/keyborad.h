@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 class Ckeyboard {
 public:
     Ckeyboard();
+    void initialize();
     void IRQ();
     int command(int acommand, int parameter1, int parameter2);
     int getState();

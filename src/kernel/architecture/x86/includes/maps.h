@@ -95,6 +95,12 @@ struct SpicMap{
     SdevicePort master;
     SdevicePort slave;
 }__attribute__ ((packed));
+//--------------------Mapeo Puertos PIT 8253
+struct SpitMap{
+    SdevicePort port;
+    
+}__attribute__ ((packed));
+
 //--------------------Mapeo Teclado---------------------------------------------
 struct SkeyMap{
     SdevicePort port;

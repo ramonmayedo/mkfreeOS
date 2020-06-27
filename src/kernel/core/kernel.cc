@@ -21,12 +21,17 @@ extern Score core;
 extern Smaps maps;
 
 void kernel() {
-    core.graphics.installDevice();  //Se monta el dispositivo de video
+    core.adminProcess.initialize();   //Seinicializa el administrador de Procesos
+    x86.sharedMemory.initialized();  //Se inicializa la memoria compartida
+    core.cacheDisk.initialize();     //Se inicializa la cache de disco
+    core.graphics.installDevice();   //Se monta el dispositivo de video
+    x86.ioScreen.initialize();       //Se monta el disposivo de entrada salida al display
+    core.devices.installDevices();  //Se montan los dispositivos de almacenamiento
+ 
     x86.ioScreen.printf("Ya estamos en el kernel MKFREE h:%i m: %i s: %i /n", maps.clockMap.hour, maps.clockMap.minute, maps.clockMap.second);
     x86.ioScreen.printf("Ya estamos en el kernel MKFREE y:%i m: %i d: %i /n", maps.clockMap.year, maps.clockMap.month, maps.clockMap.day);
        
-    core.devices.installDevices();                          //Se montan los dispositivos de almacenamiento
-    for (int i = 0; i < core.devices.getCountDevice(); i++)
+   for (int i = 0; i < core.devices.getCountDevice(); i++)
         core.diskPartition.mountFileSystem(i);               //Se montan los sistemas de archivo
         
     core.fileSystem.selectVolume('a');
@@ -44,7 +49,7 @@ void kernel() {
     
     buffer = new char[newfile->getSize()];
     newfile->readAll(buffer);
-         
+        
     int error = core.adminProcess.addReady(buffer, 0, arg);
     delete(buffer);
     delete(newfile);

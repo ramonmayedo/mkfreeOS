@@ -21,6 +21,10 @@ extern Smaps maps;
 extern Score core;
 
 CmausePS2::CmausePS2() {
+    
+}
+
+void CmausePS2::initialize() {
     waitWrite(maps.mouseMap.port.regControl, 0xA8);
     waitWrite(maps.mouseMap.port.regControl, 0x20);
     u8 status = waitRead(maps.mouseMap.port.regBase) | 2;
@@ -32,7 +36,7 @@ CmausePS2::CmausePS2() {
     ack();
     maps.mouseMap.state = 0;
     state = 0;
-    process = 0;    
+    process = 0;
 }
 
 void CmausePS2::IRQ() {

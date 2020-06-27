@@ -1,2 +1,0 @@
-# mkfreeOS
- Sistem Operative mkfreeOS

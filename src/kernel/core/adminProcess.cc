@@ -24,9 +24,15 @@ extern Smaps maps;
 extern u32 asm_syscall_ret;
 
 CadminProcess::CadminProcess() {
+
+}
+
+void CadminProcess::initialize() {
     run = 0;
     max = 0;
     id = 0;
+    ready = new Clist;
+    lock = new Clist;
 }
 
 int CadminProcess::addReady(char *afile, int argc, char **argv) {
@@ -36,16 +42,16 @@ int CadminProcess::addReady(char *afile, int argc, char **argv) {
     proceso->setParent(run);
     //if (run != 0)
     //run->addProcessChild(proceso);
-    ready.add(proceso);
+    ready->add(proceso);
     return id;
 }
 
 void CadminProcess::schelude() {
-    if (ready.count() > 0) {
-        Cprocess* read = (Cprocess*) ready.removeFirst();
+    if (ready->count() > 0) {
+        Cprocess* read = (Cprocess*) ready->removeFirst();
         if (run != 0) {
-            if (run->getcurrentState() == 0) ready.add(run);
-            else lock.add(run);
+            if (run->getcurrentState() == 0) ready->add(run);
+            else lock->add(run);
             run->onDesactivate();
         }
         run = read;
@@ -59,15 +65,15 @@ Cprocess *CadminProcess::getRun() {
 }
 
 Cprocess *CadminProcess::getNext() {
-    return (Cprocess*) ready.getFirst();
+    return (Cprocess*) ready->getFirst();
 }
 
 int CadminProcess::deleteProcess(int aidPID) {
     Cprocess* process;
-    for (int i = 0; i < ready.count(); i++) {
-        process = (Cprocess*) ready.getItem(i);
+    for (int i = 0; i < ready->count(); i++) {
+        process = (Cprocess*) ready->getItem(i);
         if (process->getpid() == aidPID) {
-            ready.delet(i);
+            ready->delet(i);
             delete(process);
             return aidPID;
         }
@@ -76,7 +82,7 @@ int CadminProcess::deleteProcess(int aidPID) {
 }
 
 void CadminProcess::killProcessRun() {
-    if (ready.count() > 0) {
+    if (ready->count() > 0) {
         x86.architecture.changeToDirectoryKernel();
         delete(run);
         run = 0;
@@ -89,8 +95,8 @@ int CadminProcess::unlockProcess(Cprocess *process, Cthread *thread) {
     process->adminThread->unlockThread(thread);
     if (process->getcurrentState() == PROC_BLOCK) {
         process->sendState(0);
-        lock.remove(process);
-        ready.add(process);
+        lock->remove(process);
+        ready->add(process);
         return process->getpid();
     }
     return 0;
@@ -99,13 +105,13 @@ int CadminProcess::unlockProcess(Cprocess *process, Cthread *thread) {
 
 Cprocess *CadminProcess::getProcess(int aidPID) {
     Cprocess* process;
-    for (int i = 0; i < lock.count(); i++) {
-        process = (Cprocess*) lock.getItem(i);
+    for (int i = 0; i < lock->count(); i++) {
+        process = (Cprocess*) lock->getItem(i);
         if (process->getpid() == aidPID)
             return process;
     }
-    for (int i = 0; i < ready.count(); i++) {
-        process = (Cprocess*) ready.getItem(i);
+    for (int i = 0; i < ready->count(); i++) {
+        process = (Cprocess*) ready->getItem(i);
         if (process->getpid() == aidPID)
             return process;
     }

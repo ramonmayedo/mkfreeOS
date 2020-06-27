@@ -22,6 +22,10 @@ extern Sx86 x86;
 extern u8 map_keyboard1;//mapa de caracteres reservado en memoria desde asm
 
 Ckeyboard::Ckeyboard() {
+
+}
+
+void Ckeyboard::initialize() {
     maps.keyMap.scanScode = &map_keyboard1;
     state = 0;
     ptr = 0;

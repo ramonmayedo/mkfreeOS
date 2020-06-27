@@ -60,7 +60,7 @@ void Cbxvga::setResolution(u16 nwidth, u16 nheight) {
 
 int Cbxvga::installBosh() {
     if (!core.pci.find(BOCHS_VBE_VENDOR, BOCHS_VBE_DEVICE, &bus, &device, &function)) {
-        x86.ioScreen.printf("BOSCH VGA not found/n");
+        //x86.ioScreen.printf("BOSCH VGA not found/n");
         return 0;
     }
 

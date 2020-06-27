@@ -35,6 +35,7 @@ public:
    u32 CurX;
    u32 CurY;
    CioScreen();
+   void initialize();
    void putC(u8 aCar);
    void setX(u32 aCurX);
    void setY(u32 aCurY);

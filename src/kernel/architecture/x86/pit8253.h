@@ -19,10 +19,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #define TICKS_PER_SECOND 1000
 
-#define TIMER0_CTL 0x40
-#define TIMER1_CTL 0x41
-#define TIMER2_CTL 0x42
-#define PIT_CTL 0x43
+#define TIMER0_CTL 0x0
+#define TIMER1_CTL 0x1
+#define TIMER2_CTL 0x2
 
 #define TIMER0_SELECT 0x00
 #define TIMER1_SELECT 0x40
@@ -41,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 class Cpit8253 {
 public:
     Cpit8253();
-    void initialized();
+    void initialize();
     ~Cpit8253();
 private:
 

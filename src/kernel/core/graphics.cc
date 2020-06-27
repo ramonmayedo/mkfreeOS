@@ -35,7 +35,7 @@ void Cgraphics::installDevice() {
 
     delete((Cbxvga*) adapter);
     (Cvga*) adapter = new Cvga(); //Se installa estandar VGA
-    ((Cvga*) adapter)->setMode(g320x200x256);
+    ((Cvga*) adapter)->setMode(t80x25x16);
     frameBuffer = ((Cvga*) adapter)->getFrameBuffer();
     indexInstall = INSTALL_VGA;
 }
