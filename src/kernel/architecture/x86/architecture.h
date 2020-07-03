@@ -17,6 +17,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef ARCHITECTURE_H
 #define ARCHITECTURE_H
 
+#define ARCHX86_GENERAL_FAULT 0x1
+#define ARCHX86_PAGE_FAULT 0x2
+#define ARCHX86_MEMORY_CORRUPT 0x3
+
 class Carchitecture {
 public:
     Carchitecture();
@@ -27,6 +31,7 @@ public:
     void enabledInterruption();
     void reset();
     void shutDown();
+    void kernelStopScreen(int stopMode);
 private:
 
 };

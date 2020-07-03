@@ -36,10 +36,8 @@ void * Cmalloc::malloc(u32 asize) {
 
     while (blockMemory->used || realSize > blockMemory->size) {
 
-        if (blockMemory->size == 0) {
-            x86.ioScreen.printf("KERNEL malloc Error, Memoria Virtual Corrupta Size=0 /n");
-            return 0;
-        }
+        if (blockMemory->size == 0)
+            x86.architecture.kernelStopScreen(ARCHX86_MEMORY_CORRUPT);
 
         blockMemory = (SmallocHeader*) ((u8*) blockMemory + blockMemory->size);
 
@@ -111,10 +109,8 @@ void Cmalloc::free(void *amemory) {
 
     SmallocHeader *blockMemory = (SmallocHeader*) (memoryPtr - sizeof (SmallocHeader));
 
-    if (blockMemory->size == 0) {
-        x86.ioScreen.printf("KERNEL free Error, Memoria Virtual Corrupta Size=0 /n");
-        return;
-    }
+    if (blockMemory->size == 0)
+        x86.architecture.kernelStopScreen(ARCHX86_MEMORY_CORRUPT);
 
     blockMemory->used = 0;
 

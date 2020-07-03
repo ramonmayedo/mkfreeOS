@@ -29,8 +29,9 @@ char* Cstring::strCopy(char* adest ,char *asource,int amaxLength){
 
     for (int i= 0;i<amaxLength;i++){
         adest[i] = asource[i];
-        if (asource[i] == 0x0) break;
+        if (asource[i] == 0x0) return (adest);
     }
+    
     adest[amaxLength] = 0x0;   
     return (adest);
 }

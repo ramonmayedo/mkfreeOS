@@ -95,6 +95,8 @@ void CioScreen::printk(char *string,u32 aebp,...){
 
 void CioScreen::clearScreen() {
     core.graphics.clearScreen();
+    CurX=0;
+    CurY =0;
 }
 
 void CioScreen::setX(u32 aCurX) {

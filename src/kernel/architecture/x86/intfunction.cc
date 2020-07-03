@@ -35,6 +35,9 @@ void c_int_timer() {
         maps.ticks++;
         maps.clockMap.msecond++;
     }
+    if (maps.ticksCmdPata)maps.ticksCmdPata++;
+    if (maps.ticksCmdPata >= 10) maps.ticksCmdPata = 0;
+        
     if (maps.clockMap.msecond >= MAX_TICK_X_SECONDS) {
         maps.clockMap.msecond = 0;
         core.cacheDisk.flush();
@@ -69,8 +72,6 @@ void c_int_keyboard() {
 }
 
 void c_int_disk0() {
-    // x86.ioScreen.printf("disk/n");
-    // while(1);
     x86.pic8259.reconocer();
 }
 
@@ -79,62 +80,41 @@ void c_mouse_ps2() {
 }
 
 void c_gp() {
-    int eip, cs, ebp;
     asm("movl 64(%ebp),%eax");
-    asm("movl %%eax,%0" : "=m"(cs));
+    asm("movl %%eax,%0" : "=m"(maps.statusX86.cs));
     asm("movl 60(%ebp),%eax");
-    asm("movl %%eax,%0" : "=m"(eip));
+    asm("movl %%eax,%0" : "=m"(maps.statusX86.eip));
     Cprocess * process = core.adminProcess.getRun();
-    char string[10];
-    x86.ioScreen.clearScreen();
-    x86.ioScreen.printf("/n----!!!! Falla General Proteccion GP !!!!----/n");
-    core.conversion.IntToHexChar(cs, string, 4);
-    x86.ioScreen.printf("         CS = %s : ", string);
-    core.conversion.IntToHexChar(eip, string, 8);
-    x86.ioScreen.printf("EIP = %s /n", string);
-    x86.ioScreen.printf("       ----- Process PID = %i -----/n",process->getpid());
-    core.conversion.IntToHexChar(process->processX86.regX86->eip, string, 8);
-    x86.ioScreen.printf("EIP = %s /n/n", string);
+    if (process == 0 || core.adminProcess.getNext() == 0) // Si noy hay procesos y el que falla es el de inicio
+        x86.architecture.kernelStopScreen(ARCHX86_GENERAL_FAULT);
     core.adminProcess.killProcessRun();
-    while(1);
 }
 
 void c_page_fault() {
-    char string[10];
-    u32 dirFalla, val;
+    u32 dirFalla;
     Cprocess *proceso;
-    proceso = (Cprocess*) core.adminProcess.getRun();
     asm("mov %cr2, %eax");
     asm("mov %%eax, %0" : "=m"(dirFalla));
+    asm("mov %%eax, %0" : "=m"(maps.statusX86.cr2));
+    asm("movl 64(%ebp),%eax");
+    asm("movl %%eax,%0" : "=m"(maps.statusX86.cs));
+    asm("movl 60(%ebp),%eax");
+    asm("movl %%eax,%0" : "=m"(maps.statusX86.eip));
+    proceso = (Cprocess*) core.adminProcess.getRun();
+    if (proceso == 0 || core.adminProcess.getNext() == 0) // Si noy hay procesos y el que falla es el kernel
+        x86.architecture.kernelStopScreen(ARCHX86_PAGE_FAULT);
+
     bool error = false;
     if (dirFalla < maps.memoryPagination.userPageHeap || dirFalla > maps.memoryPagination.userPageHeapEnd)
         error = true;
     else {
-         
-        if (proceso != 0) {
-            u32 *directory = proceso->processX86.pageDirectory;
-            u32 *directoryVirtual = proceso->processX86.pageDirectoryVirtual;
-            x86.virtualMemory.createPageToDirectory(directory, directoryVirtual, (u8*) dirFalla, 0);
-            return;
-        }
+        u32 *directory = proceso->processX86.pageDirectory;
+        u32 *directoryVirtual = proceso->processX86.pageDirectoryVirtual;
+        x86.virtualMemory.createPageToDirectory(directory, directoryVirtual, (u8*) dirFalla, 0);
+        return;
     }
-    x86.ioScreen.clearScreen();
-    x86.ioScreen.printf("----!!!! Falla de Pagina!!!!----/n");
-    core.conversion.IntToHexChar(dirFalla, string, 8);
-    x86.ioScreen.printf("Dir de la Falla = %s /n", string);
-    asm("movl 64(%ebp),%eax");
-    asm("movl %%eax,%0" : "=m"(val));
-    x86.ioScreen.printf("       ----- Process PID = %i -----/n",proceso->getpid());
-    core.conversion.IntToHexChar(val, string, 4);
-    x86.ioScreen.printf("         CS = %s : ", string);
-    asm("movl 60(%ebp),%eax");
-    asm("movl %%eax,%0" : "=m"(val));
-    core.conversion.IntToHexChar(val, string, 8);
-    x86.ioScreen.printf("EIP = %s /n", string);
-
-    if (error == true) x86.ioScreen.printf("Esta fuera del espacio de usuario/n");
+     //Si la direccion de falla esta fuera del espacio de usuario se termina la ejecucion
      core.adminProcess.killProcessRun();
-
 }
 
 void c_syscall() {

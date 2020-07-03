@@ -41,7 +41,7 @@ u8 Cdevices::readDevices(SdevicePort *device, u8 devIndex) {
     x86.port.outb(device->regBase + 0x5, 0);
     x86.port.outb(device->regBase + 0x7, 0xEC); //
     u8 existDevice = x86.port.inb(device->regBase + 0x07);
-    u8 typeDevice = 0;//ATADEV_UNKNOWN
+    u8 typeDevice = DEV_ATA_UNKNOWN;
 
     if (existDevice != 0) {
         x86.port.outb(device->regBase + 0x06, 0xA0 | (1 << devIndex));
@@ -50,10 +50,10 @@ u8 Cdevices::readDevices(SdevicePort *device, u8 devIndex) {
         u8 cl = x86.port.inb(device->regBase + 0x04);
         u8 ch = x86.port.inb(device->regBase + 0x05);
 
-        if (cl == 0x14 && ch == 0xEB) typeDevice = 1;        //ATADEV_PATAPI; CD-ROOM
-        else if (cl == 0x69 && ch == 0x96) typeDevice = 2;   //ATADEV_SATAPI;
-        else if (cl == 0 && ch == 0) typeDevice = 3;         //ATADEV_PATA;
-        else if (cl == 0x3c && ch == 0xc3) typeDevice = 4;   //ATADEV_SATA;
+        if (cl == 0x14 && ch == 0xEB) typeDevice = DEV_ATA_PATAPI;        //CD-ROOM
+        else if (cl == 0x69 && ch == 0x96) typeDevice = DEV_ATA_SATAPI;   //;
+        else if (cl == 0 && ch == 0) typeDevice = DEV_ATA_PATA;           //;
+        else if (cl == 0x3c && ch == 0xc3) typeDevice = DEV_ATA_SATA;     //;
 
         if (typeDevice != 0) {
             devices[countDevices].did = countDevices;
@@ -79,13 +79,13 @@ int Cdevices::getCountDevice() {
 
 int Cdevices::readDevice(u32 did, u32 ablock, u32 countSector, char *abuffer) {
     switch (devices[did].type) {
-        case 3:
+        case DEV_ATA_PATA:   //PATA Discos Duros
         {
             return core.diskide.readSector(devices[did].port, devices[did].index, ablock, countSector, abuffer);
         }
-        case 1:
+        case DEV_ATA_PATAPI:   //PATA CDROM
         {
-            return 0;
+            return core.cdide.readSector(devices[did].port, devices[did].index, ablock, countSector, abuffer);
         }
 
         default:break;
@@ -95,11 +95,11 @@ int Cdevices::readDevice(u32 did, u32 ablock, u32 countSector, char *abuffer) {
 
 int Cdevices::writeDevice(u32 did, u32 ablock, u32 countSector, char *abuffer) {
     switch (devices[did].type) {
-        case 3:
+        case DEV_ATA_PATA:
         {
             return core.diskide.writeSector(devices[did].port, devices[did].index, ablock, countSector, abuffer);
         }
-        case 1:
+        case DEV_ATA_PATAPI:
         {
             return 0;
         }

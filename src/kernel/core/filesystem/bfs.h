@@ -17,7 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef BFS_H
 #define BFS_H
 #include "includes/hbfs.h"
-#include "../filesystem.h"
 
 
 class Cbfs {
@@ -42,7 +41,7 @@ protected:
     int setFileInfo(SblockData *blockData,SblockData *blockDataDir,int index,int entryBlock);
     int getKernelFlagsFile(int flagas);
     int readBlockDisk(u32 ablock, char *abuffer,int nBlock);
-    int Cbfs::writeBlockDisk(u32 ablock, char *abuffer,int nBlock);
+    int writeBlockDisk(u32 ablock, char *abuffer,int nBlock);
     int readFile(char *abuffer, u32 asize);
     int readNextFile();
     int writeFile(char *abuffer, u32 asize);

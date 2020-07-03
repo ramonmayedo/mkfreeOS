@@ -34,7 +34,6 @@ struct Smedia{
     void  *structFileSystem;
     int   idDisk;
     int   aoffsetSectorPartition;
-    
 }__attribute__ ((packed));
 
 struct SinfoMedia{

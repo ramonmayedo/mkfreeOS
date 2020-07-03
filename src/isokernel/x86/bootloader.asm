@@ -1,4 +1,4 @@
-;Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+;Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 ;This program is free software: you can redistribute it and/or modify
 ;it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 
 [BITS 16]
 [ORG 0X7C00]
-;CLI
+CLI
 XOR AX,AX
 MOV ES,AX
 MOV DS,AX
@@ -23,7 +23,7 @@ MOV SS,AX
 MOV SP,0xFFF8
 
 BOOTLOADER: 
-;STI
+STI
 MOV [BOOTDRIVER],DL  ;INFORMACION DE QUE UNIDAD ES LA QUE SE ARRANCO
 
 MOV AH,0x00          ;MODO TEXTO DE LA PANTALLA
@@ -174,18 +174,9 @@ MOV EDI,0x10000         ;DESTINO
 REP MOVSW
 
 XOR EAX,EAX
-MOV AL,byte [BOOTDRIVER]
+MOV AL,BYTE [BOOTDRIVER]
 PUSH EAX
-;mov al, byte [0x10000]
-;and al,0xf
-;add al,0x30
-;mov al,[BOOTDRIVER]
-;and al,0xf0
 
-;add al,0x30
-;mov esi,0xB8000
-;mov [esi],al
-;jmp $
 JMP 0x18:0x10000
 
 TIMES 512 - ($-GDT_TABLE) DB 0x0

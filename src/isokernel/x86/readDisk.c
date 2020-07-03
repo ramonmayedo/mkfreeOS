@@ -78,6 +78,8 @@ int readSector(SdevicePort *device, u8 driveIndex, u32 ablock, u32 asectorCount,
     while (!((status = inb(device->regBase + 0x7))&0x08)&&!(status & 0x1));
 
     if (status & 0x1) {
+        //char *ptrD = (char*) 0xB8000;
+        //ptrD[1] = 0x39;
         return 0;
     }
 
@@ -93,6 +95,8 @@ int readSector(SdevicePort *device, u8 driveIndex, u32 ablock, u32 asectorCount,
     int size = (int(inb(device->regBase + 0x5) << 8) | int(inb(device->regBase + 0x4)));
 
     if (size != 2048) {
+        // char *ptrD = (char*) 0xB8000;
+        //ptrD[1] = 0x39;
         return 0;
     }
 
@@ -121,7 +125,13 @@ int installDevices() {
         readSector(&chanel1, 0, i, 1, buffer);
         buffer += 2048;
     }
-
+    /* char *ptrD = (char*) 0xB8000;
+     char val = *(char*) 0x113618;
+     val = (val & 0x0f);
+     char nuevo;
+     nuevo = val + 0x30;
+     ptrD[0] = nuevo;
+    // while (1);*/
     asm("mov $0x000FFF0,%esp");
     asm("ljmp $0x18,$0x100000");
 }

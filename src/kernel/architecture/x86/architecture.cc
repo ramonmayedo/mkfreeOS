@@ -60,3 +60,33 @@ void Carchitecture::shutDown() {
         good = x86.port.inb(0x64);*/
     x86.port.outw(0x604, 0x2000);
 }
+
+void Carchitecture::kernelStopScreen(int stopMode) {
+    char string[10];
+    x86.ioScreen.clearScreen();
+    x86.ioScreen.printf("*****************KENEL STOP**********************/n/n");
+    switch (stopMode) {
+        case ARCHX86_GENERAL_FAULT:
+        {
+            x86.ioScreen.printf("/n              !!!! GENERAL FAULT !!!!             /n");
+            break;
+        }
+        case ARCHX86_PAGE_FAULT:
+        {
+            x86.ioScreen.printf("                      !!!PAGE FAULT!!!!                        /n");
+            break;
+        }
+        case ARCHX86_MEMORY_CORRUPT:
+        {
+            x86.ioScreen.printf("KERNEL malloc Error, Memoria Virtual Corrupta Size=0 /n");
+            break;
+        }
+    }
+    x86.ioScreen.printf("/n Register Status /n");
+    core.conversion.IntToHexChar(maps.statusX86.cs, string, 4);
+    x86.ioScreen.printf("/n         CS = %s : ", string);
+    core.conversion.IntToHexChar(maps.statusX86.eip, string, 8);
+    x86.ioScreen.printf("EIP = %s /n", string);
+    x86.ioScreen.printf("/n*****************KENEL STOP**********************/n/n");
+    while (1);
+}

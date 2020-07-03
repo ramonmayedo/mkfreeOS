@@ -10,19 +10,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/architecture/x86/pit8253.cc</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/architecture/x86/pit8253.h</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/core/diskpartition.cc</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/core/kernel.cc</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/core/graphics.cc</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/core/pioscreen.h</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/architecture/x86/intfunction.cc</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/drivers/vga.cc</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/architecture/x86/x86.h</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/drivers/bxvga.cc</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/architecture/x86/x86.cc</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/core/adminProcess.cc</file>
-            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/kernel/core/adminProcess.h</file>
+            <file>file:/C:/Users/ramon/Desktop/mkfree/src/kernel/core/adminProcess.cc</file>
+            <file>file:/C:/Users/ramon/Desktop/mkfree/src/kernel/architecture/x86/intfunction.cc</file>
+            <file>file:/C:/Users/ramon/Desktop/mkfree/src/kernel/core/kernel.cc</file>
         </group>
     </open-files>
 </project-private>

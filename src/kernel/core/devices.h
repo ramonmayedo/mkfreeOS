@@ -19,9 +19,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #include "../defines/types.h"
 #include "../architecture/x86/includes/maps.h"
 
+#define DEV_ATA_UNKNOWN 0x0
+#define DEV_ATA_PATAPI  0x1
+#define DEV_ATA_SATAPI  0x2
+#define DEV_ATA_PATA    0x3
+#define DEV_ATA_SATA    0x4
+
 struct Sdevice {
-    int did;  //Identificador unico del dispositivo
-    u8 type;  //Tipo de didpositivo
+    int did; //Identificador unico del dispositivo
+    u8 type; //Tipo de didpositivo
     u8 flags; //Banderas
     u8 index; //Index
     SdevicePort *port;

@@ -19,10 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #include "../defines/types.h"
 #include "../architecture/x86/includes/maps.h"
 #include "devices.h"
+
 #define FLAG_USED 0x1
 #define FLAG_MODY 0x2
-#define MAX_ENTRY 512
-
+#define MAX_ENTRY512 512
+#define MAX_ENTRY2048 256
+#define ERROR_DEVICE -1
 
 struct Scache{
     u8  flags;
@@ -37,12 +39,14 @@ public:
     CcacheDisk();
     void initialize();
     int readSector(u32 adevice, u32 ablock, u32 asectorCount, char *abuffer);
+    int readSectorExt(u32 adevice, u32 ablock, u32 asectorCount, char *abuffer);
     int writeSector(u32 adevice,u32 ablock,u32 asectorCount,char *abuffer);
     void flush();
 private:
-    Scache *table;
+    Scache *table512, *table2048;
 protected:
     int readSector(u32 adevice, u32 ablock, char *abuffer);
+    int readSectorExt(u32 adevice, u32 ablock, char *abuffer); 
     int writeSector(u32 adevice,u32 ablock,char *abuffer);
 };
 

@@ -17,16 +17,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef DISKPARTITION_H
 #define DISKPARTITION_H
 #include "includes/disk.h"
+#include "../uses/list.h"
+
+#define DISKP_NOT_PARTITION 0x1
+#define DISKP_MBR           0x1
+#define DISKP_CDROM         0x2
+
+struct SdescriptorPartition {
+    u8 typePartition;
+    u32 startLBA;
+    u32 sizePartiton;
+    int device;
+} __attribute__((packed));
 
 class CdiskPartition {
 public:
     CdiskPartition();
-    int getPartition(int aindexPartition, int adevice);
-    int getFileSystem(int adevice, int aindexPartition);
+    int initialize();
+    int getPartition(int aindexPartition, int adevice, char *buffer);
+    int getFileSystem(int adevice);
     int mountFileSystem(int adevice);
 private:
-    Spartition partition[4];
-
+    void addPartition(int adevice);
+    Clist *partitions;
+    Spartition partition; //Particion sobre la cual se trabaja para usarla en todas las funciones
 };
 
 #endif

@@ -12,13 +12,14 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 
 #include "cdide.h"
 #include "../architecture/x86/x86.h"
 
 extern Smaps maps;
 extern Sx86 x86;
+
 /* READ (12) Command
 Byte/ Bit     7    6    5    4    3    2    1    0
  0            Operation Code (A8h)
@@ -35,62 +36,76 @@ Byte/ Bit     7    6    5    4    3    2    1    0
  11           Reserved 
  */
 Ccdide::Ccdide() {
-    
+
 }
 
-int Ccdide::waitDisk(SdevicePort *device) {    
-    while (x86.port.inb(device->regControl) & 0x80);//Registro de control
+int Ccdide::waitDisk(SdevicePort *device) {
+    while (x86.port.inb(device->regControl) & 0x80); //Registro de control
     return 0;
 }
 
-void Ccdide::initCommand(SdevicePort *device) {
+int Ccdide::detectDisk(SdevicePort* device, u8 deviceIndex) {
+    u8 mask = (u8) (0xA | (deviceIndex << 4));
+    x86.port.outb(device->regBase + 0x6, mask);
+    delay400ns(device);
+    x86.port.outb(device->regBase + 0x2, 0);
+    x86.port.outb(device->regBase + 0x3, 0);
+    x86.port.outb(device->regBase + 0x4, 0);
+    x86.port.outb(device->regBase + 0x5, 0);
+    x86.port.outb(device->regBase + 0x7, 0xEC);
+    while (x86.port.inb(device->regControl) & 0x80);
+    return 0;
+}
+
+void Ccdide::initCommand(SdevicePort *device, u8 driveIndex) {
     waitDisk(device);
     //Selecciono el dispositivo
-    u8 mask = (u8) (0&(1<<4));
+    u8 mask = (u8) (driveIndex & (1 << 4));
     x86.port.outb(device->regBase + 0x6, mask);
     delay400ns(device);
     //Selecciono modo PIO
-    x86.port.outb(device->regBase  + 0x1, 0x0);
+    x86.port.outb(device->regBase + 0x1, 0x0);
     //Tamaño maximo de un sector de un disco en byte
-    x86.port.outb(device->regBase +0x4,(u8)(2048 & 0xFF));
+    x86.port.outb(device->regBase + 0x4, (u8) (2048 & 0xFF));
     //Tamaño maximo de un sector de un disco en byte
-    x86.port.outb(device->regBase +0x5,(u8)(2048 >> 8));  
+    x86.port.outb(device->regBase + 0x5, (u8) (2048 >> 8));
 }
 
-int Ccdide::readSector(SdevicePort *device, u32 ablock, u32 asectorCount, char *abuffer) {
-//{ 0x43 /* ATAPI_READTOC */, 0, 1, 0, 0, 0, 0, 0, 12, 0x40, 0, 0};
+int Ccdide::readSector(SdevicePort *device, u8 deviceIndex, u32 ablock, u32 asectorCount, char *abuffer) {
     //Bloque de Comando SCSI 0xA8 Lectura de CD
     u8 readCmd[12] = {0xA8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     //x86.architecture.deseableInterruption();
-    initCommand(device);
+    initCommand(device, deviceIndex);
+    waitDisk(device);
     x86.port.outb(device->regBase + 0x7, 0xA0);
     //Comando 
-    int status;
+    int status = x86.port.inb(device->regBase + 0x7)&0x1;
+
     while ((status = x86.port.inb(device->regBase + 0x7))&0x80);
-    
+
     while (!((status = x86.port.inb(device->regBase + 0x7))&0x08)&&!(status & 0x1));
-    
-      
+    if (status & 0x1) return 0;
+
     readCmd[9] = 1; //Cantidad de Sectores
     readCmd[2] = u8((ablock >> 24) & 0xFF); //Byte mas significativo LBA
     readCmd[3] = u8((ablock >> 16) & 0xFF);
     readCmd[4] = u8((ablock >> 8) & 0xFF);
     readCmd[5] = u8(ablock & 0xFF); //Byte menos significativo LBA
-    
- 
+
     u16 *val = (u16*) & readCmd;
-     for (int i = 0; i < 6; i++) x86.port.outw(device->regBase, val[i]);
-   // x86.port.outb(device->regControl,0x8);
- //   x86.architecture.enabledInterruption();
-  //  x86.ioScreen.printf("Esperando irq /n");      
-  //   while(1);
-      while (!(x86.port.inb(device->regBase + 0x7)&0x08));
+    for (int i = 0; i < 6; i++) x86.port.outw(device->regBase, val[i]);
+
+    while (x86.port.inb(device->regBase + 0x7)&0x80);  
+
+    maps.ticksCmdPata = 1;
+
+    while (!(x86.port.inb(device->regBase + 0x7)&0x08) && (maps.ticksCmdPata));
+    
+    if (maps.ticksCmdPata == 0) return 0;
     
     int size = (int(x86.port.inb(device->regBase + 0x5) << 8) | int(x86.port.inb(device->regBase + 0x4)));
-    if (size != 2048) {
-        x86.ioScreen.printf("Error size %i != 2048 /n", size);
-        return 0;
-    }
+    
+    if (size != 2048)  return 0;
 
     u16 auxWord;
     for (int i = 0; i < size / 2; i++) {

@@ -9,23 +9,40 @@ db  'CD001'                 ;1-5 (Standard Identifier Type)
 db  1                       ;6   (Descriptor Version)
 db  0                       ;7   (Unused)
 sysId:         
-db  'mkfree'                ;8-39:(System Identifier)
+db  'mkfreeOS'              ;8-39:(System Identifier)
 TIMES 32 - ($-sysId) DB ' '
 volId:
-db   'mkfree.iso'           ;40-71:(Volume Identifier)
+db   'CDROM'                ;40-71:(Volume Identifier)
 TIMES 32 - ($-volId) DB ' '
 TIMES 8 DB 0x0              ;72-79:  Unused Field
-dd    0x00000080,0x80000000 ;80-87:  Volume Space Size
-TIMES 32 DB 0x0             ;88-119: Unused Field 
+dd    0x00000400            ;80-87:  Volume Space Size
+dd    0x00040000
+TIMES 32 DB 0x20      ;88-119: Unused Field 
 dw    0x0001,0x0100         ;120-123: Volume Set Size 
 dw    0x0001,0x0100         ;124-127: Volume Sequence Number
 dw    0x0800,0x0008         ;128-131: Logical Block Size 
-dd    0,0                   ;132-139: Path Table Size 
-dd    0                     ;140-143: Location of Type-L Path Table 
-dd    0                     ;144-147: Location of the Optional Type-L Path Table 
-dd    0                     ;148-151: Location of Type-M Path Table 
+dd    0x00000800,00080000   ;132-139: Path Table Size 
+dd    0x0000020B            ;140-143: Location of Type-L Path Table 
+dd    0                     ;144-147: Location of the Optional Type-L Path Table 101427
+dd    0x0C210000            ;148-151: Location of Type-M Path Table 
 dd    0                     ;152-155: Location of Optional Type-M Path Table
-TIMES 34 DB 0               ;156-189: Directory entry for the root directory
+
+;TIMES 34 DB 0               ;156-189: Directory entry for the root directory
+DB    0x22                  ;Length of Directory Record
+DB    0x00                  ;Extended Attribute Record length
+DD    0x0000022B            ;0x27Sec+0x101200B L
+DD    0x0C220000            ;B
+DD    0x00000800            ;
+DD    0x00080000            ;
+DB    0x01,0x07,19,00,00,00,00 ;Fecha y Hora
+DB    0x2;                  ;flag
+DB    0x0;
+DB    0x0;
+DW    0x0001
+DW    0x0100
+DB    0x01
+DB    0x00
+
 corp:
 db 'mkcorp'
 TIMES 128 -($-corp) db ' '
@@ -81,7 +98,7 @@ db    0x0                    ;1     :Boot media type 0 No Emulation
 dw    0x0                    ;2-3   :Load Segment. This is the load segment for the initial boot image. If this value is 0 the system will use the traditional segment of 7C0
 db    0x0                    ;4     :System Type. This must be a copy of byte 5 (System Type) from the Partition Table found in the boot image.
 db    0x0                    ;5     :Unused, must be 0
-dw    20                     ;6-7    :Sector Count. This is the number of virtual/emulated sectors the system will store at Load Segment during the initial boot procedure.
+dw    8                      ;6-7    :Sector Count. This is the number of virtual/emulated sectors the system will store at Load Segment during the initial boot procedure.
 dd    logicImageLBA         ;8-11  :Load RBA. This is the start address of the virtual disk. CD’s use Relative/Logical block addressing.
 TIMES 20 db 0x0             ;12-32 :Unused, must be 0.
 
@@ -89,5 +106,22 @@ TIMES (sizeSector*logicImageLBA) - ($-$$ ) DB 0
 
 INCBIN "x86/bootloader.o"
 
+TIMES (0x22B*sizeSector ) - ($-$$ ) DB 0  ;Aqui empieza el directorio LSB
 
-TIMES (sizeSector*70) - ($-$$ ) DB 0
+;TIMES 34 DB 0               ;156-189: Directory entry for the root directory
+DB    0x22                  ;Length of Directory Record
+DB    0x00                  ;Extended Attribute Record length
+DD    0x0000022B            ;0x27Sec+0x101200B L
+DD    0x0C220000            ;B
+DD    0x00000800            ;
+DD    0x00080000            ;
+DB    0x01,0x07,19,00,00,00,00 ;Fecha y Hora
+DB    0x2;                  ;flag
+DB    0x0;
+DB    0x0;
+DW    0x0001
+DW    0x0100
+DB    0x01
+DB    0x00
+
+TIMES (sizeSector*1000) - ($-$$ ) DB 0  ;Tamaño de la imagen 1000 * 2048 = 2MB 

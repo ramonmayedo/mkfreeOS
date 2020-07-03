@@ -23,8 +23,8 @@ struct SregX86 {
     u32 esp, ebp, esi, edi;
     u32 eip, eflags;
     u32 cs, ss, ds, es, fs, gs;
-    u32 cr3;
-};
+    u32 cr3, cr2;
+}__attribute__((packed));;
 
 struct SstackX86 {
     u32 esp0;

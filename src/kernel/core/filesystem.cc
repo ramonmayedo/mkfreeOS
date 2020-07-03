@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #include "filesystem/fat.h"
 #include "filesystem/bfs.h"
 #include "../architecture/x86/x86.h"
+#include "filesystem/iso9660.h"
 
 extern Sx86 x86;
 extern Score core;
@@ -46,6 +47,15 @@ int CfileSystem::mountFileSystem(int aid, void *astrcture, int aidDisk, int aoff
         media[indexFree].idDisk = aidDisk;
         media[indexFree].aoffsetSectorPartition = aoffsetSectorPartition;
         indexFree++;
+    } else if (aid == ISO9660) {
+        Ciso9660 *iso9660 = new Ciso9660(astrcture, aidDisk, aoffsetSectorPartition);
+        media[indexFree].flags |= MEDIA_BUSY;
+        media[indexFree].letter = ('a' + indexFree);
+        media[indexFree].type = ISO9660;
+        media[indexFree].structFileSystem = (void*) iso9660;
+        media[indexFree].idDisk = aidDisk;
+        media[indexFree].aoffsetSectorPartition = aoffsetSectorPartition;
+        indexFree++;
     }
     return aid;
 }
@@ -55,6 +65,8 @@ SinfoMedia *CfileSystem::getInfoVolume() {
         return ((Cfat*) media[indexMedia].structFileSystem)->getInfoVolume();
     else if (media[indexMedia].type == BFS)
         return ((Cbfs*) media[indexMedia].structFileSystem)->getInfoVolume();
+   else if (media[indexMedia].type == ISO9660)
+        return ((Ciso9660*) media[indexMedia].structFileSystem)->getInfoVolume(); 
 }
 
 int CfileSystem::getIndexMedia(char aletter) {
@@ -70,21 +82,26 @@ SfileInfo* CfileSystem::getFileInfo() {
         fileInfo = ((Cfat*) media[indexMedia].structFileSystem)->getFileInfo();
     else if (media[indexMedia].type == BFS)
         fileInfo = ((Cbfs*) media[indexMedia].structFileSystem)->getFileInfo();
+    else if (media[indexMedia].type == ISO9660)
+        fileInfo = ((Ciso9660*) media[indexMedia].structFileSystem)->getFileInfo();
     return fileInfo;
 }
+
 int CfileSystem::selectVolume(char aletter) {
     indexMedia = getIndexMedia(aletter);
     return indexMedia;
 }
 
 int CfileSystem::commandFile(int acommand, char *astring, u32 asize, u32 aptr) {
-    if (media[indexMedia].type == MEDIA_FAT32) 
+    if (media[indexMedia].type == MEDIA_FAT32)
         error = ((Cfat*) media[indexMedia].structFileSystem)->commandFile(acommand, astring, asize, aptr);
-        else if (media[indexMedia].type == BFS)
-            error = ((Cbfs*) media[indexMedia].structFileSystem)->commandFile(acommand, astring, asize, aptr);
-        else return 0;
-    
-    return error; 
+    else if (media[indexMedia].type == BFS)
+        error = ((Cbfs*) media[indexMedia].structFileSystem)->commandFile(acommand, astring, asize, aptr);
+    else if (media[indexMedia].type == ISO9660)
+        error = ((Ciso9660*) media[indexMedia].structFileSystem)->commandFile(acommand, astring, asize, aptr);
+    else return 0;
+
+    return error;
 }
 
 int CfileSystem::command(int acommand, char *astring1, char *astring2) {
@@ -106,47 +123,55 @@ int CfileSystem::command(int acommand, char *astring) {
     } else if (media[indexMedia].type == BFS) {
         error = ((Cbfs*) media[indexMedia].structFileSystem)->command(acommand, astring + 2);
         return error;
+    } else if (media[indexMedia].type == ISO9660) {
+        error = ((Ciso9660*) media[indexMedia].structFileSystem)->command(acommand, astring + 2);   
+        return error;
     } else return 0;
 }
 
 void *CfileSystem::getFilePtr() {
-    if (media[indexMedia].type == MEDIA_FAT32) {
+    if (media[indexMedia].type == MEDIA_FAT32)
         return ((Cfat*) media[indexMedia].structFileSystem)->getFilePtr();
-    } else if (media[indexMedia].type == BFS) {
+    else if (media[indexMedia].type == BFS)
         return ((Cbfs*) media[indexMedia].structFileSystem)->getFilePtr();
-    }
+    else if (media[indexMedia].type == ISO9660)
+        return ((Ciso9660*) media[indexMedia].structFileSystem)->getFilePtr();
 }
 
 void *CfileSystem::getDirPtr() {
-    if (media[indexMedia].type == MEDIA_FAT32) {
+    if (media[indexMedia].type == MEDIA_FAT32)
         return ((Cfat*) media[indexMedia].structFileSystem)->getDirPtr();
-    }else  if (media[indexMedia].type == BFS) {
+    else if (media[indexMedia].type == BFS)
         return ((Cbfs*) media[indexMedia].structFileSystem)->getDirPtr();
-    }
+    else if (media[indexMedia].type == ISO9660)
+        return ((Ciso9660*) media[indexMedia].structFileSystem)->getDirPtr();
 }
 
 void CfileSystem::setFilePtr(void* afilePtr) {
-    if (media[indexMedia].type == MEDIA_FAT32) {
+    if (media[indexMedia].type == MEDIA_FAT32)
         return ((Cfat*) media[indexMedia].structFileSystem)->setFilePtr(afilePtr);
-    }else if (media[indexMedia].type == BFS){
+    else if (media[indexMedia].type == BFS)
         return ((Cbfs*) media[indexMedia].structFileSystem)->setFilePtr(afilePtr);
-    }
+    else if (media[indexMedia].type == ISO9660)
+        return ((Ciso9660*) media[indexMedia].structFileSystem)->setFilePtr(afilePtr);
 }
 
 void CfileSystem::setDirPtr(void* adirPtr) {
-    if (media[indexMedia].type == MEDIA_FAT32) {
+    if (media[indexMedia].type == MEDIA_FAT32)
         return ((Cfat*) media[indexMedia].structFileSystem)->setDirPtr(adirPtr);
-    }else if (media[indexMedia].type == BFS) {
+    else if (media[indexMedia].type == BFS)
         return ((Cbfs*) media[indexMedia].structFileSystem)->setDirPtr(adirPtr);
-    }
+    else if (media[indexMedia].type == ISO9660)
+        return ((Ciso9660*) media[indexMedia].structFileSystem)->setDirPtr(adirPtr);
 }
 
 void CfileSystem::closeFile() {
-    if (media[indexMedia].type == MEDIA_FAT32) {
+    if (media[indexMedia].type == MEDIA_FAT32)
         return ((Cfat*) media[indexMedia].structFileSystem)->closeFile();
-    }else  if (media[indexMedia].type == BFS){
+    else if (media[indexMedia].type == BFS)
         return ((Cbfs*) media[indexMedia].structFileSystem)->closeFile();
-    }
+    else if (media[indexMedia].type == ISO9660)
+        return ((Ciso9660*) media[indexMedia].structFileSystem)->closeFile();
 }
 
 int CfileSystem::command(int acommand, int parameter1, int parameter2, int parameter3, int parameter4) {

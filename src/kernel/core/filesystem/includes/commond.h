@@ -35,7 +35,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #define RENAME_FILE           0x10   //Renombrar Archivo
 #define MOVE_FILE             0x11   //Mueve de una ruta a otra un archivo
 
-
 //Para manipulacion desde el Sistema Operativo al Kernel
 #define FILE_R                0x1    //Flag Lectura de Archivo
 #define FILE_W                0x2    //Flag Escritura de Archivo
@@ -57,7 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #define FILE_EXIST            0x6  //
 #define COMMAND_INVALID       0x8   //Comando Invalido
 
-
+#define FIND_END             0x1
 
 #endif /* COMMOND_H */
 

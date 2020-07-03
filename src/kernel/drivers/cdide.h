@@ -22,10 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 class Ccdide {
 public:
     Ccdide();
-    int readSector(SdevicePort *device, u32 ablock, u32 asectorCount, char *abuffer);
+    int readSector(SdevicePort *device, u8 deviceIndex, u32 ablock, u32 asectorCount, char *abuffer);
 private:
     int waitDisk(SdevicePort *device);
-    void initCommand(SdevicePort *device);
+    void initCommand(SdevicePort *device, u8 driveIndex);
+    int detectDisk(SdevicePort *device, u8 deviceIndex);
     void delay400ns(SdevicePort *device);
 };
 

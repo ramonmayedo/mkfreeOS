@@ -25,7 +25,7 @@ Sx86 x86;
 //Clases globales para uso del kernel (Para todas la arquitecturas)
 Score core;       
 
-int start() {                
+int start() {    
     CmodeProtected modeProtected;   
     maps.kstack = KERNEL_STACK_TOP - 16;
     modeProtected.initGdt();

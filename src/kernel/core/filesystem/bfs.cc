@@ -16,7 +16,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #include "bfs.h"
 #include "../../architecture/x86/x86.h"
-#include "includes/hfat.h"
 
 extern Sx86 x86;
 extern Score core;

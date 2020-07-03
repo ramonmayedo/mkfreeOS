@@ -62,6 +62,7 @@ struct Smaps{
     Sidtr kidtr;                        //Registro IDTR
     Stss  userTss;                      //Segmento de estado de tarea
     u32   kstack;                       //Offset donde empieza la pila del kernel
+    SregX86 statusX86;                  //Estado del rpocesador ante una falla
     SpicMap picMap;                     //Info Controlador de Interrupciones
     SkeyMap keyMap;                     //Info del Teclado
     SpitMap pitMap;                     //Info del PIT
@@ -69,7 +70,8 @@ struct Smaps{
     SclockMap clockMap;                 //Info del Reloj RTC
     SmemoryPagination memoryPagination; //Info de la paginacion
     SdiskIdeMap diskIde;                //Info controladores disco duro IDE
-    u32 ticks;
+    u32 ticks;                          //tick de reloj para el cambio de tarea
+    u32 ticksCmdPata;                   //
 };
 
 struct Sx86 {

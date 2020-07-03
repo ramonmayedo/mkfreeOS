@@ -17,11 +17,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef HBFS_H
 #define HBFS_H
 
+
+#include "../../../defines/types.h"
+#include "../../filesystem.h"
+
 #define BFS 0x90
 #define RES_SECTOR_BFS  51
-#include "../../../defines/types.h"
 
-#define FIND_END             0x1
+
+
 
 #define BLOCK_DATA_FILE      0x80
 #define BLOCK_DATA_DIR       0x60
