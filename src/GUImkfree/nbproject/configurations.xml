@@ -3,97 +3,102 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
       <df name="applications">
-        <df name="destokp">
-          <in>destokp.cc</in>
-        </df>
         <df name="fileExplorer">
           <in>fileExplorer.cc</in>
         </df>
-        <df name="textEditor">
-          <in>textEditor.cc</in>
+        <df name="notepad">
+          <in>main.cc</in>
         </df>
       </df>
       <df name="basics">
-        <df name="fonts">
-          <in>lucidaconsole.asm</in>
-        </df>
-        <in>color.cc</in>
-        <in>color.h</in>
-        <in>columns.cc</in>
+        <in>canvasPainter.cpp</in>
+        <in>canvasPainter.h</in>
+        <in>columns.cpp</in>
         <in>columns.h</in>
-        <in>control.cc</in>
-        <in>control.h</in>
-        <in>cstring.cc</in>
+        <in>cstring.cpp</in>
         <in>cstring.h</in>
-        <in>elapseTime.cc</in>
-        <in>elapseTime.h</in>
-        <in>font.cc</in>
+        <in>font.cpp</in>
         <in>font.h</in>
-        <in>frame.cc</in>
-        <in>frame.h</in>
-        <in>graphicsbitmap.cc</in>
-        <in>graphicsbitmap.h</in>
-        <in>kgraphics.cc</in>
-        <in>kgraphics.h</in>
-        <in>list.cc</in>
+        <in>gbitmap.cpp</in>
+        <in>gbitmap.h</in>
+        <in>gcolor.cpp</in>
+        <in>gcolor.h</in>
+        <in>gpoint.cpp</in>
+        <in>gpoint.h</in>
+        <in>grect.cpp</in>
+        <in>grect.h</in>
+        <in>gsize.cpp</in>
+        <in>gsize.h</in>
+        <in>list.cpp</in>
         <in>list.h</in>
-        <in>object.cc</in>
+        <in>object.cpp</in>
         <in>object.h</in>
-        <in>point.cc</in>
-        <in>point.h</in>
-        <in>rect.cc</in>
-        <in>rect.h</in>
-        <in>size.cc</in>
-        <in>size.h</in>
-        <in>slines.cc</in>
+        <in>png.cpp</in>
+        <in>png.h</in>
+        <in>puff.cpp</in>
+        <in>puff.h</in>
+        <in>slines.cpp</in>
         <in>slines.h</in>
+        <in>socketipc.cc</in>
+        <in>socketipc.h</in>
         <in>templates.h</in>
-        <in>vstring.cc</in>
+        <in>vstring.cpp</in>
         <in>vstring.h</in>
       </df>
-      <df name="components">
-        <in>GWbartitle.cc</in>
-        <in>GWbartitle.h</in>
-        <in>Gbutton.cc</in>
-        <in>Gbutton.h</in>
-        <in>GcolumnButton.cc</in>
-        <in>GcolumnButton.h</in>
-        <in>Gcursor.cc</in>
-        <in>Gcursor.h</in>
-        <in>Glabel.cc</in>
-        <in>Glabel.h</in>
-        <in>GlineEdit.cc</in>
-        <in>GlineEdit.h</in>
-        <in>GlistBox.cc</in>
-        <in>GlistBox.h</in>
-        <in>GlistView.cc</in>
-        <in>GlistView.h</in>
-        <in>Gpanel.cc</in>
-        <in>Gpanel.h</in>
-        <in>GscrollBar.cc</in>
-        <in>GscrollBar.h</in>
-        <in>GstatusBar.cc</in>
-        <in>GstatusBar.h</in>
-        <in>GtextEdit.cc</in>
-        <in>GtextEdit.h</in>
-        <in>GtoolBar.cc</in>
-        <in>GtoolBar.h</in>
-        <in>Gwindows.cc</in>
-        <in>Gwindows.h</in>
-        <in>desktop.cc</in>
-        <in>desktop.h</in>
-      </df>
-      <df name="server">
-        <in>client.cc</in>
-        <in>client.h</in>
-        <in>server.cc</in>
-        <in>server.h</in>
-      </df>
-      <df name="systemWindows">
-        <in>Gclient.cc</in>
+      <df name="client">
+        <in>Gclient.cpp</in>
         <in>Gclient.h</in>
-        <in>Gserver.cc</in>
-        <in>Gserver.h</in>
+      </df>
+      <df name="components">
+        <in>Gbutton.cpp</in>
+        <in>Gbutton.h</in>
+        <in>Gcomponent.cpp</in>
+        <in>Gcomponent.h</in>
+        <in>Gcontrol.cpp</in>
+        <in>Gcontrol.h</in>
+        <in>GcontrolScrolled.cpp</in>
+        <in>GcontrolScrolled.h</in>
+        <in>GgraphicComponent.cpp</in>
+        <in>GgraphicComponent.h</in>
+        <in>GlineEdit.cpp</in>
+        <in>GlineEdit.h</in>
+        <in>GlistView.cpp</in>
+        <in>GlistView.h</in>
+        <in>GscrollBar.cpp</in>
+        <in>GscrollBar.h</in>
+        <in>Gterminal.cpp</in>
+        <in>Gterminal.h</in>
+        <in>GtextEdit.cpp</in>
+        <in>GtextEdit.h</in>
+        <in>Gwindows.cpp</in>
+        <in>Gwindows.h</in>
+      </df>
+      <df name="resources">
+        <in>icons.cpp</in>
+        <in>icons.h</in>
+      </df>
+      <df name="windowserver">
+        <in>clientconnection.cpp</in>
+        <in>clientconnection.h</in>
+        <in>composer.cpp</in>
+        <in>composer.h</in>
+        <in>cursor.cpp</in>
+        <in>cursor.h</in>
+        <in>desktop.cpp</in>
+        <in>desktop.h</in>
+        <in>frame.cpp</in>
+        <in>frame.h</in>
+        <in>main.cpp</in>
+        <in>maintoolbar.cpp</in>
+        <in>maintoolbar.h</in>
+        <in>menu.cpp</in>
+        <in>menu.h</in>
+        <in>toolapp.cpp</in>
+        <in>toolapp.h</in>
+        <in>window.cpp</in>
+        <in>window.h</in>
+        <in>windowserver.cpp</in>
+        <in>windowserver.h</in>
       </df>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -130,161 +135,172 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <item path="applications/destokp/destokp.cc" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="applications/fileExplorer/fileExplorer.cc"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="applications/textEditor/textEditor.cc"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="applications/notepad/main.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="basics/color.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/canvasPainter.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="basics/color.h" ex="false" tool="3" flavor2="0">
+      <item path="basics/canvasPainter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/columns.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/columns.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="basics/columns.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/control.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="basics/control.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="basics/cstring.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/cstring.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="basics/cstring.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/elapseTime.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="basics/elapseTime.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="basics/font.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/font.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="basics/font.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/fonts/lucidaconsole.asm" ex="false" tool="4" flavor2="0">
+      <item path="basics/gbitmap.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="basics/frame.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/gbitmap.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/frame.h" ex="false" tool="3" flavor2="0">
+      <item path="basics/gcolor.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="basics/graphicsbitmap.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/gcolor.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/graphicsbitmap.h" ex="false" tool="3" flavor2="0">
+      <item path="basics/gpoint.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="basics/kgraphics.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/gpoint.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/kgraphics.h" ex="false" tool="3" flavor2="0">
+      <item path="basics/grect.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="basics/list.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/grect.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="basics/gsize.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="basics/gsize.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="basics/list.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="basics/list.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/object.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/object.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="basics/object.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/point.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/png.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="basics/point.h" ex="false" tool="3" flavor2="0">
+      <item path="basics/png.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/rect.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/puff.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="basics/rect.h" ex="false" tool="3" flavor2="0">
+      <item path="basics/puff.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/size.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="basics/size.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="basics/slines.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/slines.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="basics/slines.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="basics/socketipc.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="basics/socketipc.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="basics/templates.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="basics/vstring.cc" ex="false" tool="1" flavor2="0">
+      <item path="basics/vstring.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="basics/vstring.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/GWbartitle.cc" ex="false" tool="1" flavor2="0">
+      <item path="client/Gclient.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="components/GWbartitle.h" ex="false" tool="3" flavor2="0">
+      <item path="client/Gclient.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/Gbutton.cc" ex="false" tool="1" flavor2="0">
+      <item path="components/Gbutton.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="components/Gbutton.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/GcolumnButton.cc" ex="false" tool="1" flavor2="0">
+      <item path="components/Gcomponent.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="components/GcolumnButton.h" ex="false" tool="3" flavor2="0">
+      <item path="components/Gcomponent.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/Gcursor.cc" ex="false" tool="1" flavor2="0">
+      <item path="components/Gcontrol.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="components/Gcursor.h" ex="false" tool="3" flavor2="0">
+      <item path="components/Gcontrol.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/Glabel.cc" ex="false" tool="1" flavor2="0">
+      <item path="components/GcontrolScrolled.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="components/Glabel.h" ex="false" tool="3" flavor2="0">
+      <item path="components/GcontrolScrolled.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/GlineEdit.cc" ex="false" tool="1" flavor2="0">
+      <item path="components/GgraphicComponent.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="components/GgraphicComponent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="components/GlineEdit.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="components/GlineEdit.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/GlistBox.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="components/GlistBox.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="components/GlistView.cc" ex="false" tool="1" flavor2="0">
+      <item path="components/GlistView.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="components/GlistView.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/Gpanel.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="components/Gpanel.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="components/GscrollBar.cc" ex="false" tool="1" flavor2="0">
+      <item path="components/GscrollBar.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="components/GscrollBar.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/GstatusBar.cc" ex="false" tool="1" flavor2="0">
+      <item path="components/Gterminal.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="components/GstatusBar.h" ex="false" tool="3" flavor2="0">
+      <item path="components/Gterminal.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/GtextEdit.cc" ex="false" tool="1" flavor2="0">
+      <item path="components/GtextEdit.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="components/GtextEdit.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/GtoolBar.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="components/GtoolBar.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="components/Gwindows.cc" ex="false" tool="1" flavor2="0">
+      <item path="components/Gwindows.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="components/Gwindows.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="components/desktop.cc" ex="false" tool="1" flavor2="0">
+      <item path="resources/icons.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="components/desktop.h" ex="false" tool="3" flavor2="0">
+      <item path="resources/icons.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="server/client.cc" ex="false" tool="1" flavor2="0">
+      <item path="windowserver/clientconnection.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="server/client.h" ex="false" tool="3" flavor2="0">
+      <item path="windowserver/clientconnection.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="server/server.cc" ex="false" tool="1" flavor2="0">
+      <item path="windowserver/composer.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="server/server.h" ex="false" tool="3" flavor2="0">
+      <item path="windowserver/composer.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="systemWindows/Gclient.cc" ex="false" tool="1" flavor2="0">
+      <item path="windowserver/cursor.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="systemWindows/Gclient.h" ex="false" tool="3" flavor2="0">
+      <item path="windowserver/cursor.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="systemWindows/Gserver.cc" ex="false" tool="1" flavor2="0">
+      <item path="windowserver/desktop.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="systemWindows/Gserver.h" ex="false" tool="3" flavor2="0">
+      <item path="windowserver/desktop.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="windowserver/frame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="windowserver/frame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="windowserver/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="windowserver/maintoolbar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="windowserver/maintoolbar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="windowserver/menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="windowserver/menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="windowserver/toolapp.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="windowserver/toolapp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="windowserver/window.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="windowserver/window.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="windowserver/windowserver.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="windowserver/windowserver.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

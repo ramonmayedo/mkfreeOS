@@ -97,11 +97,11 @@ int Ccdide::readSector(SdevicePort *device, u8 deviceIndex, u32 ablock, u32 asec
 
     while (x86.port.inb(device->regBase + 0x7)&0x80);  
 
-    maps.ticksCmdPata = 1;
+    maps.ticksKernelDelay = 1;
 
-    while (!(x86.port.inb(device->regBase + 0x7)&0x08) && (maps.ticksCmdPata));
+    while (!(x86.port.inb(device->regBase + 0x7)&0x08) && (maps.ticksKernelDelay));
     
-    if (maps.ticksCmdPata == 0) return 0;
+    if (maps.ticksKernelDelay == 0) return 0;
     
     int size = (int(x86.port.inb(device->regBase + 0x5) << 8) | int(x86.port.inb(device->regBase + 0x4)));
     

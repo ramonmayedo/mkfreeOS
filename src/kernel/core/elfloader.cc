@@ -33,8 +33,8 @@ int CelfLoader::load(u8 *afile, SprocessX86 *aprocessX86) {
             virtualAddrBegin = elf32Phdr->vaddr;
             virtualAddrEnd = elf32Phdr->vaddr + elf32Phdr->memsz;
 
-            if (maps.memoryPagination.userPageHeap > virtualAddrBegin) return 0;
-            if (maps.memoryPagination.userPageHeapEnd < virtualAddrEnd) return 0;
+            if (VM_USER_PAGE > virtualAddrBegin) return 0;
+            if (VM_USER_PAGE_END < virtualAddrEnd) return 0;
 
             if (elf32Phdr->flags == PF_X + PF_R) {
                 aprocessX86->exec.begin = (u8*) virtualAddrBegin;
@@ -56,8 +56,19 @@ int CelfLoader::load(u8 *afile, SprocessX86 *aprocessX86) {
 int CelfLoader::isValidElf(u8 *afile) {
     Self32Ehdr *elf32Ehdr = (Self32Ehdr *) afile;
     if (elf32Ehdr->ident[0] == 0x7f && elf32Ehdr->ident[1] == 'E'
-            && elf32Ehdr->ident[2] == 'L' && elf32Ehdr->ident[3] == 'F')
+            && elf32Ehdr->ident[2] == 'L' && elf32Ehdr->ident[3] == 'F') {
+        Self32Ehdr *elf32Ehdr = (Self32Ehdr*) afile;
+        Self32Phdr *elf32Phdr = (Self32Phdr*) (afile + elf32Ehdr->phoff);
+        u32 virtualAddrBegin, virtualAddrEnd;
+        for (int i = 0; i < elf32Ehdr->phnum; i++, elf32Phdr++) {
+            if (elf32Phdr->type == PT_LOAD) {
+                virtualAddrBegin = elf32Phdr->vaddr;
+                virtualAddrEnd = elf32Phdr->vaddr + elf32Phdr->memsz;
+                if (VM_USER_PAGE > virtualAddrBegin) return 1;
+                if (VM_USER_PAGE_END < virtualAddrEnd) return 1;
+            }
+        }
         return 0;
-    else
-        return 1;
+    }
+    return 1;
 }

@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -88,10 +88,10 @@ int writeBufferIPC(int pid, char *buffer, int offset, int size) {
     return sysCall_5(sysAdminProcess, cmpWriteBufferIPC, pid, (int) buffer, offset, size);
 }
 
-int shmem(int size){
-    return sysCall_2(sysSharedMemory, cmsSharedZone, size);
+int shmem(int size, int *vmem) {
+    return sysCall_3(sysSharedMemory, cmsGetZone, size, (int) vmem);
 }
 
-int setshmem(int pid, int sid, int size){
-    return sysCall_4(sysSharedMemory, cmsAddZone, pid, sid, size);
+int setshmem(int key, int *vmem, int *size) {
+    return sysCall_4(sysSharedMemory, cmsSharedZone, key, (int) vmem, (int) size);
 }

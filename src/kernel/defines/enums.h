@@ -19,14 +19,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 
 enum eCommand {
-    cmdUnblock = 0, cmdKeyboardBlock = 1, cmdScreeBlock = 1,
-    cmdKeyboardSleep = 2, cmdScreeSleep = 1, cmdSemaphoreSleep = 3, cmdMouseBlock = 1,
+    cmdUnlock = 0, cmdKeyboardLock = 1, cmdScreeLock = 1,
+    cmdKeyboardSleep = 6, cmdScreeSleep = 1, cmdSemaphoreSleep = 3, cmdMouseLock = 1,
     cmdMouseSleep = 4, cmdCommandSleep = 1
 };
 
 enum eCommandConsole {
     cmcColor = 1, cmcGotoXY = 2, cmcWhereX = 3, cmcWhereY = 4,
-    cmcPrintf = 5, cmcBlock = 6, cmcUnBlock = 7, cmcGetChar = 8,
+    cmcPrintf = 5, cmcLock = 6, cmcUnlock = 7, cmcGetChar = 8,
     cmcPutChar = 9, cmcReadChar = 10, cmcWrite = 11, cmcMouseEvent = 12
 };
 

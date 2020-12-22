@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,7 +26,9 @@ int kmain(int argc, char** argv) {
     mtime = time(0);
     gmtime(mtime, &ftime);
     printf("Son las %i:%i:%i \n", ftime.hour, ftime.min, ftime.sec);
-    int *a = (int*)shmem(2048);
+    int *a = new int[10];
+    a[1] = 90;
+    //int *a = (int*)shmem(2048);
     unblockDisplay();
     return 0;
 }

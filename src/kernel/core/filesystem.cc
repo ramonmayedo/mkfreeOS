@@ -15,10 +15,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 
 #include "filesystem.h"
-#include "filesystem/fat.h"
-#include "filesystem/bfs.h"
+#include "../filesystem/fat.h"
+#include "../filesystem/bfs.h"
 #include "../architecture/x86/x86.h"
-#include "filesystem/iso9660.h"
+#include "../filesystem/iso9660.h"
 
 extern Sx86 x86;
 extern Score core;
@@ -175,7 +175,7 @@ void CfileSystem::closeFile() {
 }
 
 int CfileSystem::command(int acommand, int parameter1, int parameter2, int parameter3, int parameter4) {
-    Cprocess *process = core.adminProcess.getRun();
+    Cprocess *process = core.adminProcess.getRun()->process;
     Cfile *file;
     switch (acommand) {
         case cmfCreateDir:
@@ -219,7 +219,7 @@ int CfileSystem::command(int acommand, int parameter1, int parameter2, int param
             return process->deleteFile(parameter1);
         }
         case cmfLSeek:
-        {
+        {//    error = sysCall_5(sysFileSystem, cmfLSeek, fd, aoffset, awhence, (int) &result);
             file = (Cfile*) process->getFile(parameter1);
             return file->command(parameter3, parameter2, parameter4);
         }

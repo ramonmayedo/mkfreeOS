@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,6 +13,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
+
+enum commandConsole {
+    cmcColor = 1, cmcGotoXY = 2, cmcWhereX = 3, cmcWhereY = 4,
+    cmcPrintf = 5, cmcLock = 6, cmcUnlock = 7, cmcGetChar = 8,
+    cmcPutChar = 9, cmcReadChar = 10, cmcWrite = 11
+};
+
 
 #include "../includes/stdio.h"
 #include "../includes/conio.h"
@@ -52,7 +59,7 @@ int write(int fd, const void* abuffer, int count) {
 int close(int fd) {
     return sysCall_2(sysFileSystem, cmfClose, fd);
 }
-//ok
+//ok    fseek(fileFont, 256, SEEK_SET);
 int lseek(int fd, int aoffset, int awhence) {
     int result;
     int error;
@@ -126,7 +133,7 @@ int fread(void* abuffer, int size, int n, FILE* stream) {
 
     for (int i = 0; i < bsize; i++) {
         int c = fgetc(stream);
-        if (c == EOF) return i;                        //Si se acabo el fichero
+        if (stream->flags & FILE_EOF) return i; //Si se acabo el fichero
         ((char*) abuffer)[i] = c;
     }
     return bsize;
@@ -311,12 +318,16 @@ int sup_fprintf(FILE *stream, const char*string, int *ebp) {
             case '%':
             {
                 car = *(ptrCar++); //proximo caracterptrCar++;
-                if (car == 'i' || car == 's' || car == 'c') {
+                if (car == 'i' || car == 's' || car == 'c' || car == 'h') {
                     if (car == 'i') //si es un entero %i
                     {
                         IntToStrChar(*ebp, buffer); //lo  convierto a string
                         sup_fprintf(stream, buffer, ebp); //lo muestro
-                    } else if (car == 's') //si es un string %s
+                    } else if (car == 'h') {
+                        IntToHexChar(*ebp, buffer, 8); //lo  convierto a string
+                        sup_fprintf(stream, buffer, ebp); //lo muestro                       
+                    }
+                    else if (car == 's') //si es un string %s
                         sup_fprintf(stream, (char*) *ebp, ebp);
                     else if (car == 'c') //si es un char
                         fputc((char) *ebp, stream);

@@ -12,11 +12,21 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 
 #ifndef MAPKEYBORAD_H
 #define MAPKEYBORAD_H
 #include "../core/process.h"
+#include "../core/includes/hutils.h"
+
+#define KB_CONTROL_REGISTER 0x64
+#define KB_BASE_REGISTER    0x60
+
+struct SkeyMap {
+    u16 keyState;
+    u8 *scanScode;
+    u16 keyPress;
+} __attribute__((packed));
 
 class Ckeyboard {
 public:
@@ -27,14 +37,15 @@ public:
     int getState();
 private:
     u32 state;
-    Cprocess *process;
-    Cthread *thread;
+    Clist locksProcess;
     char buffer[32];
     u8 ptr;
     u8 count;
-protected:
-    int block();
-    int unBlock();
+    SlockProcess *lockProcess;
+    SkeyMap keyMap;
+    int lock();
+    int unlock();
+    int confirmUnlock();
 };
 
 #endif

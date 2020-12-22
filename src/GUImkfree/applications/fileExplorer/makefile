@@ -13,7 +13,7 @@ OBJCOPY = objcopy
 OBJCOPYFLAG = -O elf32-i386
 
 
-OBJ := fileExplorer.o $(LIBRARY) ../../basics/fonts/lucidaconsole.o
+OBJ := fileExplorer.o $(LIBRARY)
 	
 ensamblar : $(PROG)
 

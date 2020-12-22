@@ -17,7 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef DEVICES_H
 #define DEVICES_H
 #include "../defines/types.h"
-#include "../architecture/x86/includes/maps.h"
 
 #define DEV_ATA_UNKNOWN 0x0
 #define DEV_ATA_PATAPI  0x1
@@ -25,12 +24,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #define DEV_ATA_PATA    0x3
 #define DEV_ATA_SATA    0x4
 
+struct SdevicePort {
+    u32 regBase;
+    u32 regControl;
+} __attribute__((packed));
+
 struct Sdevice {
     int did; //Identificador unico del dispositivo
     u8 type; //Tipo de didpositivo
     u8 flags; //Banderas
     u8 index; //Index
     SdevicePort *port;
+} __attribute__((packed));
+
+struct SdiskIdeMap {
+    SdevicePort chanel0;
+    SdevicePort chanel1;
 } __attribute__((packed));
 
 class Cdevices {
@@ -44,6 +53,7 @@ public:
     int writeDevice(u32 did, u32 ablock, u32 countSector, char *abuffer);
 private:
     Sdevice devices[10]; //Tabla de dispositivos instalados
+    SdiskIdeMap diskIde;
     u32 countDevices;
     void resetBus(SdevicePort *device);
     void delay400ns(SdevicePort *device);

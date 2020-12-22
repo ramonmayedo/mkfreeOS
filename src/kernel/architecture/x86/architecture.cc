@@ -25,11 +25,11 @@ Carchitecture::Carchitecture() {
 }
 
 void Carchitecture::changeToDirectoryKernel(){
-     setDirectory((u32)maps.memoryPagination.directoryPageKernel);
+     setDirectory((u32)VM_KERNEL_PAGE_DIR);
 }
 
 void Carchitecture::changeToDirectoryCurrentProcess() {
-    setDirectory((u32)core.adminProcess.getRun()->processX86.regX86->cr3);
+    setDirectory((u32)core.adminProcess.getRun()->process->processX86.cr3);
 }
 
 void Carchitecture::setDirectory(u32 adirectorty) {
@@ -61,32 +61,14 @@ void Carchitecture::shutDown() {
     x86.port.outw(0x604, 0x2000);
 }
 
-void Carchitecture::kernelStopScreen(int stopMode) {
-    char string[10];
+void Carchitecture::kernelStopScreen(char *stringFault) {
     x86.ioScreen.clearScreen();
-    x86.ioScreen.printf("*****************KENEL STOP**********************/n/n");
-    switch (stopMode) {
-        case ARCHX86_GENERAL_FAULT:
-        {
-            x86.ioScreen.printf("/n              !!!! GENERAL FAULT !!!!             /n");
-            break;
-        }
-        case ARCHX86_PAGE_FAULT:
-        {
-            x86.ioScreen.printf("                      !!!PAGE FAULT!!!!                        /n");
-            break;
-        }
-        case ARCHX86_MEMORY_CORRUPT:
-        {
-            x86.ioScreen.printf("KERNEL malloc Error, Memoria Virtual Corrupta Size=0 /n");
-            break;
-        }
-    }
+    x86.ioScreen.printf("*****************KENEL STOP SCREEN**********************/n/n");
+    x86.ioScreen.printf("%s", stringFault);
     x86.ioScreen.printf("/n Register Status /n");
-    core.conversion.IntToHexChar(maps.statusX86.cs, string, 4);
-    x86.ioScreen.printf("/n         CS = %s : ", string);
-    core.conversion.IntToHexChar(maps.statusX86.eip, string, 8);
-    x86.ioScreen.printf("EIP = %s /n", string);
-    x86.ioScreen.printf("/n*****************KENEL STOP**********************/n/n");
+    x86.ioScreen.printf("/n         CS = %h : ", maps.statusX86.cs);
+    x86.ioScreen.printf("EIP = %h /n", maps.statusX86.eip);
+    x86.ioScreen.printf("/n         CR2 = %h /n", maps.statusX86.cr2);
+    x86.ioScreen.printf("/n*********************KENEL STOP************************/n/n");
     while (1);
 }

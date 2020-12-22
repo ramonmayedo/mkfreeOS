@@ -18,6 +18,7 @@
         <in>memory.cc</in>
         <in>read.cc</in>
         <in>sbrk.cc</in>
+        <in>setjmp.asm</in>
         <in>stdio.c</in>
         <in>stdio.cc</in>
         <in>stdlib.cc</in>
@@ -38,6 +39,7 @@
         <in>memory.cc</in>
         <in>memory.h</in>
         <in>program.h</in>
+        <in>setjmp.h</in>
         <in>stdio.h</in>
         <in>stdlib.h</in>
         <in>string.h</in>

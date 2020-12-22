@@ -13,9 +13,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
-
 #ifndef PIT8253_H
 #define PIT8253_H
+
+#include "../../defines/types.h"
 
 #define TICKS_PER_SECOND 1000
 
@@ -31,16 +32,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #define MODE_ONESHOT 0x02
 #define MODE_RATE 0x04
 #define MODE_SQUARE_WAVE 0x06
-
 #define WRITE_WORD 0x30
-
 #define BASE_FREQUENCY 1193182
 
+#define PT_BASE_REGISTER    0x40
+#define PT_CONTROL_REGISTER 0x43
 
 class Cpit8253 {
 public:
     Cpit8253();
     void initialize();
+    void waitms(u32 msec);
     ~Cpit8253();
 private:
 

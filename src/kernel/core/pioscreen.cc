@@ -15,8 +15,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 
 #include "pioscreen.h"
-
 #include "../architecture/x86/x86.h"
+
 extern Score core;
 extern Sx86 x86;
 
@@ -30,9 +30,9 @@ void Cpioscreen::connectScreen() {
     curBlock = 0;
     curOut = 0;
     state = 0;
-    process = 0;
-    bufferIn = (char*) x86.virtualMemory.getPagesVirtualKernel();
-    bufferOut = (char*) x86.virtualMemory.getPagesVirtualKernel();
+    bufferIn = (char*) x86.virtualMemory.getPagesHeapToKernel();
+    bufferOut = (char*) x86.virtualMemory.getPagesHeapToKernel();
+    locksProcess = new Clist();
 }
 
 int Cpioscreen::putCharOut(char car) {
@@ -53,9 +53,7 @@ char Cpioscreen::getChar() {
     return car;
 }
 
-
 int Cpioscreen::command(int acommand, int parameter1, int parameter2) {
-    Cprocess *processRun = core.adminProcess.getRun();
     switch (acommand) {
         case cmcReadChar:
         {
@@ -72,23 +70,16 @@ int Cpioscreen::command(int acommand, int parameter1, int parameter2) {
             setKeyPress(key);
             return key;
         }
-        case cmcBlock:
+        case cmcLock:
         {
-            if (state == cmdScreeBlock) { //Si esta bloqueado ya !!!
-                process = processRun;
-                thread = processRun->adminThread->getRun();
-                processRun->sendState(cmdScreeSleep); //Se supende el proceso
-            }
-            state = 1;
+            if (state == cmdScreeLock) //Si esta bloqueado ya !!!
+                lock();                //Se bloque el proceso que intenta bloquerlo
+            state = cmdScreeLock;      //Si no se bloquea la pantalla
             return 0;
         }
-        case cmcUnBlock:
+        case cmcUnlock:
         {
-            state = 0; //Se desbloquea
-            if (process) {
-                core.adminProcess.unlockProcess(process, thread);
-                process = 0;
-            }
+            unlock();
             return 0;
         }
         case cmcColor:
@@ -139,3 +130,19 @@ int Cpioscreen::setKeyPress(char akey) {
     putCharOut(akey);
 }
 
+int Cpioscreen::lock() {
+    SlockProcess *lockProcess = new SlockProcess;
+    lockProcess->thread = core.adminProcess.getRun();
+    lockProcess->state = cmdScreeLock;
+    locksProcess->add(lockProcess);
+    lockProcess->thread->sendState(cmdScreeSleep,60); //se suspende     
+}
+
+int Cpioscreen::unlock() {
+    while (locksProcess->count()) { //Si hay procesos bloqueados
+        SlockProcess *lockProcess = (SlockProcess*) locksProcess->removeFirst(); //Tomo el primero de la lista
+        if (core.adminProcess.unlockThread(lockProcess->thread, ADP_PRIORITY_LOW) != -1)
+            break;
+    }
+    state = cmdUnlock; //Se desbloquea
+}

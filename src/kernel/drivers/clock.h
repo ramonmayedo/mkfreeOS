@@ -18,6 +18,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #define CLOCK_H
 #include "../defines/types.h"
 
+#define CK_CONTROL_REGISTER 0x71
+#define CK_BASE_REGISTER    0x70
+
+#define MAX_TICK_X_SECONDS 1000
+
+struct SclockMap {
+    u32 weakUp;
+    u32 hour;
+    u32 minute;
+    u32 second;
+    u32 year;
+    u32 month;
+    u32 day;
+    u32 weekDay;
+} __attribute__((packed));
+
 class Cclock {
 public:
     Cclock();
@@ -31,7 +47,7 @@ public:
     u32 getTimeU32();
     int command(int acommand, int parameter1, int parameter2);
 private:
-    
+   
 };
 
 #endif 

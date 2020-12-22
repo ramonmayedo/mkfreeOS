@@ -27,14 +27,6 @@ enum commandGPH {
     cgpGetArea = 4
 };
 
-struct SvideoArea {
-    int *area;
-    int left;
-    int top;
-    int height;
-    int width;
-};
-
 class Cgraphics {
 public:
     Cgraphics();
@@ -49,6 +41,7 @@ private:
     u8* frameBuffer;
     int indexInstall;
     void *adapter;
+    u32 width, height;
 };
 
 #endif

@@ -16,28 +16,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #include "kernel.h"
 #include "../architecture/x86/x86.h"
+#include "../architecture/x86/smp.h"
+#include "../architecture/x86/ioapic.h"
+
 extern Sx86 x86;
 extern Score core;
 extern Smaps maps;
 
-void kernel() {
-    core.adminProcess.initialize();  //Seinicializa el administrador de Procesos
-    x86.sharedMemory.initialized();  //Se inicializa la memoria compartida
-    core.cacheDisk.initialize();     //Se inicializa la cache de disco
-    core.graphics.installDevice();   //Se monta el dispositivo de video
-    x86.ioScreen.initialize();       //Se monta el disposivo de entrada salida al display
-    core.devices.installDevices();   //Se montan los dispositivos de almacenamiento
-    core.diskPartition.initialize(); //
-
+void kernel() {   
     x86.ioScreen.printf("Ya estamos en el kernel MKFREE h:%i m: %i s: %i /n", maps.clockMap.hour, maps.clockMap.minute, maps.clockMap.second);
     x86.ioScreen.printf("Ya estamos en el kernel MKFREE y:%i m: %i d: %i /n", maps.clockMap.year, maps.clockMap.month, maps.clockMap.day);
-
+        
     for (int i = 0; i < core.devices.getCountDevice(); i++)
         core.diskPartition.mountFileSystem(i); //Se montan los sistemas de archivo
 
     int volSel = core.fileSystem.selectVolume('a');
 
     if (volSel != -1) {
+        x86.ioScreen.printf("Volumen seleccionado [a] /n"); 
         SinfoMedia *infoMedia = core.fileSystem.getInfoVolume();
         x86.ioScreen.printf("label=%s /n", infoMedia->labelVolume);
         x86.ioScreen.printf("type=%s /n", infoMedia->labelType);
@@ -54,13 +50,13 @@ void kernel() {
     buffer = new char[newfile->getSize()];
     newfile->readAll(buffer);
 
-    int error = core.adminProcess.addReady(buffer, 0, arg);
+    int error = core.adminProcess.addReady(buffer, 0, arg, priorityVeryLow);
     delete(buffer);
     delete(newfile);
     if (error) {
         core.pioscreen.connectScreen();
         core.adminProcess.schelude();
-    } else
-        x86.ioScreen.printf("Error no se pudo cargar el proceso init");
+    }
+    x86.architecture.kernelStopScreen("KERNEL Falta el proceso 0 init /n"); //Siempre debe haber un proceso ejecutandose
     while (1);
 }

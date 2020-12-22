@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -45,6 +45,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #define PCI_BAR4    0x20
 #define PCI_BAR5    0x24
 
+struct SvideoArea {
+    int *area;
+    int left;
+    int top;
+    int height;
+    int width;
+    int trueLeft, trueTop, trueHeight, trueWidth;
+};
+
+struct SvideoAreaTrue {
+    int *area;
+    int left;
+    int top;
+    int height;
+    int width;
+    int heightTrue;
+    int widthTrue;
+    
+};
+
 class Cbxvga {
 public:
     Cbxvga();
@@ -60,6 +80,8 @@ public:
     void putc(int attrb, char c);
     void scrollUp(int nLines);
     void clearScreen();
+    void paintArea(SvideoArea *area,bool copyOrWrite);
+    
 private:
     u32 bus, device, function;
     u8 *frameBuffer;

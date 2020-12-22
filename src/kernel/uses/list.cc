@@ -22,6 +22,12 @@ Clist::Clist() {
     ncount = 0;
 }
 
+void Clist::initialize() {
+    firstNode = 0;
+    lastNode = 0;
+    ncount = 0;
+}
+
 int Clist::add(void * aitem) {
     Cnode *newNode = new Cnode(aitem);
     if (ncount == 0) {

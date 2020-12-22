@@ -17,21 +17,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef THREAD_H
 #define THREAD_H
 #include "../architecture/x86/includes/reg.h"
+#include "process.h"
 
 class Cthread {
 public:
-    Cthread(SregX86 *aregX86, int atid);
-    void setregX86(SregX86 *aregX86);
-    void sendState(int astate);
-    SregX86 *getregX86();
+    Cthread(SregX86 *aregX86, Cprocess *parent,bool ismainThread);
+    int sendState(int astate, u32 filtro);
+    SregX86 *regX86;
     int waitSignal;
-    int getState();
+    int state;
+    ScontrolTime controlTime;
+    Cprocess *process;
     int gettid();
+    void settid(int atid);
+    void setmainThread();
+    bool getmainThred();
+    void onActivate();
     ~Cthread();
 private:
-    SregX86 *regX86;
     int tid;
-    int state;
+    
+    bool mainThread;
 };
 
 #endif

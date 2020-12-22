@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #include "bxvga.h"
 #include "../architecture/x86/x86.h"
+#include "../core/includes/templates.h"
 
 extern Score core;
 extern Sx86 x86;
@@ -59,16 +60,12 @@ void Cbxvga::setResolution(u16 nwidth, u16 nheight) {
 }
 
 int Cbxvga::installBosh() {
-    if (!core.pci.find(BOCHS_VBE_VENDOR, BOCHS_VBE_DEVICE, &bus, &device, &function)) {
-        //x86.ioScreen.printf("BOSCH VGA not found/n");
+    if (!core.pci.find(BOCHS_VBE_VENDOR, BOCHS_VBE_DEVICE, &bus, &device, &function))
         return 0;
-    }
-
-    frameBuffer = (u8*) core.pci.read(bus, device, function, PCI_BAR0);
-    //4MB Se asume que la RAM existe pues la usa el emulador, por eso la memoria virtual es la misma que la fisica
-    for (int i = 0; i < 1024; i++)
-        x86.virtualMemory.addDirectoryPagesKernel(((u8*) (frameBuffer) + 0x1000 * i), (u8*) ((frameBuffer) + 0x1000 * i), 0);
-
+    frameBuffer = (u8*) core.pci.read(bus, device, function, PCI_BAR0); //4MB RAM
+    CmemoryRegion *region = new CmemoryRegion((u32) frameBuffer, (u32) frameBuffer, 1024, false);
+    region->setMappedKernel(WM_PG_CACHE_DISABLED);
+    x86.virtualMemory.addRegion(region);
     return 1;
 }
 
@@ -147,8 +144,10 @@ void Cbxvga::scrollUp(int nLines) {
     u32 *ptrVideo = (u32*) frameBuffer; //Inicio de la RAM de video
     u32 screenSize = width*height;
     int scroll = nLines*width;
+    u32 *ptrMove = ptrVideo + scroll;
+
     for (int i = 0; i < screenSize; i++) //Se recorre la memoria de video
-        ptrVideo[i] = ptrVideo[i + scroll];
+        ptrVideo[i] = ptrMove[i];
 }
 
 void Cbxvga::clearScreen() {
@@ -158,4 +157,22 @@ void Cbxvga::clearScreen() {
     u32 screenSize = width*height;
     for (int i = 0; i < screenSize; i++)
         ptrVideo[i] = 0x0;
+}
+
+void Cbxvga::paintArea(SvideoArea* area, bool copyOrWrite) {
+    u32 *linearBufferDest = (u32*) frameBuffer + area->left + area->top * width;
+    u32 *linearBufferSource = (u32*) area->area + area->trueLeft + area->trueTop * area->trueWidth;
+    if (copyOrWrite == false) {
+        for (int i = 0; i < area->height; i++) {
+            fastCopy32(linearBufferDest, linearBufferSource, area->width);
+            linearBufferDest += width;
+            linearBufferSource += area->trueWidth;
+        }
+    } else {
+        for (int i = 0; i < area->height; i++) {
+            fastCopy32(linearBufferSource, linearBufferDest, area->width);
+            linearBufferDest += width;
+            linearBufferSource += area->trueWidth;
+        }
+    }
 }

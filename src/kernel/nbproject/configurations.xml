@@ -5,19 +5,28 @@
       <df name="architecture">
         <df name="x86">
           <df name="includes">
-            <in>maps.h</in>
+            <in>hapic.h</in>
+            <in>hcpu.h</in>
+            <in>hmodeprotected.h</in>
+            <in>hsmp.h</in>
+            <in>hvirtualmemory.h</in>
             <in>reg.h</in>
           </df>
+          <in>apic.cc</in>
+          <in>apic.h</in>
           <in>architecture.cc</in>
           <in>architecture.h</in>
+          <in>bootCPUs.asm</in>
           <in>intfunction.cc</in>
           <in>intfunction.h</in>
+          <in>inthandler.cc</in>
+          <in>inthandler.h</in>
           <in>io.cc</in>
           <in>io.h</in>
+          <in>ioapic.cc</in>
+          <in>ioapic.h</in>
           <in>ioscreen.cc</in>
           <in>ioscreen.h</in>
-          <in>malloc.cc</in>
-          <in>malloc.h</in>
           <in>modeprotected.cc</in>
           <in>modeprotected.h</in>
           <in>pic8259.cc</in>
@@ -26,39 +35,28 @@
           <in>pit8253.h</in>
           <in>sharedmemory.cc</in>
           <in>sharedmemory.h</in>
+          <in>smp.cc</in>
+          <in>smp.h</in>
           <in>star.asm</in>
           <in>virtualmemory.cc</in>
           <in>virtualmemory.h</in>
           <in>x86.cc</in>
           <in>x86.h</in>
+          <in>xcpu.cc</in>
+          <in>xcpu.h</in>
         </df>
       </df>
       <df name="core">
         <df name="compiler">
           <in>operator.cc</in>
         </df>
-        <df name="filesystem">
-          <df name="includes">
-            <in>commond.h</in>
-            <in>hbfs.h</in>
-            <in>hfat.h</in>
-            <in>hiso9660.h</in>
-          </df>
-          <in>bfs.cc</in>
-          <in>bfs.h</in>
-          <in>fat.cc</in>
-          <in>fat.h</in>
-          <in>iso9660.cc</in>
-          <in>iso9660.h</in>
-        </df>
         <df name="includes">
           <in>disk.h</in>
           <in>hprocess.h</in>
+          <in>hutils.h</in>
         </df>
         <in>adminProcess.cc</in>
         <in>adminProcess.h</in>
-        <in>adminthread.cc</in>
-        <in>adminthread.h</in>
         <in>cacheDisk.cc</in>
         <in>cacheDisk.h</in>
         <in>devices.cc</in>
@@ -85,8 +83,6 @@
         <in>systemcall.h</in>
         <in>thread.cc</in>
         <in>thread.h</in>
-        <in>virtualmemoryzone.cc</in>
-        <in>virtualmemoryzone.h</in>
       </df>
       <df name="defines">
         <in>constants.h</in>
@@ -94,6 +90,10 @@
         <in>types.h</in>
       </df>
       <df name="drivers">
+        <df name="bxvga">
+          <in>font8x8.h</in>
+          <in>fontbasic8x8.asm</in>
+        </df>
         <df name="includes">
           <in>modevideo.h</in>
         </df>
@@ -134,18 +134,19 @@
         <in>vga.cc</in>
         <in>vga.h</in>
       </df>
-      <df name="files">
+      <df name="filesystem">
         <df name="includes">
-          <in>hbmp.h</in>
+          <in>commond.h</in>
+          <in>hbfs.h</in>
+          <in>hfat.h</in>
+          <in>hiso9660.h</in>
         </df>
-        <in>bmp.cc</in>
-        <in>bmp.h</in>
-      </df>
-      <df name="nbproject1">
-        <df name="private">
-          <in>c_standard_headers_indexer.c</in>
-          <in>cpp_standard_headers_indexer.cpp</in>
-        </df>
+        <in>bfs.cc</in>
+        <in>bfs.h</in>
+        <in>fat.cc</in>
+        <in>fat.h</in>
+        <in>iso9660.cc</in>
+        <in>iso9660.h</in>
       </df>
       <df name="uses">
         <in>conversion.cc</in>
@@ -157,8 +158,16 @@
         <in>memory.h</in>
         <in>string.cc</in>
         <in>string.h</in>
-        <in>timer.cc</in>
-        <in>timer.h</in>
+      </df>
+      <df name="vmemory">
+        <in>malloc.cc</in>
+        <in>malloc.h</in>
+        <in>memorybitmap.cc</in>
+        <in>memorybitmap.h</in>
+        <in>memoryregion.cc</in>
+        <in>memoryregion.h</in>
+        <in>memoryzone.cc</in>
+        <in>memoryzone.h</in>
       </df>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -195,11 +204,31 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
+      <item path="architecture/x86/apic.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/apic.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="architecture/x86/architecture.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="architecture/x86/architecture.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="architecture/x86/includes/maps.h" ex="false" tool="3" flavor2="0">
+      <item path="architecture/x86/bootCPUs.asm" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="architecture/x86/includes/hapic.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/includes/hcpu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/includes/hmodeprotected.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="architecture/x86/includes/hsmp.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="architecture/x86/includes/hvirtualmemory.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="architecture/x86/includes/reg.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -207,17 +236,21 @@
       </item>
       <item path="architecture/x86/intfunction.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="architecture/x86/inthandler.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/inthandler.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="architecture/x86/io.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="architecture/x86/io.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="architecture/x86/ioapic.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/ioapic.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="architecture/x86/ioscreen.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="architecture/x86/ioscreen.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="architecture/x86/malloc.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="architecture/x86/malloc.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="architecture/x86/modeprotected.cc" ex="false" tool="1" flavor2="0">
       </item>
@@ -235,6 +268,10 @@
       </item>
       <item path="architecture/x86/sharedmemory.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="architecture/x86/smp.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/smp.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="architecture/x86/star.asm" ex="false" tool="4" flavor2="0">
       </item>
       <item path="architecture/x86/virtualmemory.cc" ex="false" tool="1" flavor2="0">
@@ -245,13 +282,13 @@
       </item>
       <item path="architecture/x86/x86.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="architecture/x86/xcpu.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="architecture/x86/xcpu.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="core/adminProcess.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="core/adminProcess.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="core/adminthread.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="core/adminthread.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="core/cacheDisk.cc" ex="false" tool="1" flavor2="0">
       </item>
@@ -283,29 +320,6 @@
       </item>
       <item path="core/filesystem.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="core/filesystem/bfs.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="core/filesystem/bfs.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="core/filesystem/fat.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="core/filesystem/fat.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="core/filesystem/includes/commond.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="core/filesystem/includes/hbfs.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="core/filesystem/includes/hfat.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="core/filesystem/includes/hiso9660.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="core/filesystem/iso9660.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="core/filesystem/iso9660.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="core/graphics.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="core/graphics.h" ex="false" tool="3" flavor2="0">
@@ -313,6 +327,8 @@
       <item path="core/includes/disk.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="core/includes/hprocess.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="core/includes/hutils.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="core/kernel.cc" ex="false" tool="1" flavor2="0">
       </item>
@@ -334,10 +350,6 @@
       </item>
       <item path="core/thread.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="core/virtualmemoryzone.cc" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="core/virtualmemoryzone.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="defines/constants.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="defines/enums.h" ex="false" tool="3" flavor2="0">
@@ -347,6 +359,10 @@
       <item path="drivers/bxvga.cc" ex="false" tool="1" flavor2="0">
       </item>
       <item path="drivers/bxvga.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/bxvga/font8x8.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="drivers/bxvga/fontbasic8x8.asm" ex="false" tool="4" flavor2="0">
       </item>
       <item path="drivers/cdide.cc" ex="false" tool="1" flavor2="0">
       </item>
@@ -420,21 +436,25 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="files/bmp.cc" ex="false" tool="1" flavor2="0">
+      <item path="filesystem/bfs.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="files/bmp.h" ex="false" tool="3" flavor2="0">
+      <item path="filesystem/bfs.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="files/includes/hbmp.h" ex="false" tool="3" flavor2="0">
+      <item path="filesystem/fat.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="nbproject1/private/c_standard_headers_indexer.c"
-            ex="false"
-            tool="0"
-            flavor2="0">
+      <item path="filesystem/fat.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="nbproject1/private/cpp_standard_headers_indexer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="filesystem/includes/commond.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="filesystem/includes/hbfs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="filesystem/includes/hfat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="filesystem/includes/hiso9660.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="filesystem/iso9660.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="filesystem/iso9660.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="uses/conversion.cc" ex="false" tool="1" flavor2="0">
       </item>
@@ -454,9 +474,21 @@
       </item>
       <item path="uses/string.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="uses/timer.cc" ex="false" tool="1" flavor2="0">
+      <item path="vmemory/malloc.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="uses/timer.h" ex="false" tool="3" flavor2="0">
+      <item path="vmemory/malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="vmemory/memorybitmap.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="vmemory/memorybitmap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="vmemory/memoryregion.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="vmemory/memoryregion.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="vmemory/memoryzone.cc" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="vmemory/memoryzone.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

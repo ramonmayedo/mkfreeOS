@@ -40,10 +40,10 @@ void Cvga::setConfiguration(CmodeVideo *aconfiguration) {
 }
 
 void Cvga::clearDisplay() {
-    u8 *dir = (u8*) 0xA0000;
+    u8 *dir = (u8*) frameBuffer;
     int maxPixel = configuration->width * configuration->height;
     for (int i = 0; i < maxPixel; i++)
-        dir[i] = 0x00;
+         dir[i] = 0x00;
 }
 
 void Cvga::writeRegisterSequency(CmodeVideo *aconfiguration) {
@@ -145,16 +145,9 @@ u32 * Cvga::getdefaultVGApalette(){
 }
 
 void Cvga::setBackGroundColor(u32 color) {
-    u8 *dir = (u8*) 0xA0000;
-    for (int i = 0; i < configuration->width*configuration->height; i++) {
-        dir[i] = color;
-    }
-}
-
-void Cvga::setPixelVGA(int aX, int aY, int acolor) {
-    u8 *dir = (u8*) 0xA0000;
-    u32 offset = (aX + (configuration->height) * aY);
-    dir[offset] = acolor;
+    u8 *dir = (u8*) frameBuffer;
+    for (int i = 0; i < configuration->width*configuration->height; i++)
+      dir[i] = color;
 }
 
 void Cvga::setColorVGApalette24(u32 aindex, u32 color) {
@@ -173,7 +166,7 @@ void Cvga::setFont(CmodeVideo *aconfiguration, u8 *afont) {
 
     for (int i = 0; i < aconfiguration->mapFontSize; i += 16)
         for (int j = 0; j < aconfiguration->fontSize; j++)
-            ((u8*) 0xA0000)[2 * i + j] = afont[i + j];
+             ((volatile u8*) 0xA0000)[2 * i + j] = afont[i + j];
 
     registerVGA.writeRegisterSequency(ResetRegisterIndex, 0x01); // seq reset            
     registerVGA.writeRegisterSequency(MapMaskRegisterIndex, 0x03); // image planes 0 and 1
@@ -212,6 +205,7 @@ int Cvga::setMode(int amode) {
         case t80x25x16:
         {
             configuration = (CmodeVideo*) & modeText80x25x16;
+            frameBuffer = (u8*)0xB8000;
             setConfiguration(configuration);
             setFont(systemByte);
             mode = amode;
@@ -221,6 +215,7 @@ int Cvga::setMode(int amode) {
         }
         case g320x200x256:
         {
+            frameBuffer = (u8*)0xA0000;
             configuration = (CmodeVideo*) & mode320x200x256;
             setConfiguration(configuration);
             setdefaultVGApalette(&difault_vga_palette);
@@ -252,7 +247,7 @@ u8* Cvga::getFrameBuffer() {
 }
 
 void Cvga::putc(int attrb, char c) {
-    u8 *ptrVideo;
+    volatile u8 *ptrVideo;
     if (mode != t80x25x16)
         setMode(t80x25x16);
 
@@ -297,7 +292,7 @@ int Cvga::setPixel(u32 x, u32 y, int acolor) {
     u32 offset;
     if (x > configuration->width || y > configuration->height) return 0;
     offset = (y * configuration->width) + x;
-    u8 *buff = (u8*) (0xA0000);
+    u8 *buff = (u8*) frameBuffer;
     buff[offset] = acolor;
     return 0;
 }
@@ -306,7 +301,7 @@ int Cvga::getPixel(u32 x, u32 y) {
     u32 offset;
     if (x > configuration->width || y > configuration->height) return 0;
     offset = (y * configuration->width) + x;
-    u8 *buff = (u8*) (0xA0000);
+    u8 *buff = (u8*) (frameBuffer);
     return buff[offset];
 }
 
@@ -329,7 +324,36 @@ void Cvga::scrollUp(int nLines) {
 void Cvga::clearScreen() {
     x86.ioScreen.CurX = 0;
     x86.ioScreen.CurY = 0;
-    u8 *ptrVideo = (u8*) RAM_SCREEN;
-    for (int i = 0; i < SCREEN_SIZE; i++)
-        *(ptrVideo++) = 0x0;
+    clearDisplay();
+}
+
+void Cvga::paintArea(SvideoArea* area, bool copyOrWrite) {
+    int newLeft, newRight, newTop, newBottom;
+    newLeft = (area->left > 0 ? area->left : 0);
+    newRight = (area->left + area->width < 320 ? area->left + area->width : 320);
+    newTop = (area->top > 0 ? area->top : 0);
+    newBottom = (area->top + area->height < 200 ? area->top + area->height : 200);
+    if (newLeft > newRight || newTop > newBottom)
+        return;
+    int newWidth = newRight - newLeft;
+    int newHeight = newBottom - newTop;
+
+    u8 *linearBuffer = (u8*) frameBuffer + area->left + area->top * 320;
+    u32 *linearBufferSource = (u32*) area->area + area->trueLeft + area->trueTop*area->trueWidth ;
+
+    if (copyOrWrite == false) {
+        for (int i = 0; i < newHeight; i++) {
+            for (int j = 0; j < newWidth; j++)
+                linearBuffer[j] = linearBufferSource[j];
+            linearBuffer += 320;
+            linearBufferSource += area->trueWidth;
+        }
+    } else {
+        for (int i = 0; i < newHeight; i++) {
+            for (int j = 0; j < newWidth; j++)
+                linearBufferSource[j] = linearBuffer[j];
+            linearBuffer += 320;
+            linearBufferSource += area->trueWidth;
+        }
+    }
 }

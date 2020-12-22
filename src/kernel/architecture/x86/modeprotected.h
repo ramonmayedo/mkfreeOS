@@ -16,24 +16,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #ifndef MODEPROTECTED_H
 #define MODEPROTECTED_H
-#include "../../defines/types.h"
-
-//Area para definiciones gloables
-#define GDTSIZE 0x10
-#define IDTSIZE 0xFF
-#define INTGATE  0x8E00 //Tipo Compuerta de interrupcion del 80386 
-#define TRAPGATE 0xEF00 //Compuerta de trampa del 80386
+#include "includes/hcpu.h"
+#include "includes/hmodeprotected.h"
 
 class CmodeProtected {
 public:
-        CmodeProtected();
-        void initGdtDescriptor(u32, u32, u8, u8, struct SgdtDescriptor *); //incializa un descriptor global
- 	void initIdtDescriptor(u16, u32, u16, struct SidtDescriptor *);    //inicializa un descriptor de interrupciones
-        void initGdt(void);  
-        void initIdt(void);
-       // void setIRQ(u8 irq, u32 *vector);
+    CmodeProtected();
+    void initGdtDescriptor(u32, u32, u8, u8, struct SgdtDescriptor *); //incializa un descriptor global
+    void initIdtDescriptor(u16, u32, u16, struct SidtDescriptor *); //inicializa un descriptor de interrupciones
+    void initGdt(Scpus* cpu);
+    void initIdt(void);
+    void addHandlerInterrupt(u8 index, u32 handler);
+    void initGDTCpus(Scpus *cpu);
 private:
-
+    SidtDescriptor kidt[MP_IDTSIZE]; //Tabla para los descriptores de interrupcion IDT
+    Sidtr kidtr; //Registro IDTR
+    Sgdtr kgdtr; //Registro GDTR
 };
 
 #endif

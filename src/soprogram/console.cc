@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -128,7 +128,10 @@ int scanLine(char *line) {
                 tok = strtok(line, sep);
             }
             blockDisplay();
-            console->execute();
+            if (console->execute() == 0){
+                printf("No se pudo ejecutar el proceso\n");
+                unblockDisplay();
+            }
             console->deleteArg();
         } else {
             tok = strtok(0, sep); //se inicializa la funcion

@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,4 +29,14 @@ void *memset(char *dest, char val, int n) {
     char *ptrdest = dest;
     while (n--)
         *ptrdest++ = val;
+}
+
+int memcmp(const void* s1, const void* s2, u32 size) {
+    char* ptr1 = (char*) s1;
+    char* ptr2 = (char*) s2;
+    while (size-- > 0) {
+        if (*ptr1++ != *ptr2++)
+            return 1;
+    }
+    return 0;
 }

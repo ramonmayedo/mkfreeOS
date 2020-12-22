@@ -12,162 +12,154 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 
 #include "intfunction.h"
 #include "x86.h"
-#include "../../core/process.h"
+
 
 extern Score core;
 extern Smaps maps;
 extern Sx86 x86;
 
 void c_passint() {
-    x86.pic8259.reconocer();
+    x86.intHandler.eoi();
 }
 //Atencion al timer IRQ0
 
 void c_int_timer() {
     u32 *ebp;
-    asm("mov %%ebp,%0" : "=m"(ebp));
-    Cprocess *process = core.adminProcess.getRun();
-    if (process != 0) {
-        maps.ticks++;
-        maps.clockMap.msecond++;
-    }
-    if (maps.ticksCmdPata)maps.ticksCmdPata++;
-    if (maps.ticksCmdPata >= 10) maps.ticksCmdPata = 0;
-        
-    if (maps.clockMap.msecond >= MAX_TICK_X_SECONDS) {
-        maps.clockMap.msecond = 0;
+    asm volatile("mov %%ebp,%0" : "=m"(ebp));
+    x86.intHandler.eoi();
+    maps.ticks++;
+    if (maps.ticks >= TICKS_PER_SECOND) {
+        maps.clockMap.weakUp++;
+        maps.ticks = 0;
         core.cacheDisk.flush();
     }
-    if (maps.ticks >= 10) {
-        maps.ticks = 0;
-        
-        if (process != 0 && core.adminProcess.getNext() != 0) {
-            process->processX86.regX86->gs = ebp[2];
-            process->processX86.regX86->fs = ebp[3];
-            process->processX86.regX86->es = ebp[4];
-            process->processX86.regX86->ds = ebp[5];
-            process->processX86.regX86->edi = ebp[6];
-            process->processX86.regX86->esi = ebp[7];
-            process->processX86.regX86->ebp = ebp[8];
-            process->processX86.regX86->ebx = ebp[10];
-            process->processX86.regX86->edx = ebp[11];
-            process->processX86.regX86->ecx = ebp[12];
-            process->processX86.regX86->eax = ebp[13];
-            process->processX86.regX86->eip = ebp[14];
-            process->processX86.regX86->cs = ebp[15];
-            process->processX86.regX86->eflags = ebp[16];
-            process->processX86.regX86->esp = ebp[17];
-            core.adminProcess.schelude();
-        }
-    }
-    x86.pic8259.reconocer();
+    if (maps.ticksKernelDelay > 0) maps.ticksKernelDelay--;
+    core.adminProcess.tick(ebp);
 }
 
 void c_int_keyboard() {
     core.keyborad.IRQ();
+    x86.intHandler.eoi();
 }
 
 void c_int_disk0() {
-    x86.pic8259.reconocer();
+    x86.intHandler.eoi();
 }
 
 void c_mouse_ps2() {
     core.mousePS2.IRQ();
+    x86.intHandler.eoi();
 }
 
 void c_gp() {
-    asm("movl 64(%ebp),%eax");
-    asm("movl %%eax,%0" : "=m"(maps.statusX86.cs));
-    asm("movl 60(%ebp),%eax");
-    asm("movl %%eax,%0" : "=m"(maps.statusX86.eip));
-    Cprocess * process = core.adminProcess.getRun();
-    if (process == 0 || core.adminProcess.getNext() == 0) // Si noy hay procesos y el que falla es el de inicio
-        x86.architecture.kernelStopScreen(ARCHX86_GENERAL_FAULT);
+    asm volatile("movl 64(%ebp),%eax");
+    asm volatile("movl %%eax,%0" : "=m"(maps.statusX86.cs));
+    asm volatile("movl 60(%ebp),%eax");
+    asm volatile("movl %%eax,%0" : "=m"(maps.statusX86.eip));
+    Cprocess * process = core.adminProcess.getRun()->process;
+    // Si noy hay procesos ready y el que falla es el que se esta ejecutando o es el kernel el que falla    
+    if (process == 0 || core.adminProcess.getNext() == 0 || maps.statusX86.eip < VM_KERNEL_PAGE1_END)
+        x86.architecture.kernelStopScreen("/n              !!!! GENERAL FAULT !!!!             /n");
+    x86.architecture.kernelStopScreen("/n              !!!! GENERAL FAULT !!!!             /n");
     core.adminProcess.killProcessRun();
 }
 
 void c_page_fault() {
     u32 dirFalla;
-    Cprocess *proceso;
-    asm("mov %cr2, %eax");
-    asm("mov %%eax, %0" : "=m"(dirFalla));
-    asm("mov %%eax, %0" : "=m"(maps.statusX86.cr2));
-    asm("movl 64(%ebp),%eax");
-    asm("movl %%eax,%0" : "=m"(maps.statusX86.cs));
-    asm("movl 60(%ebp),%eax");
-    asm("movl %%eax,%0" : "=m"(maps.statusX86.eip));
-    proceso = (Cprocess*) core.adminProcess.getRun();
-    if (proceso == 0 || core.adminProcess.getNext() == 0) // Si noy hay procesos y el que falla es el kernel
-        x86.architecture.kernelStopScreen(ARCHX86_PAGE_FAULT);
+    Cprocess *process;
+    asm volatile("mov %cr2, %eax");
+    asm volatile("mov %%eax, %0" : "=m"(dirFalla));
+    asm volatile("mov %%eax, %0" : "=m"(maps.statusX86.cr2));
+    asm volatile("movl 64(%ebp),%eax");
+    asm volatile("movl %%eax,%0" : "=m"(maps.statusX86.cs));
+    asm volatile("movl 60(%ebp),%eax");
+    asm volatile("movl %%eax,%0" : "=m"(maps.statusX86.eip));
+    process = (Cprocess*) core.adminProcess.getRun()->process;
+    // Si noy hay procesos ready y el que falla es el que se esta ejecutando o es el kernel el que falla
+    if (process == 0 || core.adminProcess.getNext() == 0)
+        x86.architecture.kernelStopScreen("                      !!!PAGE FAULT!!!!                        /n");
 
     bool error = false;
-    if (dirFalla < maps.memoryPagination.userPageHeap || dirFalla > maps.memoryPagination.userPageHeapEnd)
+    if (dirFalla <= VM_USER_PAGE || dirFalla >= VM_USER_PAGE_END)
         error = true;
     else {
-        u32 *directory = proceso->processX86.pageDirectory;
-        u32 *directoryVirtual = proceso->processX86.pageDirectoryVirtual;
-        x86.virtualMemory.createPageToDirectory(directory, directoryVirtual, (u8*) dirFalla, 0);
+        x86.virtualMemory.insertPageToPageDirectoryUser(process, (u8*) dirFalla, 0);
         return;
     }
-     //Si la direccion de falla esta fuera del espacio de usuario se termina la ejecucion
-     core.adminProcess.killProcessRun();
+    //Si la direccion de falla esta fuera del espacio de usuario se termina la ejecucion
+    x86.architecture.kernelStopScreen("                      !!!PAGE FAULT!!!!                        /n");
+    core.adminProcess.killProcessRun();
 }
 
 void c_syscall() {
     u32 noSystemCall, parameter1, parameter2, parameter3, parameter4, parameter5, ret, *ebp;
-    asm("movl %%ebp,%0" : "=m"(ebp));
-    asm("movl %%eax,%0" : "=m"(noSystemCall));
-    asm("movl %%ecx,%0" : "=m"(parameter1));
-    asm("movl %%edx,%0" : "=m"(parameter2));
-    asm("movl %%ebx,%0" : "=m"(parameter3));
-    asm("movl %%esi,%0" : "=m"(parameter4));
-    asm("movl %%edi,%0" : "=m"(parameter5));
-    Cprocess *process = core.adminProcess.getRun();
+    asm volatile("movl %%ebp,%0" : "=m"(ebp));
+    asm volatile("movl %%eax,%0" : "=m"(noSystemCall));
+    asm volatile("movl %%ecx,%0" : "=m"(parameter1));
+    asm volatile("movl %%edx,%0" : "=m"(parameter2));
+    asm volatile("movl %%ebx,%0" : "=m"(parameter3));
+    asm volatile("movl %%esi,%0" : "=m"(parameter4));
+    asm volatile("movl %%edi,%0" : "=m"(parameter5));
     //Se salva el estado del proceso
-    process->processX86.regX86->esp = ebp[17];
-    process->processX86.regX86->edi = ebp[6];
-    process->processX86.regX86->esi = ebp[7];
-    process->processX86.regX86->ebp = ebp[8];
-    process->processX86.regX86->ebx = ebp[10];
-    process->processX86.regX86->edx = ebp[11];
-    process->processX86.regX86->ecx = ebp[12];
-    process->processX86.regX86->eax = ebp[13];
-    process->processX86.regX86->cs = ebp[15];
-    process->processX86.regX86->eflags = ebp[16];
-    process->processX86.regX86->eip = ebp[14];
-    ret = core.systemCall.systemCall(noSystemCall, parameter1, parameter2, parameter3,parameter4,parameter5);
+    c_save_current_state(ebp, core.adminProcess.getRun());
+    ret = core.systemCall.systemCall(noSystemCall, parameter1, parameter2, parameter3, parameter4, parameter5);
     ebp[13] = ret;
 }
 
-void c_scheluder() {
-    asm ("mov %0,%%eax" : "=m"(core.adminProcess.getRun()->processX86.regX86->cr3));
-    asm ("mov %eax,%cr3");
-    asm ("mov %0,%%esp" : "=m"(core.adminProcess.getRun()->processX86.regX86->esp));
-    
-    Cprocess *process = core.adminProcess.getRun();
+void c_scheluder(Cthread *thread, bool changeDirectoryPages) {
+    if (changeDirectoryPages) {
+        asm volatile("mov %0,%%eax" : "=m"(thread->process->processX86.cr3));
+        asm volatile("mov %eax,%cr3");
+    }
+    asm volatile("mov %0,%%esp" : "=m"(thread->regX86->esp));
     //Se prepara el cambio a modo de usuario
-    asm ("mov %0,%%eax" : "=m"(process->processX86.regX86->esp));        
-    asm ("push $0x33");                                          // SS
-    asm ("push %eax");                                           //ESP
-    asm ("push %0" : "=m"(process->processX86.regX86->eflags));  //EFLAGS
-    asm ("push %0" : "=m"(process->processX86.regX86->cs));      //CS
-    asm ("push %0" : "=m"(process->processX86.regX86->eip));     //IP
+    asm volatile("mov %0,%%eax" : "=m"(thread->regX86->esp));
+    asm volatile("push $0x33"); // SS
+    asm volatile("push %eax"); //ESP
+    asm volatile("push %0" : "=m"(thread->regX86->eflags)); //EFLAGS
+    asm volatile("push %0" : "=m"(thread->regX86->cs));     //CS
+    asm volatile("push %0" : "=m"(thread->regX86->eip));    //IP
     //Se guardan los demas registros
-    asm ("push %0" : "=m"(process->processX86.regX86->eax));
-    asm ("push %0" : "=m"(process->processX86.regX86->ecx));
-    asm ("push %0" : "=m"(process->processX86.regX86->edx));
-    asm ("push %0" : "=m"(process->processX86.regX86->ebx));
-    asm ("push %0" : "=m"(process->processX86.regX86->esp));
-    asm ("push %0" : "=m"(process->processX86.regX86->ebp));
-    asm ("push %0" : "=m"(process->processX86.regX86->esi));
-    asm ("push %0" : "=m"(process->processX86.regX86->edi));
-    asm ("push %0" : "=m"(process->processX86.regX86->ds));
-    asm ("push %0" : "=m"(process->processX86.regX86->es));
-    asm ("push %0" : "=m"(process->processX86.regX86->fs));
-    asm ("push %0" : "=m"(process->processX86.regX86->gs));
-    asm ("ljmp $0x08,$_asm_restore");
+    asm volatile("push %0" : "=m"(thread->regX86->eax));
+    asm volatile("push %0" : "=m"(thread->regX86->ecx));
+    asm volatile("push %0" : "=m"(thread->regX86->edx));
+    asm volatile("push %0" : "=m"(thread->regX86->ebx));
+    asm volatile("push %0" : "=m"(thread->regX86->esp));
+    asm volatile("push %0" : "=m"(thread->regX86->ebp));
+    asm volatile("push %0" : "=m"(thread->regX86->esi));
+    asm volatile("push %0" : "=m"(thread->regX86->edi));
+    asm volatile("push %0" : "=m"(thread->regX86->ds));
+    asm volatile("push %0" : "=m"(thread->regX86->es));
+    asm volatile("push %0" : "=m"(thread->regX86->fs));
+    asm volatile("push %0" : "=m"(thread->regX86->gs));
+    asm volatile("ljmp $0x08,$_asm_restore");
+}
+//Para salvar el estado del proceso en sus registros
+
+void c_save_current_state(u32 *ebp, Cthread *thread) {
+    thread->regX86->gs = ebp[2];
+    thread->regX86->fs = ebp[3];
+    thread->regX86->es = ebp[4];
+    thread->regX86->ds = ebp[5];
+    thread->regX86->edi = ebp[6];
+    thread->regX86->esi = ebp[7];
+    thread->regX86->ebp = ebp[8];
+    thread->regX86->ebx = ebp[10];
+    thread->regX86->edx = ebp[11];
+    thread->regX86->ecx = ebp[12];
+    thread->regX86->eax = ebp[13];
+    thread->regX86->eip = ebp[14];
+    thread->regX86->cs = ebp[15];
+    thread->regX86->eflags = ebp[16];
+    thread->regX86->esp = ebp[17];
+}
+
+void c_bootCpus() {
+    x86.ioScreen.printf("CPU %i running /n", x86.intHandler.getLapicId());
+    asm("cli");
+    while (1);
 }

@@ -22,13 +22,13 @@ Cmode720x480x4::Cmode720x480x4() {
     fontSize = 0;
     mapFontSize = 0;
     //writeMiscellaneousOutput
-    MiscellaneousOutput = 0x63; // 0
+    MiscellaneousOutput = 0xE7; // 0
     //writeRegisterSequency
     Reset = 0x03; // 0
     ClockingMode = 0x01; // 1
-    MapMask = 0x0F; // 2
+    MapMask = 0x08; // 2
     CharacterMapSelect = 0x00; // 3
-    SequencerMemoryMode = 0x0E; // 4
+    SequencerMemoryMode = 0x06; // 4
     //WriteCRTCRegisters
     HorizontalTotal = 0x6B; // 0
     EndHorizontalDisplay = 0x59; // 1
@@ -47,7 +47,7 @@ Cmode720x480x4::Cmode720x480x4() {
     CursorLocationHigh = 0x00; // E
     CursorLocationLow = 0x00; // F
     VerticalRetraceStart = 0xEA; // 10  
-    VerticalRetraceEnd = 0x8C; // 11
+    VerticalRetraceEnd = 0x0C; // 11
     VerticalDisplayEnd = 0xDF; // 12
     Offset = 0x2D; // 13
     UnderlineLocation = 0x08; // 14

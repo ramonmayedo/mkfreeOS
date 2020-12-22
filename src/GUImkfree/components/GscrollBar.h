@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,36 +16,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #ifndef GSCROLLBAR_H
 #define GSCROLLBAR_H
-#include "../basics/control.h"
-#include "Gbutton.h"
-#include "Gpanel.h"
+#include "Gcomponent.h"
 
-typedef void (onScrollEvent)(Gcontrol*,int,int);
+typedef void (onScrollEvent)(GgraphicComponent* sender,int pos);
 
 enum scrollBarKind {
-    sbVertical, sbHorizontal
+     kindVertical, kindHorizontal
 };
 
-class GscrollBar : public Gcontrol {
+class GscrollBar : public Gcomponent {
 public:
-    GscrollBar();
-    void repaint();
-    void refresh();
-    GscrollBar(int x, int y, int width, int height);
-    void initialized();
+    GscrollBar(int x, int y, int width, int heigh,scrollBarKind kind ,Gcomponent *parent);
+    void clickPressUp(int x, int y);
+    void clickPressDown(int x, int y) ;
+    void mouseMove(int x, int y);
+    void draw(Grect &rect);
     onScrollEvent *onScrollBy;
     ~GscrollBar();
     Gcolor color;
-    int position;
-    int max;
+    int scrollPosition;
     int min;
     int inc;
     scrollBarKind kind;
+    void setmax(int amax);
+    void resize();
 private:
-    Gbutton *bup, *bdown;
-    Gpanel *cursor,*bscroll;
+     Grect bup1, bdown1;
+     Grect cursor1,bscroll1;
+     GgraphicsBitmap *bup, *bdown;
+     float paso;
+     bool clickedCursor;
+     Gpoint posClick;
+     int max;
 protected:
-    void cursorResize();
+    void scrollForce(Gpoint newPosition, Gpoint actualPosition);
+    void scrolled(Gpoint newPosition, Gpoint actualPosition);
+
 };
 
 #endif

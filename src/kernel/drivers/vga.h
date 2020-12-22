@@ -22,12 +22,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #include "vga/videomode/mode320x200x256.h"
 #include "vga/videomode/modetext80x25x16.h"
 #include "vga/videomode/mode720x480x4.h"
-
+#include "bxvga.h"
 
 #define	RAM_SCREEN     0xB8000        //Direccion de la RAM de Video
 #define SCREEN_SIZE    0xFA0	     
 #define SCREEN_LIMIT   0xB8FA0
 #define SIZE_LINE      0x4f
+
 
 class Cvga {
 public:
@@ -46,6 +47,7 @@ public:
     int setPixel(u32 x, u32 y, int acolor);
     int getPixel(u32 x, u32 y);
     void clearScreen();
+    void paintArea(SvideoArea *area, bool copyOrWrite);
 protected:   
     void setConfiguration(CmodeVideo *aconfiguration);
     void writeRegisterSequency(CmodeVideo *aconfiguration);
@@ -58,9 +60,12 @@ protected:
     void setColorVGApalette24(u32 aindex,u32 color);
     void setFont(CmodeVideo *aconfiguration,u8 *afont);
     void scrollUp(int nLines);
+
+    
 private:
     CmodeVideo *configuration;
     u32 *vgaPalette;
+    volatile u8 *frameBuffer;
     CregisterVGA registerVGA;
     bool BlankedAndUnlocked;
     CmodeText80x25x16 modeText80x25x16;

@@ -12,42 +12,56 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 
 #ifndef ADMINPROCESS_H
 #define ADMINPROCESS_H
 #include "../uses/list.h"
 #include "process.h"
+#include "thread.h"
 
-#define PROC_RUN   0
-#define PROC_READY 1
-#define PROC_BLOCK 2
+#define THREAD_RUN   0x0
+#define THREAD_READY 0x1
+#define THREAD_BLOCK 0x2
+
+#define ADP_PRIORITY_LOW   0x0
+#define ADP_PRIORITY_HIGHT 0x1
 
 enum commandAdminProcess {
     cmpExecV = 1, cmpExit = 2, cmpCreateThread = 3, cmpKillThread = 4, cmpSrbk = 5,
-    cmpSendCommand = 6, cmpGetCommand = 7, cmpGetPid = 8, cmpWaitCommand = 9,
+    cmpSendCommand = 6, cmpGetCommand = 7, cmpGetPid = 8,
     cmpReadBufferIPC = 10, cmpWriteBufferIPC = 11, cmpSharedMemory = 12
 };
 
-class CadminProcess {
+enum priorityAdminProcess {
+    priorityVeryHight = 50, priorityLow = 15, priorityHight = 40, priorityVeryLow = 1,
+    priorityNormal = 25
+};
 
+class CadminProcess {
 public:
     CadminProcess();
     void initialize();
-    int addReady(char *afile, int argc, char **argv);
+    int addReady(char *afile, int argc, char **argv, int priority);
+    int addThread(Cthread *thread);
     void schelude();
-    Cprocess *getRun();
-    Cprocess *getNext();
-    int deleteProcess(int aidPID);
+    Cthread *getRun();
+    Cthread *getNext();
+    int deleteThread(int tid);
     void killProcessRun();
-    int unlockProcess(int astate);
-    int unlockProcess(Cprocess *process, Cthread *thread);
-    Cprocess *getProcess(int aidPID);
+    int unlockThread(Cthread *thread, int priority);
+    int isThreadExist(Cthread *thread);
+    Cprocess *getProcess(int pid);
+    Cthread *getThread(int tid);
+    Cthread* sendSignal(int signal, Cprocess *process);
     int command(int acommand, int parameter1, int parameter2, int parameter3, int parameter4);
+    void tick(u32 *ebp);
 private:
-    Clist *ready, *lock;
-    Cprocess *run;
-    int max,id;
+    Clist *ready, *lock, *processList;
+    Cthread *run;
+    int max, pid, tid;
+    void deleteProcess(Cprocess *process);
+
 };
 
 #endif

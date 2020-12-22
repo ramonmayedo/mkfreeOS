@@ -19,16 +19,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #include "cstring.h"
 #include "list.h"
 
-class Gslines {
+class slines {
 public:
-    Gslines();
+    slines();
     void insert(int index, string *str);
     void add(string *str);
     void Delete(int index);
     void clear();
     string *operator[](int index);
     int count();
-    ~Gslines();
+    ~slines();
 private:
     Clist *lines;
 };

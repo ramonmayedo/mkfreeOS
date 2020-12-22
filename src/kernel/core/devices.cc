@@ -7,7 +7,7 @@ the Free Software Foundation, either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABIL    ITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
@@ -26,10 +26,14 @@ Cdevices::Cdevices() {
 
 int Cdevices::installDevices() {
     countDevices = 0;
-    readDevices(&maps.diskIde.chanel0, 0);
-    readDevices(&maps.diskIde.chanel0, 1);
-    readDevices(&maps.diskIde.chanel1, 0);
-    readDevices(&maps.diskIde.chanel1, 1);
+    diskIde.chanel0.regBase = 0x1F0;
+    diskIde.chanel0.regControl = 0x3F6;
+    diskIde.chanel1.regBase = 0x170;
+    diskIde.chanel1.regControl = 0x376;
+    readDevices(&diskIde.chanel0, 0);
+    readDevices(&diskIde.chanel0, 1);
+    readDevices(&diskIde.chanel1, 0);
+    readDevices(&diskIde.chanel1, 1);
 }
 
 u8 Cdevices::readDevices(SdevicePort *device, u8 devIndex) {

@@ -52,7 +52,8 @@ public:
     int indexOf(void *aitem);
     int remove(void *aitem);
     void *removeLast();
-    void *removeFirst(); 
+    void *removeFirst();
+    void initialize();
     ~Clist();
 protected:
     Cnode *getNode(int aindex);

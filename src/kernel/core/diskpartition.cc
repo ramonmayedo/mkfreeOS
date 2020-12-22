@@ -15,9 +15,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
 #include "diskpartition.h"
-#include "filesystem/fat.h"
-#include "filesystem/bfs.h"
-#include "filesystem/iso9660.h"
+#include "../filesystem/fat.h"
+#include "../filesystem/bfs.h"
+#include "../filesystem/iso9660.h"
 #include "../architecture/x86/x86.h"
 
 extern Score core;

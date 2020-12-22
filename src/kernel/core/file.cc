@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #include "file.h"
 #include "../architecture/x86/x86.h"
-#include "filesystem/includes/hbfs.h"
+#include "../filesystem/includes/hbfs.h"
 
 extern Score core;
 extern Sx86 x86;
@@ -86,6 +86,7 @@ Cfile::~Cfile() {
         core.fileSystem.closeFile();
     }
 }
+
 int Cfile::getSize() {
     if (error == 0)
         return info->fileSize;

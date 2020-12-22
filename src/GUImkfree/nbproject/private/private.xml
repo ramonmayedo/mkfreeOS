@@ -9,6 +9,21 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/basics/canvasPainter.cpp</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/applications/fileExplorer/fileExplorer.cc</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/components/GcontrolScrolled.cpp</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/components/GcontrolScrolled.h</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/components/GgraphicComponent.cpp</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/components/GlistView.cpp</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/components/Gcomponent.h</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/components/Gbutton.cpp</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/components/Gwindows.cpp</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/components/Gcomponent.cpp</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/windowserver/menu.cpp</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/components/GgraphicComponent.h</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/components/GscrollBar.cpp</file>
+            <file>file:/C:/Users/Ramon/Desktop/mkfree/src/GUImkfree/components/GscrollBar.h</file>
+        </group>
     </open-files>
 </project-private>

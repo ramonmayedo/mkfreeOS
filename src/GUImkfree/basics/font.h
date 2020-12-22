@@ -1,49 +1,42 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>
-*/
-
 #ifndef FONT_H
 #define FONT_H
-#include "graphicsbitmap.h"
-#include "frame.h"
 
-struct Sfont {
+#define u32 unsigned int
+#define u16 unsigned short
+#define u8 unsigned char
+
+struct SfontHeader {
+    u32 typeFile; //Identificador de los archivos mkfreeOS
+    u8 magicChar[6]; //MKFONT
+    u32 family;
+    u8 width;
+    u8 height;
+    u32 countChar;
+    char name[128];
+};
+
+enum TextAlignment {
+    talignTopLeft,
+    talignCenterTop,
+    talignCenter,
+    talignCenterBottom,
+    talignTopRight,
+    talignNone,
+};
+
+class Gfont {
+public:
+    Gfont();
+    Gfont(char *dir);
     int width;
     int height;
-};
-
-enum eTextAlign {
-    alignCenter = 1, alignLeft = 2, alignRight = 3,
-    alignTop = 4
-};
-
-class Gfont : public Gframe {
-public:
-    Gfont(int x, int y, int width, int height);
-    int print(char *text, Gcolor color, Gcolor background);
-    int printLine(int dx, char *text, int size, Gcolor color, Gcolor background);
-    void putc(int x, int y, Gcolor color, Gcolor background, const char c);
-    bool wordWrap;
-private:
     int spaceSeparator;
-    int cwidth;
-    int cheight;
-    Sfont font;
-protected:
-    void iputc(int x, int y, Gcolor color, Gcolor background, const char c);
-
+    int countChar;
+    int *linearBuffer;
+private:
+    int buildFontTypeBinary(char *buffer);
+    int loadFont(char *path);
+    int byteXwidth;
 };
 
 #endif

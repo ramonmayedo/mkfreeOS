@@ -17,40 +17,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef VIRTUALMEMORY_H
 #define VIRTUALMEMORY_H
 
-#include "../../defines/types.h"
-#include "../../core/virtualmemoryzone.h"
-
-#define PG_PRESENT   0x00000001
-#define PG_WRITE     0x00000002
-#define PG_USER      0x00000004
-#define PG_4MB       0x00000080
-
-#define WRITE_PAGE 0x1
-#define RELEASE_PAGE 0x2
+#include "includes/hvirtualmemory.h"
+#include "../../vmemory/memorybitmap.h"
+#include "../../vmemory/memoryzone.h"
+#include "../../vmemory/memoryregion.h"
+#include "../../uses/list.h"
 
 class CvirtualMemory {
 public:
     CvirtualMemory();
     void initialize();
-    u8 * getPageFrameToBitmap();
-    int directoryPages(u32 *apagDirectory, u8 *avirtualAddress, u8 *aphisicalAddress, u32 aflags, int acommand);
+    u8 * getPhisicalPage();
     int addDirectoryPagesKernel(u8 *avirtualAddress, u8 *aphisicalAddress, u32 aflags);
-    u8* getPagesVirtualKernel(u32 *phisicalPage);
-    u8* getPagesVirtualKernel();
-    int releasePageVirtualKernel(u8 *avirtualAddress);
-    u32 *createPageDirectory(u32 *phisicalAddress);
-    int createPageToDirectory(u32 *apagDirectory, u32 *apagDirectoryVirtual, u8 *avirtualAddress, u8 *aphisicalAdress);
-    void deleteDirectoryPages(u32 *apagDirectory);
-
-protected:
-    void initDirectoryPages();
-    void initBitapMemoryPages();
-    void initMemoryPagesVirtual();
-
+    u8* getPagesHeapToKernel(u32 *phisicalPage);
+    u8* getPagesHeapToKernel();
+    int releasePagesHeapToKernel(u8 *avirtualAddress);
+    u32 *createPageDirectoryUser(u32 *phisicalAddress);
+    int insertPageToPageDirectoryUser(Cprocess *process, u8 *avirtualAddress, u8 *aphisicalAdress);
+    void deleteDirectoryPagesUser(u32 *apagDirectory);
+    void addRegion(CmemoryRegion *region);
+    int command(int acommand, int parameter1, int parameter2,int parameter3);
 private:
-    u32 *pagDirectory;
-    u8 *bitMapPages;
-    CvirtualMemoryZone *pagesKernel;
+    u32 *dirPagesKernel;
+    CmemoryZone *kernelPageHeap;   //Paginas del monton del kernel
+    CmemoryZone *sharedMemoryPage;     //Memoria Compartida
+    CmemoryBitmap phisicalBitmap;  //Bitmap de las paginas fisicas
+    Clist regions;   //Regiones de Memoria y Paginas Compartidas
+    int idCountRegion;                //Para llave de la memoria compartida
+    void initDirectoryPages();
+    int directoryPagesKernel(u8 *avirtualAddress, u8 *aphisicalAddress, u32 aflags, int acommand);
 };
 
 #endif

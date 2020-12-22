@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #include "graphics.h"
 #include "../architecture/x86/x86.h"
+
 extern Score core;
 extern Sx86 x86;
 
@@ -30,6 +31,8 @@ void Cgraphics::installDevice() {
     if (indexInstall == INSTALL_BOSCH) {
         frameBuffer = ((Cbxvga*) adapter)->getFrameBuffer();
         ((Cbxvga*) adapter)->setResolution(640, 480);
+        width = 640;
+        height = 480;
         return;
     }
 
@@ -43,10 +46,14 @@ void Cgraphics::installDevice() {
 int Cgraphics::changeMode(int kwidth, int kheight) {
     if (indexInstall == INSTALL_BOSCH) {
         ((Cbxvga*) adapter)->setResolution(kwidth, kheight);
+        width = kwidth;
+        height = kheight;
         return 0;
     }
     if (indexInstall == INSTALL_VGA) {
         ((Cvga*) adapter)->setMode(g320x200x256);
+        width = 200;
+        height = 256;        
         return 0;
     }
 }
@@ -65,17 +72,19 @@ int Cgraphics::command(int acommand, int parameter1, int parameter2) {
         case cgpPaintArea:
         {
             SvideoArea *area = (SvideoArea*) parameter1;
-            for (int i = 0; i < area->height; i++)
-                for (int j = 0; j < area->width; j++)
-                    setPixel((j + area->left), (i + area->top), area->area[i * area->width + j]);
+            if (indexInstall == INSTALL_BOSCH)
+                ((Cbxvga*) adapter)->paintArea(area, false);
+            if (indexInstall == INSTALL_VGA)
+                ((Cvga*) adapter)->paintArea(area, false);
             break;
         }
         case cgpGetArea:
         {
             SvideoArea *area = (SvideoArea*) parameter1;
-            for (int i = 0; i < area->height; i++)
-                for (int j = 0; j < area->width; j++)
-                    area->area[i * area->width + j] = getPixel((j + area->left), (i + area->top));
+            if (indexInstall == INSTALL_BOSCH)
+                ((Cbxvga*) adapter)->paintArea(area, true);
+            if (indexInstall == INSTALL_VGA)
+                ((Cvga*) adapter)->paintArea(area, true);
             break;
         }
 

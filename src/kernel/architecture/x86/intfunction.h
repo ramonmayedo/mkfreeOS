@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #ifndef INTFUNCTION_H
 #define INTFUNCTION_H
+#include "../../core/thread.h"
 
 extern "C"{
     void  c_passint();
@@ -26,8 +27,10 @@ extern "C"{
     void  c_page_fault();
     void  c_syscall();
     void  c_syscall_ret();
-    void  c_scheluder();
+    void  c_scheluder(Cthread *process, bool changeDirectoryPages);
     void  c_mouse_ps2();
+    void  c_save_current_state(u32 *ebp, Cthread *process);
+    void  c_bootCpus();
 }
 
 #endif

@@ -19,8 +19,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #include "../defines/types.h"
 #include "../core/process.h"
 #include "../core/thread.h"
+#include "../core/includes/hutils.h"
 
-//ok
+#define MS_CONTROL_REGISTER 0x64
+#define MS_BASE_REGISTER    0x60
+
+struct SmouseMap {
+    int dx;
+    int dy;
+    int dz;
+    int state;
+    u8 flags;
+    u8 buttons;
+} __attribute__((packed));
+
 class CmausePS2 {
 public:
     CmausePS2();
@@ -30,12 +42,12 @@ public:
     int getState();
 private:
     u32 state;
-    Cprocess *process;
-    Cthread *thread;
+    Clist locksProcess;
+    SlockProcess *lockProcess;
     char buffer[32];
     u8 ptr;
     u8 count;
-protected:
+    SmouseMap mouseMap ;
     u8 waitRead(u32 port);
     void waitWrite(u32 port, u8 value);
     void waitOutPut();
@@ -43,8 +55,10 @@ protected:
     void write(u8 data);
     u8 read();
     void ack();
-    int block();
-    int unblock();
+    int lock();
+    int unlock();
+    int confirmUnlock();
+    
 };
 
 #endif

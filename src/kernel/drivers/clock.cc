@@ -12,7 +12,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 
 #include "clock.h"
 #include "../architecture/x86/x86.h"
@@ -21,52 +21,52 @@ extern Smaps maps;
 extern Sx86 x86;
 
 Cclock::Cclock() {
+    refresh();
 }
 
 void Cclock::getTime(u32 *ahour, u32 *aminute, u32 *asecond) {
     u32 dataHour, dataMinute, dataSecond;
-    x86.port.outb(maps.clockMap.port.regBase, 0x95);
+    x86.port.outb(CK_BASE_REGISTER, 0x95);
 
-    x86.port.outb(maps.clockMap.port.regBase, 4);
-    dataHour = x86.port.inb(maps.clockMap.port.regControl);
+    x86.port.outb(CK_BASE_REGISTER, 4);
+    dataHour = x86.port.inb(CK_CONTROL_REGISTER);
     *ahour = dataHour - ((u32) dataHour / 16) * 6;
 
-    x86.port.outb(maps.clockMap.port.regBase, 2);
-    dataMinute = x86.port.inb(maps.clockMap.port.regControl);
+    x86.port.outb(CK_BASE_REGISTER, 2);
+    dataMinute = x86.port.inb(CK_CONTROL_REGISTER);
     *aminute = dataMinute - ((u32) dataMinute / 16) * 6;
 
-    x86.port.outb(maps.clockMap.port.regBase, 0);
-    dataSecond = x86.port.inb(maps.clockMap.port.regControl);
+    x86.port.outb(CK_BASE_REGISTER, 0);
+    dataSecond = x86.port.inb(CK_CONTROL_REGISTER);
     *asecond = dataSecond - ((u32) dataSecond / 16) * 6;
 }
 
 void Cclock::getDate(u32 *ayear, u32 *amonth, u32 *aday) {
     u32 dataYear, dataMonth, dataDay;
 
-    x86.port.outb(maps.clockMap.port.regBase, 0x95);
+    x86.port.outb(CK_BASE_REGISTER, 0x95);
 
-    x86.port.outb(maps.clockMap.port.regBase, 9);
-    dataYear = x86.port.inb(maps.clockMap.port.regControl);
+    x86.port.outb(CK_BASE_REGISTER, 9);
+    dataYear = x86.port.inb(CK_CONTROL_REGISTER);
     *ayear = dataYear - ((u32) dataYear / 16) * 6;
 
-    x86.port.outb(maps.clockMap.port.regBase, 8);
-    dataMonth = x86.port.inb(maps.clockMap.port.regControl);
+    x86.port.outb(CK_BASE_REGISTER, 8);
+    dataMonth = x86.port.inb(CK_CONTROL_REGISTER);
     *amonth = dataMonth - ((u32) dataMonth / 16) * 6;
 
-    x86.port.outb(maps.clockMap.port.regBase, 7);
-    dataDay = x86.port.inb(maps.clockMap.port.regControl);
+    x86.port.outb(CK_BASE_REGISTER, 7);
+    dataDay = x86.port.inb(CK_CONTROL_REGISTER);
     *aday = dataDay - ((u32) dataDay / 16) * 6;
 }
 
 void Cclock::getWeekDay(u32 *aweekDay) {
     u32 dataWeekday;
 
-    x86.port.outb(maps.clockMap.port.regBase, 0x95);
-    x86.port.outb(maps.clockMap.port.regBase, 6);
-    dataWeekday = x86.port.inb(maps.clockMap.port.regControl);
+    x86.port.outb(CK_BASE_REGISTER, 0x95);
+    x86.port.outb(CK_BASE_REGISTER, 6);
+    dataWeekday = x86.port.inb(CK_CONTROL_REGISTER);
     if (dataWeekday < 6) *aweekDay = dataWeekday + 2;
     else *aweekDay = dataWeekday - 5;
-
 }
 
 void Cclock::refresh() {
@@ -90,7 +90,7 @@ void Cclock::refreshWeekDay() {
 u32 Cclock::getTimeU32() {
     u32 hours, minutes, seconds;
     getTime(&hours, &minutes, &seconds);
-    return ((hours * 60 + minutes)*60 + seconds)* MAX_TICK_X_SECONDS + maps.clockMap.msecond;
+    return ((hours * 60 + minutes)*60 + seconds)* MAX_TICK_X_SECONDS + maps.ticks;
 }
 
 int Cclock::command(int acommand, int parameter1, int parameter2) {

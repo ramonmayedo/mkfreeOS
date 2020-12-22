@@ -26,7 +26,7 @@ CcacheDisk::CcacheDisk() {
 void CcacheDisk::initialize() {
     table512 = new Scache[MAX_ENTRY512];
     for (int i = 0; i < MAX_ENTRY512 / 8; i++) {
-        u32 dirPtr = (u32) x86.virtualMemory.getPagesVirtualKernel();
+        u32 dirPtr = (u32) x86.virtualMemory.getPagesHeapToKernel();
         for (int j = 0; j < 8; j++) {
             table512[i * 8 + j].ptrMem = dirPtr + 512 * j;
             table512[i * 8 + j].flags = 0;
@@ -35,7 +35,7 @@ void CcacheDisk::initialize() {
 
     table2048 = new Scache[MAX_ENTRY2048];
     for (int i = 0; i < MAX_ENTRY2048 / 2; i++) {
-        u32 dirPtr = (u32) x86.virtualMemory.getPagesVirtualKernel();
+        u32 dirPtr = (u32) x86.virtualMemory.getPagesHeapToKernel();
         table2048[i * 2].ptrMem = dirPtr;
         table2048[i * 2].flags = 0;
         table2048[i * 2 + 1].ptrMem = dirPtr + 2048;
@@ -162,7 +162,6 @@ int CcacheDisk::readSector(u32 adevice, u32 ablock, u32 asectorCount, char *abuf
 int CcacheDisk::readSectorExt(u32 adevice, u32 ablock, u32 asectorCount, char *abuffer) {
     char *buffer = abuffer;
     u32 block = ablock;
-
     for (int i = 0; i < asectorCount; i++) {
         if (readSectorExt(adevice, block, buffer) == ERROR_DEVICE) return 0;
         buffer += 2048;

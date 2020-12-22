@@ -1,1 +1,0 @@
-del bootloader\x86\image.o

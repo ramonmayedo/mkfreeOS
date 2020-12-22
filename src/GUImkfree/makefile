@@ -7,21 +7,27 @@ ASM=C:\nasm\nasm
 ASMFLAG = -f elf 
 OBJDUMP=objdump
 
-OBJ := $(OBJ) basics/control.o basics/point.o basics/size.o basics/cstring.o\
-	      basics/rect.o basics/color.o basics/list.o basics/object.o \
-	      basics/frame.o basics/graphicsbitmap.o basics/fonts/lucidaconsole.o \
-	      basics/font.o components/Gbutton.o components/Gpanel.o \
-	      components/Gcursor.o components/Gwindows.o components/GWbartitle.o \
-	      components/Glabel.o components/GlistBox.o basics/elapseTime.o \
-	      components/GscrollBar.o basics/kgraphics.o basics/vstring.o \
-	      components/GtextEdit.o basics/slines.o components/GlineEdit.o \
-	      basics/columns.o components/GlistView.o components/GcolumnButton.o\
-	      systemWindows/Gclient.o components/GstatusBar.o components/GtoolBar.o
+OBJ := $(OBJ) basics/canvasPainter.o basics/gpoint.o basics/gsize.o basics/cstring.o\
+	      basics/grect.o basics/gcolor.o basics/list.o basics/object.o \
+	      basics/gbitmap.o  \
+	      basics/font.o \
+	      basics/socketipc.o \
+	      basics/vstring.o \
+	      basics/slines.o resources/icons.o \
+	      basics/columns.o basics/socketipc.o \
+	      basics/png.o basics/puff.o \
+	      components/GgraphicComponent.o components/Gcomponent.o \
+	      components/Gwindows.o client/Gclient.o components/Gbutton.o\
+	      components/GscrollBar.o components/GcontrolScrolled.o \
+	      components/GlistView.o
 	
 ensamblar : $(PROG)
 
 $(PROG):$(OBJ)
 	 ar rcs $@ $(OBJ)
+%.o: %.cpp
+	 $(SC) $(FLAG) -c $< -o  $@
+
 %.o: %.cc
 	 $(SC) $(FLAG) -c $< -o  $@
 

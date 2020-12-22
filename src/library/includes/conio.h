@@ -6,39 +6,13 @@
 #define CAR_ATTRIBUTE     0x07
 #define CAR_BACKSPACE     0x08
 
-enum commandConsole {
-    cmcColor = 1, cmcGotoXY = 2, cmcWhereX = 3, cmcWhereY = 4,
-    cmcPrintf = 5, cmcBlock = 6, cmcUnBlock = 7, cmcGetChar = 8,
-    cmcPutChar = 9, cmcReadChar = 10, cmcWrite = 11
-};
-
-enum commandGraphics {
-    cmgChangeModeVideo = 1, cmgPaintArea = 2, cgpChangeModeVideoAdvanced = 3,
-    cmpGetArea = 4
-};
-
-enum commandMouse {
-    cmmMouseEvent = 1
-};
-
-enum eCommandKeyboard {
-    cmkKeyEvent = 1
-};
-
-
-enum COLORS {
-    clBLACK, clRED, clGREEN, clCYAN, clBLUE, clMAGENTA,
-    clBROWN, clLIGHTGRAY, clDARKGRAY, clLIGHTBLUE,
-    clLIGHTGREEN, clLIGHTCYAN, clLIGHTRED, clLIGHTMAGENTA,
-    clYELLOW, clWHITE
-};
-
 struct SvideoArea {
     int *area;
     int left;
     int top;
     int height;
     int width;
+    int trueLeft, trueTop, trueHeight, trueWidth;
 };
 
 enum MODESVIDEO {

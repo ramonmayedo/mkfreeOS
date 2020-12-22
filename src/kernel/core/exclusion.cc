@@ -83,7 +83,7 @@ int Cexclusion::up(int aid) {
     Csemaphore * semaphore = (Csemaphore*) getSemaphore(aid);
     if (semaphore) {
         if (semaphore->getValue() == 0) semaphore->setValue(true);
-        else core.adminProcess.getRun()->sendState(semaphore->getsid()); //Proceso Bloquedo;
+        else core.adminProcess.getRun()->sendState(semaphore->getsid(),5); //Proceso Bloquedo;
         return aid;
     }
     return 0;

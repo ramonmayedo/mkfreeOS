@@ -17,7 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef CACHEDISK_H
 #define CACHEDISK_H
 #include "../defines/types.h"
-#include "../architecture/x86/includes/maps.h"
 #include "devices.h"
 
 #define FLAG_USED 0x1
@@ -32,7 +31,7 @@ struct Scache{
     u32 idResorce;
     u32 old;
     u32 did;
-};
+}__attribute__ ((packed));
 
 class CcacheDisk {
 public:

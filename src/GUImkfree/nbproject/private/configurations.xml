@@ -3,105 +3,102 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
       <df name="applications">
-        <df name="destokp">
-          <in>Gdestokp.cc</in>
-          <in>Gdestokp.h</in>
-          <in>GmainBar.cc</in>
-          <in>GmainBar.h</in>
-          <in>Gscreen.cc</in>
-          <in>Gscreen.h</in>
-          <in>destokp.cc</in>
-        </df>
         <df name="fileExplorer">
           <in>fileExplorer.cc</in>
         </df>
-        <df name="textEditor">
-          <in>textEditor.cc</in>
+        <df name="notepad">
+          <in>main.cc</in>
         </df>
       </df>
       <df name="basics">
-        <df name="fonts">
-          <in>lucidaconsole.asm</in>
-        </df>
-        <in>color.cc</in>
-        <in>color.h</in>
-        <in>columns.cc</in>
+        <in>canvasPainter.cpp</in>
+        <in>canvasPainter.h</in>
+        <in>columns.cpp</in>
         <in>columns.h</in>
-        <in>control.cc</in>
-        <in>control.h</in>
-        <in>cstring.cc</in>
+        <in>cstring.cpp</in>
         <in>cstring.h</in>
-        <in>elapseTime.cc</in>
-        <in>elapseTime.h</in>
-        <in>font.cc</in>
+        <in>font.cpp</in>
         <in>font.h</in>
-        <in>frame.cc</in>
-        <in>frame.h</in>
-        <in>graphicsbitmap.cc</in>
-        <in>graphicsbitmap.h</in>
-        <in>kgraphics.cc</in>
-        <in>kgraphics.h</in>
-        <in>list.cc</in>
+        <in>gbitmap.cpp</in>
+        <in>gbitmap.h</in>
+        <in>gcolor.cpp</in>
+        <in>gcolor.h</in>
+        <in>gpoint.cpp</in>
+        <in>gpoint.h</in>
+        <in>grect.cpp</in>
+        <in>grect.h</in>
+        <in>gsize.cpp</in>
+        <in>gsize.h</in>
+        <in>list.cpp</in>
         <in>list.h</in>
-        <in>object.cc</in>
+        <in>object.cpp</in>
         <in>object.h</in>
-        <in>point.cc</in>
-        <in>point.h</in>
-        <in>rect.cc</in>
-        <in>rect.h</in>
-        <in>size.cc</in>
-        <in>size.h</in>
-        <in>slines.cc</in>
+        <in>png.cpp</in>
+        <in>png.h</in>
+        <in>puff.cpp</in>
+        <in>puff.h</in>
+        <in>slines.cpp</in>
         <in>slines.h</in>
+        <in>socketipc.cc</in>
+        <in>socketipc.h</in>
         <in>templates.h</in>
-        <in>vstring.cc</in>
+        <in>vstring.cpp</in>
         <in>vstring.h</in>
       </df>
-      <df name="components">
-        <in>GWbartitle.cc</in>
-        <in>GWbartitle.h</in>
-        <in>Gbutton.cc</in>
-        <in>Gbutton.h</in>
-        <in>GcolumnButton.cc</in>
-        <in>GcolumnButton.h</in>
-        <in>Gcursor.cc</in>
-        <in>Gcursor.h</in>
-        <in>Glabel.cc</in>
-        <in>Glabel.h</in>
-        <in>GlineEdit.cc</in>
-        <in>GlineEdit.h</in>
-        <in>GlistBox.cc</in>
-        <in>GlistBox.h</in>
-        <in>GlistView.cc</in>
-        <in>GlistView.h</in>
-        <in>Gpanel.cc</in>
-        <in>Gpanel.h</in>
-        <in>GscrollBar.cc</in>
-        <in>GscrollBar.h</in>
-        <in>GstatusBar.cc</in>
-        <in>GstatusBar.h</in>
-        <in>GtextEdit.cc</in>
-        <in>GtextEdit.h</in>
-        <in>GtoolBar.cc</in>
-        <in>GtoolBar.h</in>
-        <in>Gwindows.cc</in>
-        <in>Gwindows.h</in>
-        <in>desktop.cc</in>
-        <in>desktop.h</in>
-      </df>
-      <df name="iconos">
-      </df>
-      <df name="server">
-        <in>client.cc</in>
-        <in>client.h</in>
-        <in>server.cc</in>
-        <in>server.h</in>
-      </df>
-      <df name="systemWindows">
-        <in>Gclient.cc</in>
+      <df name="client">
+        <in>Gclient.cpp</in>
         <in>Gclient.h</in>
-        <in>Gserver.cc</in>
-        <in>Gserver.h</in>
+      </df>
+      <df name="components">
+        <in>Gbutton.cpp</in>
+        <in>Gbutton.h</in>
+        <in>Gcomponent.cpp</in>
+        <in>Gcomponent.h</in>
+        <in>Gcontrol.cpp</in>
+        <in>Gcontrol.h</in>
+        <in>GcontrolScrolled.cpp</in>
+        <in>GcontrolScrolled.h</in>
+        <in>GgraphicComponent.cpp</in>
+        <in>GgraphicComponent.h</in>
+        <in>GlineEdit.cpp</in>
+        <in>GlineEdit.h</in>
+        <in>GlistView.cpp</in>
+        <in>GlistView.h</in>
+        <in>GscrollBar.cpp</in>
+        <in>GscrollBar.h</in>
+        <in>Gterminal.cpp</in>
+        <in>Gterminal.h</in>
+        <in>GtextEdit.cpp</in>
+        <in>GtextEdit.h</in>
+        <in>Gwindows.cpp</in>
+        <in>Gwindows.h</in>
+      </df>
+      <df name="resources">
+        <in>icons.cpp</in>
+        <in>icons.h</in>
+      </df>
+      <df name="windowserver">
+        <in>clientconnection.cpp</in>
+        <in>clientconnection.h</in>
+        <in>composer.cpp</in>
+        <in>composer.h</in>
+        <in>cursor.cpp</in>
+        <in>cursor.h</in>
+        <in>desktop.cpp</in>
+        <in>desktop.h</in>
+        <in>frame.cpp</in>
+        <in>frame.h</in>
+        <in>main.cpp</in>
+        <in>maintoolbar.cpp</in>
+        <in>maintoolbar.h</in>
+        <in>menu.cpp</in>
+        <in>menu.h</in>
+        <in>toolapp.cpp</in>
+        <in>toolapp.h</in>
+        <in>window.cpp</in>
+        <in>window.h</in>
+        <in>windowserver.cpp</in>
+        <in>windowserver.h</in>
       </df>
     </df>
   </logicalFolder>

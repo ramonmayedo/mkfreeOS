@@ -15,7 +15,7 @@ int delSemaphore(int sid);
 int blockSemaphore(int sid);
 int unblockSemaphore(int sid);
 int getPid();
-int shmem(int size);
-int setshmem(int pid, int sid, int size);
+int shmem(int size, int *vmem);
+int setshmem(int key, int *vmem, int *size);
 #endif
 

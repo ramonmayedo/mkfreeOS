@@ -5,19 +5,28 @@
       <df name="architecture">
         <df name="x86">
           <df name="includes">
-            <in>maps.h</in>
+            <in>hapic.h</in>
+            <in>hcpu.h</in>
+            <in>hmodeprotected.h</in>
+            <in>hsmp.h</in>
+            <in>hvirtualmemory.h</in>
             <in>reg.h</in>
           </df>
+          <in>apic.cc</in>
+          <in>apic.h</in>
           <in>architecture.cc</in>
           <in>architecture.h</in>
+          <in>bootCPUs.asm</in>
           <in>intfunction.cc</in>
           <in>intfunction.h</in>
+          <in>inthandler.cc</in>
+          <in>inthandler.h</in>
           <in>io.cc</in>
           <in>io.h</in>
+          <in>ioapic.cc</in>
+          <in>ioapic.h</in>
           <in>ioscreen.cc</in>
           <in>ioscreen.h</in>
-          <in>malloc.cc</in>
-          <in>malloc.h</in>
           <in>modeprotected.cc</in>
           <in>modeprotected.h</in>
           <in>pic8259.cc</in>
@@ -26,39 +35,29 @@
           <in>pit8253.h</in>
           <in>sharedmemory.cc</in>
           <in>sharedmemory.h</in>
+          <in>smp.cc</in>
+          <in>smp.h</in>
           <in>star.asm</in>
           <in>virtualmemory.cc</in>
           <in>virtualmemory.h</in>
           <in>x86.cc</in>
           <in>x86.h</in>
+          <in>xcpu.cc</in>
+          <in>xcpu.h</in>
         </df>
       </df>
       <df name="core">
         <df name="compiler">
           <in>operator.cc</in>
         </df>
-        <df name="filesystem">
-          <df name="includes">
-            <in>commond.h</in>
-            <in>hbfs.h</in>
-            <in>hfat.h</in>
-            <in>hiso9660.h</in>
-          </df>
-          <in>bfs.cc</in>
-          <in>bfs.h</in>
-          <in>fat.cc</in>
-          <in>fat.h</in>
-          <in>iso9660.cc</in>
-          <in>iso9660.h</in>
-        </df>
         <df name="includes">
           <in>disk.h</in>
           <in>hprocess.h</in>
+          <in>hutils.h</in>
+          <in>templates.h</in>
         </df>
         <in>adminProcess.cc</in>
         <in>adminProcess.h</in>
-        <in>adminthread.cc</in>
-        <in>adminthread.h</in>
         <in>cacheDisk.cc</in>
         <in>cacheDisk.h</in>
         <in>devices.cc</in>
@@ -85,8 +84,6 @@
         <in>systemcall.h</in>
         <in>thread.cc</in>
         <in>thread.h</in>
-        <in>virtualmemoryzone.cc</in>
-        <in>virtualmemoryzone.h</in>
       </df>
       <df name="defines">
         <in>constants.h</in>
@@ -138,18 +135,19 @@
         <in>vga.cc</in>
         <in>vga.h</in>
       </df>
-      <df name="files">
+      <df name="filesystem">
         <df name="includes">
-          <in>hbmp.h</in>
+          <in>commond.h</in>
+          <in>hbfs.h</in>
+          <in>hfat.h</in>
+          <in>hiso9660.h</in>
         </df>
-        <in>bmp.cc</in>
-        <in>bmp.h</in>
-      </df>
-      <df name="nbproject1">
-        <df name="private">
-          <in>c_standard_headers_indexer.c</in>
-          <in>cpp_standard_headers_indexer.cpp</in>
-        </df>
+        <in>bfs.cc</in>
+        <in>bfs.h</in>
+        <in>fat.cc</in>
+        <in>fat.h</in>
+        <in>iso9660.cc</in>
+        <in>iso9660.h</in>
       </df>
       <df name="uses">
         <in>conversion.cc</in>
@@ -161,8 +159,16 @@
         <in>memory.h</in>
         <in>string.cc</in>
         <in>string.h</in>
-        <in>timer.cc</in>
-        <in>timer.h</in>
+      </df>
+      <df name="vmemory">
+        <in>malloc.cc</in>
+        <in>malloc.h</in>
+        <in>memorybitmap.cc</in>
+        <in>memorybitmap.h</in>
+        <in>memoryregion.cc</in>
+        <in>memoryregion.h</in>
+        <in>memoryzone.cc</in>
+        <in>memoryzone.h</in>
       </df>
     </df>
   </logicalFolder>

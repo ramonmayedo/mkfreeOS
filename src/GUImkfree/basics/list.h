@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  RamÃ³n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -42,7 +42,6 @@ public:
     void *getFirst();
     void *getLast();
     void *getItem(int aindex);
-    void * operator[](int index);
     int count();
     bool isEmty();
     void setItem(int aindex, void *aitem);
@@ -53,7 +52,8 @@ public:
     int indexOf(void *aitem);
     int remove(void *aitem);
     void *removeLast();
-    void *removeFirst(); 
+    void *removeFirst();
+    void initialize();
     ~Clist();
 protected:
     Cnode *getNode(int aindex);

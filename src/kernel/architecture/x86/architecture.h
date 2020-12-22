@@ -17,9 +17,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef ARCHITECTURE_H
 #define ARCHITECTURE_H
 
-#define ARCHX86_GENERAL_FAULT 0x1
-#define ARCHX86_PAGE_FAULT 0x2
-#define ARCHX86_MEMORY_CORRUPT 0x3
+
+#define DECLARE_LOCK(name) volatile int name ## Locked = 0
+#define LOCK(name) \
+	while (!__sync_bool_compare_and_swap(& name ## Locked, 0, 1)); \
+	__sync_synchronize();
+#define UNLOCK(name) \
+	__sync_synchronize(); \
+	name ## Locked = 0;
 
 class Carchitecture {
 public:
@@ -31,7 +36,7 @@ public:
     void enabledInterruption();
     void reset();
     void shutDown();
-    void kernelStopScreen(int stopMode);
+    void kernelStopScreen(char *stringFault);
 private:
 
 };

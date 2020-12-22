@@ -8,22 +8,29 @@ include ./architecture/$(ARCH)/configmakefile
 include ./architecture/$(ARCH)/makefile 
 include ./core/makefile
 include ./core/compiler/makefile
-include ./core/filesystem/makefile
+include ./filesystem/makefile
 include ./drivers/makefile
 include ./uses/makefile
-include ./files/makefile
+include ./vmemory/makefile
+
 #objetivo es obtener compilar , dependencia es obtener $(KERNEL) , comandos es obtener .o
-ensamblar : $(KERNEL)
+ensamblar : bootCPUs $(KERNEL) 
 
 $(KERNEL):$(OBJ)
 	$(LD) $(LDFLAG) -o $@ $^
 	$(OBJCOPY) $(OBJCOPYFLAG) $(KERNEL) $(KERBIN)
 
 %.o: %.cc
-	$(SC) $(FLAG) -c $< -o  $@
+	$(SC) $(FLAG)  -c $< -o  $@
 	 
 %.o: %.asm
 	$(ASM) $(ASMFLAG) $< -o  $@
+
+bootCPUs:
+	$(ASM) architecture/$(ARCH)/bootCPUs.asm -o architecture/$(ARCH)/bootCPUs.o
+
+showobjBoot:
+	$(OBJDUMP) -D architecture/$(ARCH)/bootCPUs.o
 	
 cpybinario:
 	$(OBJCOPY) $(OBJCOPYFLAG) $(KERNEL) $(KERBIN)

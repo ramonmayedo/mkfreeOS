@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,9 +25,9 @@ struct SmallocHeader {
     u32 size;
 } __attribute__((packed));
 
- extern u8 *b_heap;
- extern u8 *e_heap;
- extern u8 context;
+// extern u8 *b_heap;
+// extern u8 *e_heap;
+// extern u8 context;
  
  u8 *b_heap = 0;
  u8 *e_heap = 0;

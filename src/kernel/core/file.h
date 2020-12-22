@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef FILE_H
 #define FILE_H
 #include "filesystem.h"
-#include "filesystem/includes/commond.h"
+#include "../filesystem/includes/commond.h"
 //comandos para la manipulacion de los archivos Comun para todos los ssitemas de archivos FAT32, EXT2...
 
 

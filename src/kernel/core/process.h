@@ -19,11 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #include "../defines/types.h"
 #include "includes/hprocess.h"
 #include "../uses/list.h"
-#include "adminthread.h"
 
 class Cprocess {
 public:
-    Cprocess(u8 *afile, int argc, char **argv, int apid);
+    Cprocess(u8 *afile, int argc, char **argv, int apid, int apriority);
     int addFile(void* afile);
     void *getFile(int aidFile);
     int deleteFile(int aidFile);
@@ -32,18 +31,15 @@ public:
     Cprocess *getParent();
     int addProcessChild(Cprocess *achild);
     int deleteProcessChild(Cprocess *achild);
-    int sendState(int acommand);
+    int sendState(int acommand, u32 filtro);
     char *getbufferIPC();
-    int getcurrentState();
     void onActivate();
     void onDesactivate();
     SprocessX86 processX86;
-    CadminThread *adminThread; 
-    int  sharedMemory;
+    int priority;
     int addThread(u32 eip);
     int getCommand(int command,int parameter1,int parameter2, int parameter3);
     int sendCommad(int command,int parameter1,int parameter2, int aprameter3);
-    int getWaitCommand(int command,int parameter1,int parameter2, int aprameter3);
     ~Cprocess();
 
 private:
@@ -54,10 +50,9 @@ private:
     u32 sizeMemory;
     int countFiles;
     int type;
-    int currentState;
     char *bufferIPC;
-   SCommandProcess *commands;
-protected:
+    ScommandProcess *commands;
+  
     char** saveArgMainToKernel(int argc, char **argv);
     u8* saveArgMain(int argc, char **argv, char *stackPtr);
     void deleteAllFiles();

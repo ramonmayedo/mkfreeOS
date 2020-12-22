@@ -18,12 +18,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #define REG_H
 #include "../../../defines/types.h"
 
-struct SregX86 {
+struct SregX86Info {
     u32 eax, ecx, edx, ebx;
     u32 esp, ebp, esi, edi;
     u32 eip, eflags;
     u32 cs, ss, ds, es, fs, gs;
     u32 cr3, cr2;
+}__attribute__((packed));;
+
+struct SregX86 {
+    u32 eax, ecx, edx, ebx;
+    u32 esp, ebp, esi, edi;
+    u32 eip, eflags;
+    u32 cs, ss, ds, es, fs, gs;
 }__attribute__((packed));;
 
 struct SstackX86 {

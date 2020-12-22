@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -12,37 +12,36 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
-*/
+ */
 
 #ifndef GWINDOWS_H
 #define GWINDOWS_H
-#include "../basics/control.h"
-#include "GWbartitle.h"
+#include "../basics/grect.h"
+#include "../basics/canvasPainter.h"
+#include "Gcomponent.h"
 
-enum eWindowsState {
-    wsNormal, wsMaximized, wsMinimized
-};
-
-typedef void (eventOnCreate) (Gcontrol *sender);
-
-class Gwindows : public Gcontrol {
+class Gwindow : public Gcomponent {
 public:
-    Gwindows();
-    Gwindows(int x, int y, int width, int height);
-    Gwindows(int x, int y, int width, int height, int *bufferShare);
-    void repaint();
-    void refresh();
-    void activate();
-    ~Gwindows();
+    Gwindow(int x, int y, int width, int height, Gcomponent *aparent);
+    Grect *getWindowsRect();
+    void resize(int width, int height);
+    void setdoubleBuffer(bool active);
+    void setBackCanvas(int *buffer);
+    void onCreate();
+    void flush();
+    void flushRect(Grect &rect);
+    void draw();
+    int keyShmem;
+    int wid;
+    GcanvasPainter *backCanvas;
+    GcanvasPainter *frontCanvas;
+    GgraphicComponent *controlFocused;
     string caption;
-    Gcontrol *controlFocused;
-    Gcontrol *controlMouseMove;
-    void *application;
-    eventOnCreate *OnCreate;
+    string iconPath;
+    ~Gwindow();
 private:
-    GWbartitle *bartitle;
-protected:
-    void initialized();
+    bool doubleBuffer;    
+
 };
 
 #endif

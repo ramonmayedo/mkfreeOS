@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,6 +17,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #include "../includes/conio.h"
 #include "../includes/syscall.h"
 
+enum commandConsole {
+    cmcColor = 1, cmcGotoXY = 2, cmcWhereX = 3, cmcWhereY = 4,
+    cmcPrintf = 5, cmcLock = 6, cmcUnlock = 7, cmcGetChar = 8,
+    cmcPutChar = 9, cmcReadChar = 10, cmcWrite = 11
+};
+
+enum commandGraphics {
+    cmgChangeModeVideo = 1, cmgPaintArea = 2, cgpChangeModeVideoAdvanced = 3,
+    cmpGetArea = 4
+};
+
+enum commandMouse {
+    cmmMouseEvent = 1
+};
+
+enum eCommandKeyboard {
+    cmkKeyEvent = 1
+};
+
+
 void textcolor(int newcolor) {
     sysCall_2(sysConsole, cmcColor, newcolor);
 }
@@ -34,11 +54,11 @@ int wherey() {
 }
 
 int blockDisplay() {
-    return sysCall_1(sysConsole, cmcBlock);
+    return sysCall_1(sysConsole, cmcLock);
 }
 
 int unblockDisplay() {
-    return sysCall_1(sysConsole, cmcUnBlock);
+    return sysCall_1(sysConsole, cmcUnlock);
 }
 
 int changeMode(int mode) {

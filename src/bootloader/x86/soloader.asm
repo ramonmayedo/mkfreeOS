@@ -1,4 +1,4 @@
-;Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+;Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 ;This program is free software: you can redistribute it and/or modify
 ;it under the terms of the GNU General Public License as published by
@@ -115,9 +115,9 @@ POP  ECX
 
 MOV ECX,512          ;2 sectores a copiar
 MOV ESI,CODELOADER   ;ORIGEN
-MOV EDI,0x10000      ;DESTINO 
+MOV EDI,0x1000       ;DESTINO 
 REP MOVSW
-JMP 0x18:0x10000
+JMP 0x18:0x1000
 
 CODELOADER:
 INCBIN "x86/loader.bin"

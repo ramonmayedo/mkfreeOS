@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,9 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #include <application.h>
 
 int kmain(int argc, char *argv[]) {
-    Capplication *console = new Capplication("console", "a/kernel/program/console.elf", 3);
-  //  Capplication *console = new Capplication("console", "a/server.elf", 3); //Ejecutar directamente modo grafico
+    //Capplication *console = new Capplication("console", "a/kernel/program/console.elf", 3);
+    Capplication *console = new Capplication("console", "a/server.elf", 3); //Ejecutar directamente modo grafico
     console->execute();
-    while (1);
+    //while (1);
 }
 

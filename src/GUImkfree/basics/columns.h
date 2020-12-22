@@ -28,7 +28,7 @@ public:
     string caption;
     int group;
     int focus;
-    Gslines subItem;
+    slines subItem;
 };
 
 class GlistItems {
@@ -54,7 +54,7 @@ public:
     int index;
     int drawWidth;
     int cutWidth;
-    Gslines items;
+    slines items;
     bool selected;
     void *component;
 private:

@@ -19,12 +19,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 #include "../../defines/types.h"
 
+#define PC_MASTER_CONTROL_REGISTER 0x21
+#define PC_MASTER_BASE_REGISTER    0x20
+
+#define PC_SLAVE_CONTROL_REGISTER 0xA1
+#define PC_SLAVE_BASE_REGISTER    0xA0
+
 class Cpic8259 {
 public:
     Cpic8259();
     void initialize();
     void setICW(u32 aicw,u32 aport);
-    void reconocer();
+    void diseabled();
+    void eoi();
 private:
 
 };

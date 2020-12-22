@@ -73,7 +73,7 @@ u32 CsystemCall::systemCall(u32 anumber, u32 parameter1, u32 parameter2, u32 par
         }
         case sysSharedMemory:
         {
-            return x86.sharedMemory.command(parameter1, parameter2, parameter3, parameter4);
+            return x86.virtualMemory.command(parameter1, parameter2, parameter3, parameter4);
         }
         default:return 0;
     }

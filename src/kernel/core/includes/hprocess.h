@@ -29,10 +29,9 @@ struct SsegFile {
 } __attribute__((packed));
 
 struct SprocessX86 {
-    SregX86 *regX86;
-    SstackX86 stackX86;
     u32 *pageDirectory;
     u32 *pageDirectoryVirtual;
+    u32 cr3;
     SsegFile bss;
     SsegFile exec;
     SsegFile heap;
@@ -40,12 +39,12 @@ struct SprocessX86 {
     u32 stackThread;
 } __attribute__((packed));
 
-struct SFilesProcess{
+struct SfilesProcess{
     Cfile *file;
     int id;
 } __attribute__((packed));
 
-struct SCommandProcess {
+struct ScommandProcess {
     int pidTrasmisor;
     int command;
     int parameter1;
@@ -53,6 +52,13 @@ struct SCommandProcess {
     int parameter3;
 } __attribute__((packed));
 
+struct ScontrolTime{
+    u32 standarTime;
+    int plannedTime;
+    u32 beforeConsumedTime;
+    u32 filter;
+    u32 timeConsumed;
+};
 
 #endif
 

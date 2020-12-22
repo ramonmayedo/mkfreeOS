@@ -136,3 +136,12 @@ _asm_int_mouse_ps2:
 	out 0x20,al
 	RESTORE_REGS
 	iret
+
+global _asm_interrupt_apic_spurious
+_asm_interrupt_apic_spurious:
+       nop
+       iret
+
+global _asm_bootCPUs ;Se carga como dato, esta seccion contiene el codigo de trampolin para inicializar los procesadores
+_asm_bootCPUs:
+    INCBIN "../kernel/architecture/x86/bootCPUs.o"

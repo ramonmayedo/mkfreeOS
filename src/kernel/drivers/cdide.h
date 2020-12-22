@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef CDIDE_H
 #define CDIDE_H
 #include "../defines/types.h"
-#include "../architecture/x86/includes/maps.h"
+#include "../core/devices.h"
 
 class Ccdide {
 public:

@@ -1,4 +1,4 @@
-/*Copyright (C) 2019  Ramón Mayedo Morales (ramonmayedo@gmail.com)
+/*Copyright (C) 2019  Ramï¿½n Mayedo Morales (ramonmayedo@gmail.com)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -57,10 +57,13 @@ extern "C" {
     int __rtti_user() {
         return 0;
     }
-   /* void __rtti_si(){
-        return ;
+
+    void __rtti_si() {
+        return;
     }
-    void __pure_virtual(){
-        return ;
-    }*/
+
+    void __pure_virtual() {
+        return;
+    }
+    
 }

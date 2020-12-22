@@ -65,15 +65,18 @@ void CioScreen::printk(char *string,u32 aebp,...){
             case '%':
             {
                 car = *(ptrCar++); //proximo caracterptrCar++;
-                if (car == 'i' || car == 's' || car == 'c') {
+                if (car == 'i' || car == 's' || car == 'c' || car == 'h') {
                     if (car == 'i') //si es un entero %i
                     {
                         core.conversion.IntToStrChar(*ptrEBP, buffer); //lo  convierto a string
                         printf(buffer); //lo muestro
+                    } else if (car == 'h') {
+                        core.conversion.IntToHexChar(*ptrEBP, buffer, 8); //lo  convierto a string
+                        printf(buffer); //lo muestro
                     } else if (car == 's') //si es un string %s
-                        printf((char*)*ptrEBP);
+                        printf((char*) *ptrEBP);
                     else if (car == 'c') //si es un char
-                        putC((char)*ptrEBP);
+                        putC((char) *ptrEBP);
 
                     ptrEBP += 0x1; //preparo puntero a proxima varible
                     break;
@@ -126,7 +129,7 @@ void CioScreen::setTextColor(int newColor){
 
 int CioScreen::block() {
     state = 1;
-    pidBlock =core.adminProcess.getRun()->getpid();
+    pidBlock =core.adminProcess.getRun()->process->getpid();
 }
 
 int CioScreen::unblock() {

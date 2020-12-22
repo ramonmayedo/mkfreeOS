@@ -17,9 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef PIOSCREEN_H
 #define PIOSCREEN_H
 #include "../architecture/x86/ioscreen.h"
-#include "process.h"
-#include "thread.h"
 #include "../defines/enums.h"
+#include "includes/hutils.h"
 
 #define CAR_JMPLINE       0x0A
 #define CAR_RETCURSOR     0x0D
@@ -36,14 +35,13 @@ public:
     int putCharOut(char car);
     char getChar();
     int command(int acommand, int parameter1, int parameter2);
-    int block();
-    int unblock();
+    int lock();
+    int unlock();
     int setKeyPress(char akey);
 
 private:
     CioScreen *ioscreen;
-    Cprocess *process;
-    Cthread *thread;
+    Clist *locksProcess;
     char *bufferIn;
     char *bufferOut;
     int curOut;
